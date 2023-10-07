@@ -19,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,7 @@ public class Product {
 
 	@Column
 	@Nationalized
+	@NotEmpty(message = "Vui lòng nhập tên sản phẩm")
 	private String productName;
 
 	@Column
@@ -46,7 +49,7 @@ public class Product {
 	private BigDecimal price;
 
 	@Column
-	private Date createdDate = new Date();
+	private Date CreatedDate;
 
 	@ManyToOne
 	@JoinColumn(name = "userProduct")

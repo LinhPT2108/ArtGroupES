@@ -1,7 +1,6 @@
 package com.art.DAO.Product;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -50,5 +49,4 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 //
 //    // Tìm Product theo ID của Manufacturer
 //    List<Product> findByManufacturer_ManufacturerId(int manufacturerId);
-//	Collection<Product> getProducts();
 }

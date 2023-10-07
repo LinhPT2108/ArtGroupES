@@ -1,18 +1,23 @@
+<<<<<<< HEAD
+﻿USE artgroup;
+=======
 ﻿
 USE artgroup;
+>>>>>>> dev/nguyentcpc04750
 GO 
+
 INSERT INTO dbo.role
         ( role_name )
 VALUES  ( 'admin'),( 'user'),( 'shipper');
 GO 
 
 INSERT INTO dbo.user_custom
-        ( del ,
+        ( is_del ,
           email ,
           fullname ,
           image ,
           password ,
-          role ,
+          role_name ,
           user_id
         )
 VALUES  ( 1 , -- is_del - bit
@@ -42,7 +47,7 @@ VALUES  ( 1 , -- is_del - bit
 GO
 
 INSERT INTO dbo.infor_address
-        ( address, phone_number, user_infor )
+        ( address, phone_number, user_id )
 VALUES  ( N'An phú, Ninh Kiều, Cần Thơ', -- address - nvarchar(255)
           '0948922927', -- phone_number - varchar(255)
           'linhptpc04737'  -- user_id - varchar(255)
@@ -62,7 +67,7 @@ VALUES  ( N'An phú, Ninh Kiều, Cần Thơ', -- address - nvarchar(255)
 GO
 
 INSERT INTO dbo.voucher
-        ( discount, user_voucher )
+        ( discount, user_id )
 VALUES  ( 19000, -- discount - float
           'nguyentcpc04750'  -- user_id - varchar(255)
           ),
@@ -102,7 +107,7 @@ INSERT INTO dbo.invoice
         ( total_amount ,
           invoice_date ,
           note ,
-          user_invoice
+          user_id
         )
 VALUES  ( 199000 , -- total_amount - float
           '2023-09-01' , -- invoice_date - datetime2(6)
@@ -125,7 +130,7 @@ INSERT INTO dbo.flash_sale
         ( is_status ,
           end_day ,
           start_day ,
-          user_flash_sale
+          user_id
         )
 VALUES  ( 0 , -- is_status - bit
           '2023-07-15' , -- end_day - datetime2(6)
@@ -150,7 +155,7 @@ VALUES  ( 0 , -- is_status - bit
 GO
 
 INSERT  INTO dbo.banner
-        ( banner_name, user_banner )
+        ( banner_name, user_id )
 VALUES  ( 'salemonth09.png', -- banner_name - varchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
@@ -163,9 +168,9 @@ VALUES  ( 'salemonth09.png', -- banner_name - varchar(255)
 GO
 
 INSERT INTO dbo.manufacturer
-        ( del ,
+        ( is_del ,
           manufacturer_name ,
-          user_manufacturer
+          user_id
         )
 VALUES  ( 1 , -- is_del - bit
           'Samsung' , -- manufacturer_name - varchar(255)
@@ -194,176 +199,204 @@ VALUES  ( 1 , -- is_del - bit
 GO
 
 INSERT INTO dbo.category
-        ( del, category_name, user_category )
+        ( is_del, category_name, user_id )
 VALUES  ( 1, -- is_del - bit
-          N'Tivi', -- category_name - nvarchar(255)
+          'telivion', -- category_name - nvarchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
 		( 1, -- is_del - bit
-          N'Tủ lạnh', -- category_name - nvarchar(255)
+          'fridge', -- category_name - nvarchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
 		( 1, -- is_del - bit
-         N'Máy giặt', -- category_name - nvarchar(255)
+          'washing machine', -- category_name - nvarchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
 		( 1, -- is_del - bit
-          N'Máy điều hòa', -- category_name - nvarchar(255)
+          'air-conditioner', -- category_name - nvarchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
 		( 1, -- is_del - bit
-          N'Bếp điện', -- category_name - nvarchar(255)
+          'electric stove', -- category_name - nvarchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
 		( 0, -- is_del - bit
-          N'Bếp gas', -- category_name - nvarchar(255)
+          'gas stove', -- category_name - nvarchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         );
 GO
+
 INSERT INTO dbo.product
-        ( category ,
-          del ,
-          manufacturer , 
+        ( category_id ,
+          is_del ,
+          manufacturer_id ,
           quantity_in_stock ,
-          price,
-          product_id, 
+          prodcut_id ,
           product_name ,
-          user_product,
-          created_date
+          user_id
         )
 VALUES  ( 1 , -- category_id - int
-          0 , -- is_del - bit
+          1 , -- is_del - bit
           1 , -- manufacturer_id - int
           20 , -- quantity_in_stock - int
-          23000000 , -- price 
-          'QA55Q65A' , -- product_id - varchar(255)
+          'QA55Q65A' , -- prodcut_id - varchar(255)
           N'Smart Tivi QLED 4K 55 inch Samsung QA55Q65A' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 1 , -- category_id - int
-          0 , -- is_del - bit
+		( 1 , -- category_id - int
+          1 , -- is_del - bit
           2 , -- manufacturer_id - int
           10 , -- quantity_in_stock - int
-          16000000 , -- price 
-          '55NANO76SQA' , -- product_id - varchar(255)
-          N'Smart Tivi NanoCell LG 4K 55 inch 55NANO76SQA' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          '55NANO76SQA' , -- prodcut_id - varchar(255)
+          N'Smart Tivi NanoCell LG 4K 55 inch 55NANO76SQA ' , -- product_name - nvarchar(255)
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 1 , -- category_id - int
-          0 , -- is_del - bit
+		( 1 , -- category_id - int
+          1 , -- is_del - bit
           3 , -- manufacturer_id - int
           5 , -- quantity_in_stock - int
-          9000000 , -- price 
-          '32V35KP' , -- product_id - varchar(255)
-          N'Android Tivi Toshiba 32 inch 32V35KP' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          '32V35KP' , -- prodcut_id - varchar(255)
+          N'Android Tivi Toshiba 32 inch 32V35KP ' , -- product_name - nvarchar(255)
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 2 , -- category_id - int
-          0 , -- is_del - bit
+		( 2 , -- category_id - int
+          1 , -- is_del - bit
           1 , -- manufacturer_id - int
           35 , -- quantity_in_stock - int
-          19000000 , -- price 
-          'RT25M4032BU/SV' , -- product_id - varchar(255)
+          'RT25M4032BU/SV' , -- prodcut_id - varchar(255)
           N'Tủ lạnh Samsung Inverter 256 lít RT25M4032BU/SV' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 2 , -- category_id - int
-          0 , -- is_del - bit
+		( 2 , -- category_id - int
+          1 , -- is_del - bit
           2 , -- manufacturer_id - int
           50 , -- quantity_in_stock - int
-          22000000 , -- price 
-          'GR-B256JDS' , -- product_id - varchar(255)
+          'GR-B256JDS' , -- prodcut_id - varchar(255)
           N'Tủ lạnh LG Inverter 519 lít Side By Side GR-B256JDS' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 2 , -- category_id - int
-          0 , -- is_del - bit
+		( 2 , -- category_id - int
+          1 , -- is_del - bit
           3 , -- manufacturer_id - int
           20 , -- quantity_in_stock - int
-          11500000 , -- price 
-          'GR-RF610WE-PGV(22)-XK' , -- product_id - varchar(255)
+          'GR-RF610WE-PGV(22)-XK' , -- prodcut_id - varchar(255)
           N'Tủ lạnh Toshiba Inverter 511 lít Multi Door GR-RF610WE-PGV(22)-XK' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 3 , -- category_id - int
-          0 , -- is_del - bit
+		( 3 , -- category_id - int
+          1 , -- is_del - bit
           1 , -- manufacturer_id - int
           35 , -- quantity_in_stock - int
-          11500000 , -- price 
-          'WW80T3020WW/SV' , -- product_id - varchar(255)
+          'WW80T3020WW/SV' , -- prodcut_id - varchar(255)
           N'Máy giặt Samsung Inverter 8kg WW80T3020WW/SV' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 3 , -- category_id - int
-          0 , -- is_del - bit
+		( 3 , -- category_id - int
+          1 , -- is_del - bit
           2 , -- manufacturer_id - int
           50 , -- quantity_in_stock - int
-          15000000 , -- price 
-          'T2351VSAB' , -- product_id - varchar(255)
+          'T2351VSAB' , -- prodcut_id - varchar(255)
           N'Máy giặt LG TurboDrum Inverter 11.5 kg T2351VSAB' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 3 , -- category_id - int
-          0 , -- is_del - bit
+		( 3 , -- category_id - int
+          1 , -- is_del - bit
           3 , -- manufacturer_id - int
           20 , -- quantity_in_stock - int
-          9500000 , -- price 
-          'AW-L805AV' , -- product_id - varchar(255)
+          'AW-L805AV' , -- prodcut_id - varchar(255)
           N'Máy giặt Toshiba 7 Kg AW-L805AV (SG)' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 4 , -- category_id - int
-          0 , -- is_del - bit
+		( 4 , -- category_id - int
+          1 , -- is_del - bit
           1 , -- manufacturer_id - int
           35 , -- quantity_in_stock - int
-          14500000 , -- price 
-          'AR13CYFAAWKNSV' , -- product_id - varchar(255)
+          'AR13CYFAAWKNSV' , -- prodcut_id - varchar(255)
           N'Máy lạnh Samsung Inverter 1.5 HP AR13CYFAAWKNSV' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 4 , -- category_id - int
-          0 , -- is_del - bit
+		( 4 , -- category_id - int
+          1 , -- is_del - bit
           2 , -- manufacturer_id - int
           50 , -- quantity_in_stock - int
-          18500000 , -- price - decimal (18,2) - Giá sản phẩm
-         'ZTNQ18GPLA0' , -- product_id - varchar(255)
+          'ZTNQ18GPLA0' , -- prodcut_id - varchar(255)
           N'Máy lạnh âm trần LG Inverter 2 HP ZTNQ18GPLA0' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 4 , -- category_id - int
-          0 , -- is_del - bit
+		( 4 , -- category_id - int
+          1 , -- is_del - bit
           3 , -- manufacturer_id - int
           20 , -- quantity_in_stock - int
-          8500000 , -- price 
-          'RAS-H10Z1KCVG-V' , -- product_id - varchar(255)
+          'RAS-H10Z1KCVG-V' , -- prodcut_id - varchar(255)
           N'Máy lạnh Toshiba Inverter 1 HP RAS-H10Z1KCVG-V' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-        ( 4 , -- category_id - int
-          0 , -- is_del - bit
+		( 4 , -- category_id - int
+          1 , -- is_del - bit
           5 , -- manufacturer_id - int
           50 , -- quantity_in_stock - int
-          12000000 , -- price 
-          'MSAGA-10CRDN8' , -- product_id - varchar(255)
+          'MSAGA-10CRDN8' , -- prodcut_id - varchar(255)
           N'Máy lạnh Midea Inverter 1 HP MSAGA-10CRDN8' , -- product_name - nvarchar(255)
-          'nguyentcpc04750',  -- user_id - varchar(255)
-          GETDATE()
+          'nguyentcpc04750'  -- user_id - varchar(255)
         );
-
 GO
-	
+		  
+INSERT INTO dbo.price
+        ( is_use, price, product_id )
+VALUES  ( 1, -- is_use - bit
+          12990000, -- price - float
+          'QA55Q65A'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          11890000, -- price - float
+          '55NANO76SQA'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          6990000, -- price - float
+          '32V35KP'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          7190000, -- price - float
+          'RT25M4032BU/SV'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          14490000, -- price - float
+          'GR-B256JDS'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          20490000, -- price - float
+          'GR-RF610WE-PGV(22)-XK'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          5990000, -- price - float
+          'WW80T3020WW/SV'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          14490000, -- price - float
+          'T2351VSAB'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          3990000, -- price - float
+          'AW-L805AV'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          11390000, -- price - float
+          'AR13CYFAAWKNSV'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          23990000, -- price - float
+          'ZTNQ18GPLA0'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          10590000, -- price - float
+          'RAS-H10Z1KCVG-V'  -- product_id - varchar(255)
+          ),
+		  ( 1, -- is_use - bit
+          6990000, -- price - float
+          'MSAGA-10CRDN8'  -- product_id - varchar(255)
+          );
+GO
+
 INSERT INTO dbo.detail_description
         ( description, product_id, tile )
 VALUES  ( N'Smart Tivi QLED 4K 55 inch Samsung QA55Q65A với thiết kế với màn hình tràn viền 4 cạnh, 
@@ -585,8 +618,5 @@ VALUES  ( 'QA55Q65A_1.png', -- image - varchar(255)
           'MSAGA-10CRDN8'  -- product_id - varchar(255)
         );
 GO 
-
-SELECT * FROM dbo.product
-
 
 
