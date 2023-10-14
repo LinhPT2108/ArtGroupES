@@ -27,7 +27,6 @@
     user-select: none;
     white-space: nowrap;
     width: auto;
-    margin-bottom: 16px;
 }
 
 .nice-select:hover {
@@ -74,6 +73,8 @@
     -webkit-transform: scale(1) translateY(0);
     -ms-transform: scale(1) translateY(0);
     transform: scale(1) translateY(0);
+    overflow-y: scroll;
+    max-height: 300px;
 }
 
 .nice-select.disabled {

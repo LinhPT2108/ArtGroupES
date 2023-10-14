@@ -2,6 +2,8 @@ package com.art.Entities.Product;
 
 import org.hibernate.annotations.Nationalized;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,7 @@ public class DetailDescription {
 	@Nationalized
 	private String description;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;

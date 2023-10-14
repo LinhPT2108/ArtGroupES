@@ -11,6 +11,11 @@
 <link rel="shortcut icon" type="image/png"
 	href="../../images/favicon.png" />
 <link rel="stylesheet" href="../../assets/css/styles.min.css" />
+
+<script
+	src="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.js"/>"></script>
+<link rel="stylesheet"
+	href="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.css"/>">
 <c:if test="${views=='product-form' }">
 <link rel="stylesheet" href="../../assets/css/productStyle.css" />
 </c:if>
@@ -147,7 +152,7 @@
 				</nav>
 			</header>
 			<!--  Header End -->
-			<div class="container-fluid px-0">
+			<div class="container-fluid">
 				<jsp:include page="../component/admin/${views}.jsp"></jsp:include>
 			</div>
 		</div>

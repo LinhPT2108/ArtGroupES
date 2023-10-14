@@ -7,7 +7,7 @@
 		<span class="display-6">Đổi mật khẩu</span>
 	</div>
 	<div class="main-content p-3">
-		<form action="change-password" method="post" id="formChangePass">
+		<form action="/account/change-password" method="post" id="formChangePass">
 			<div class="form-group mb-3">
 				<label for="currentPass" class="form-label ">Mật khẩu hiện
 					tại:</label> <input type="password"
@@ -44,3 +44,83 @@
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		console.log('this is change pass')
+		$('#formChangePass').submit(function(e) {
+			e.preventDefault();
+			let currentPass = $('#currentPass').val();
+			let newPasswordInput = $('#newPassword').val();
+			let confirmPasswordInput = $('#confirmPassword').val();
+			let isvalid = false;
+			if (currentPass == '') {
+				$('#currentPassError').removeClass("d-none");
+				$('#currentPassError').html("Vui lòng nhập mật khẩu hiện tại.");
+				isvalid = true;
+			} else {
+				const pattern = /^(?=.*[A-Za-z]).{6,}$/;
+	
+				if (newPasswordInput == '') {
+					$('#currentPassError').removeClass("d-none");
+					$('#currentPassError').html("Vui lòng nhập mật khẩu hiện tại.");
+					isvalid = true;
+				} else if (!pattern.test(newPasswordInput)) {
+					$('#newPasswordError').removeClass("d-none");
+					$('#newPasswordError').html("Mật khẩu ít nhất 6 ký tự và ít nhất 1 chữ cái");
+					isvalid = true;
+				} else {
+					$('#newPasswordError').addClass("d-none");
+				}
+	
+				if (confirmPasswordInput != newPasswordInput) {
+					$('#confirmPasswordError').removeClass("d-none");
+					$('#confirmPasswordError').html("Xác nhận mật khẩu không chính xác.");
+					isvalid = true;
+				} else {
+					$('#confirmPasswordError').addClass("d-none");
+				}
+	
+				if (isvalid) {
+					console.log(false)
+				} else {
+					$.ajax({
+						type: 'POST',
+						url: '/account/change-password',
+						data: {
+							newPass: newPasswordInput,
+							currentPass: currentPass
+						}, success: function(response) {
+							console.log(response)
+							if (response == 'success') {
+								Swal.fire({
+									icon: 'success',
+									title: 'Cập nhật mật khẩu thành công !',
+									text: 'Ấn Ok để tiếp tục',
+									confirmButtonText: 'OK'
+								})
+								$('#currentPassError').html("");
+								$('#newPasswordError').html("");
+								$('#confirmPasswordError').html("");
+								
+							} else if (response == '404') {
+								$('#currentPassError').removeClass("d-none");
+								$('#currentPassError').html("Mật khẩu không chính xác.");
+							}
+						},
+						error: function(xhr, status, error) {
+							console.log(xhr)
+							Swal.fire({
+								icon: 'error',
+								title: 'Opps... !',
+								text: "Có lỗi xảy ra, vui lòng thử lại !",
+								showConfirmButton: true,
+								timer: 1500
+							});
+						}
+					});
+				}
+			}
+		});
+	
+	});
+</script>

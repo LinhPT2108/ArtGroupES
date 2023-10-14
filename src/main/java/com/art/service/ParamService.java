@@ -96,20 +96,49 @@ public class ParamService {
 	 * @throws RuntimeException lỗi lưu file
 	 */
 	public File save(MultipartFile file, String path) {
-		if (!file.isEmpty()) {
-			File dir = new File(request.getServletContext().getRealPath(path));
-			if (!dir.exists()) {
-				dir.mkdirs();
-			}
-			try {
-				File saveFile = new File(dir, file.getOriginalFilename());
-				file.transferTo(saveFile);
-				return saveFile;
-			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println(e);
-			}
-		}
-		return null;
+	    if (!file.isEmpty()) {
+	        File dir = new File(request.getServletContext().getRealPath(path));
+	        if (!dir.exists()) {
+	            dir.mkdirs();
+	        }
+	        try {
+	            // Tránh tên trùng lặp bằng cách thêm timestamp vào tên tệp
+	            String originalFileName = file.getOriginalFilename();
+	            String fileExtension = getFileExtension(originalFileName);
+	            String timestamp = String.valueOf(System.currentTimeMillis());
+	            String uniqueFileName = timestamp+fileExtension;
+	            File saveFile = new File(dir, uniqueFileName);
+
+	            // Kiểm tra phần mở rộng của tệp (đảm bảo là tệp hình ảnh hợp lệ)
+	            if (isValidImageExtension(fileExtension)) {
+	                file.transferTo(saveFile);
+	                return saveFile;
+	            } else {
+	                // Xử lý lỗi nếu phần mở rộng không hợp lệ
+	                System.out.println("Định dạng tệp không hợp lệ");
+	                return null;
+	            }
+	        } catch (Exception e) {
+	            // Xử lý lỗi nếu có
+	            System.out.println(e);
+	        }
+	    }
+	    return null;
 	}
+
+	private String getFileExtension(String filename) {
+	    int dotIndex = filename.lastIndexOf(".");
+	    if (dotIndex >= 0) {
+	        return filename.substring(dotIndex);
+	    }
+	    return "";
+	}
+
+	private boolean isValidImageExtension(String fileExtension) {
+	    // Kiểm tra phần mở rộng của tệp có phải là một hình ảnh hợp lệ (vd: jpg, jpeg, png)
+	    return fileExtension.equalsIgnoreCase(".jpg") ||
+	           fileExtension.equalsIgnoreCase(".jpeg") ||
+	           fileExtension.equalsIgnoreCase(".png");
+	}
+
 }
