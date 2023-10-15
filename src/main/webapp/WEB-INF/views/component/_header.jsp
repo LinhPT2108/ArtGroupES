@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <header class="header shop">
 	<!-- Topbar -->
 	<div class="topbar">
@@ -35,6 +36,8 @@
 								<c:otherwise>
 									<li><i class="ti-user"></i> <a href="/account/profile">Tài
 											khoản </a></li>
+									<li><i class="bi bi-box-arrow-right"></i> <a
+										href="/account/logout">Đăng xuất</a></li>
 								</c:otherwise>
 							</c:choose>
 						</ul>
@@ -117,7 +120,7 @@
 										<c:when test="${userLogin!=null }">
 											<li class="list-group-item"><a href="/account/profile">Thông
 													tin tài khoản</a></li>
-											<li class="list-group-item"><a href="/account/">Đơn
+											<li class="list-group-item"><a href="/account/Invoice">Đơn
 													mua</a></li>
 											<li class="list-group-item"><a href="#">Đổi mật khẩu</a></li>
 											<li class="list-group-item"><a href="/account/logout">Đăng
@@ -137,41 +140,96 @@
 							<!--/ End Shopping Item -->
 						</div>
 						<div class="sinlge-bar shopping">
-							<a href="#" class="single-icon"><i class="ti-bag"></i> <span
-								class="total-count">2</span></a>
+							<a href="#" class="single-icon"><i class="ti-bag"></i> <c:if
+									test="${userLogin != null }">
+									<span class="total-count">${sizeInCart }</span>
+								</c:if></a>
 
 							<!-- Shopping Item -->
 							<div class="shopping-item">
 								<c:choose>
 									<c:when test="${userLogin!=null }">
 										<div class="dropdown-cart-header">
-											<span>2 Items</span> <a href="#">View Cart</a>
+											<span class="total-count">${sizeInCart }</span> Sản phẩm <a
+												href="#">Xem giỏ hàng</a>
 										</div>
-										<ul class="shopping-list">
-											<li><a href="#" class="remove" title="Remove this item"><i
-													class="fa fa-remove"></i></a> <a class="cart-img" href="#"><img
-													src="https://via.placeholder.com/70x70" alt="#"></a>
-												<h4>
-													<a href="#">Woman Ring</a>
-												</h4>
-												<p class="quantity">
-													1x - <span class="amount">$99.00</span>
-												</p></li>
-											<li><a href="#" class="remove" title="Remove this item"><i
-													class="fa fa-remove"></i></a> <a class="cart-img" href="#"><img
-													src="https://via.placeholder.com/70x70" alt="#"></a>
-												<h4>
-													<a href="#">Woman Necklace</a>
-												</h4>
-												<p class="quantity">
-													1x - <span class="amount">$35.00</span>
-												</p></li>
+										<ul class="shopping-list" id="listProductCart">
+											<c:choose>
+												<c:when test="${sizeInCart==0 }">
+													<div
+														class="nothing d-flex flex-column align-items-center justify-content-center">
+														<i class="bi bi-cart-x display-1"></i> <span>Chưa
+															có sản phẩm</span>
+													</div>
+												</c:when>
+												<c:otherwise>
+													<li><c:forEach var="cart" items="${carts}">
+															<div class="mb-2 productInCart" id="${cart.cartId}">
+																<a class="cart-img"
+																	href="/products/${cart.product.productId }"><img
+																	src="images/products/${cart.product.productImage[0].image }"
+																	alt="${cart.product.productImage[0].image }"></a>
+																<h4>
+																	<a href="#">${cart.product.productName}</a>
+																</h4>
+																<p class="quantity">
+																	Số lượng: <span class="qtyInStock">${cart.quantity}
+																	</span> <span class="amount d-flex flex-column"> <c:choose>
+																			<c:when test="${isFlashSale}">
+																				<c:choose>
+																					<c:when
+																						test="${cart.product.productPromotionalDetails[0] != null}">
+																						<del>
+																							<span
+																								class="text-muted text-decoration-line-through me-2"><fmt:formatNumber
+																									type="number" pattern="###,###,###"
+																									value="${cart.product.price}" /> ₫</span>
+																						</del>
+																						<span class="fw-bold float-end text-danger">
+																							<fmt:formatNumber type="number"
+																								pattern="###,###,###"
+																								value="${cart.product.productPromotionalDetails[0].discountedPrice}" />
+																							₫
+																						</span>
+																					</c:when>
+																					<c:otherwise>
+																						<span class="fw-bold float-end text-danger"><fmt:formatNumber
+																								type="number" pattern="###,###,###"
+																								value="${cart.product.price}" /> ₫</span>
+																					</c:otherwise>
+																				</c:choose>
+																			</c:when>
+																			<c:otherwise>
+																				<span class="fw-bold float-end text-danger"><fmt:formatNumber
+																						type="number" pattern="###,###,###"
+																						value="${cart.product.price}" /> ₫</span>
+																			</c:otherwise>
+																		</c:choose>
+																	</span>
+																	<button onclick="removeCartItem(${cart.cartId}, this)"
+																		class="remove remove-product-cart"
+																		title="Xóa khỏi giỏ hàng">
+																		<i class="fa fa-remove"></i>
+																	</button>
+																</p>
+
+															</div>
+														</c:forEach></li>
+												</c:otherwise>
+											</c:choose>
 										</ul>
-										<div class="bottom">
-											<div class="total">
-												<span>Total</span> <span class="total-amount">$134.00</span>
-											</div>
-											<a href="checkout.html" class="btn animate">Checkout</a>
+										<div class="bottom cartBottom">
+											<c:if test="${sizeInCart>0 }">
+												<div class=" bottomCart">
+													<div class="total">
+														<span>Tổng tiền</span> <span class="total-amount">
+															<fmt:formatNumber type="number" pattern="###,###,###"
+																value="${totalPriceInCart}" /> ₫
+														</span>
+													</div>
+													<a href="/checkout" class="btn animate">Thanh toán</a>
+												</div>
+											</c:if>
 										</div>
 									</c:when>
 									<c:otherwise>
@@ -184,8 +242,6 @@
 									</c:otherwise>
 								</c:choose>
 							</div>
-
-
 							<!--/ End Shopping Item -->
 						</div>
 					</div>

@@ -17,7 +17,9 @@ public class GlobalInterceptor implements HandlerInterceptor {
 	CategoryDAO categoryDAO;
 	@Autowired
 	ManufacturerDAO manufacturerDAO;
-
+	@Autowired
+	SessionService sessionService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -29,5 +31,6 @@ public class GlobalInterceptor implements HandlerInterceptor {
 			throws Exception {
 		req.setAttribute("listCategories", categoryDAO.findAll());
 		req.setAttribute("listBrands", manufacturerDAO.findAll());
+		
 	}
 }

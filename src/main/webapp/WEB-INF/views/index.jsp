@@ -56,6 +56,11 @@
 	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick-theme.css"/>">
+
+<%-- <link rel="stylesheet"
+	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">  --%>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 <body class="js">
 
@@ -163,8 +168,8 @@
 																				value="${(p.price - f.discountedPrice)/p.price *100}" />%
 																		</span>
 																		<c:if test="${p.quantityInStock==0 }">
-																			<span class="p-1 text-bg-dark ms-3">Tạm hết
-																				hàng</span>
+																			<span class="p-1  bg-dark text-white ms-3">Tạm
+																				hết hàng</span>
 																		</c:if>
 																	</div>
 																</div>
@@ -183,19 +188,19 @@
 													<c:choose>
 														<c:when test="${p.quantityInStock==0  }">
 															<button type="button" disabled
-																class="btn btn-outline-primary  float-xl-start">Thêm
+																class="btn-outline-primary p-2  float-xl-start">Thêm
 																vào giỏ</button>
-															<button class="btn btn-outline-primary  float-xl-end"
+															<button class="btn-outline-primary  p-2  float-xl-end"
 																role="button" disabled>Mua ngay</button>
 														</c:when>
 														<c:otherwise>
 															<button type="button"
 																class="btn-outline-primary p-2 addToCart"
 																data-product-id="${p.productId}"
-																data-user-id="${user.userId}">Thêm vào giỏ</button>
+																data-user-id="${userLogin.userId}">Thêm vào giỏ</button>
 															<button class="btn-outline-primary  p-2 btnBuyNow"
 																data-product-id="${p.productId}"
-																data-user-id="${user.userId}">Mua ngay</button>
+																data-user-id="${userLogin.userId}">Mua ngay</button>
 														</c:otherwise>
 													</c:choose>
 												</div>
@@ -245,18 +250,22 @@
 						</div>
 						<div class="tab-content" id="myTabContent">
 							<!-- Start Single Tab -->
+
 							<c:forEach items="${listCategories }" var="c" varStatus="i">
+							<c:set var="countProduct" value="0"></c:set>
 								<c:if test="${i.index<=5 }">
 									<div
 										class="tab-pane fade tab-product-highlight ${i.index==0?'active show':'' }"
 										id="${c.categoryId }" role="tabpanel">
 										<div class="tab-single">
 											<div class="row">
-												<c:forEach items="${listProduct }" var="p" varStatus="i">
-													<c:if test="${i.index<=7 }">
-														<c:if test="${!p.del}">
-															<c:if
-																test="${c.categoryId == p.categoryProduct.categoryId }">
+												<c:forEach items="${listProduct }" var="p" varStatus="ic">
+													<%-- <c:if test="${ic.index<=7 }"> --%>
+													<c:if test="${!p.del}">
+														<c:if
+															test="${c.categoryId == p.categoryProduct.categoryId }">
+															<c:set var="countProduct" value="${countProduct+1 }"></c:set>
+															<c:if test="${countProduct<=8 }">
 																<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 																	<div class="single-product h-100">
 																		<div class="product-img">
@@ -278,9 +287,6 @@
 																										type="number" pattern="###,###,###"
 																										value="${(p.price - f.discountedPrice)/p.price *100}" />%
 																								</span>
-																								<c:if test="${p.quantityInStock==0 }">
-																									<span class="out-of-stock">Tạm hết hàng</span>
-																								</c:if>
 																							</div>
 
 																							<c:set var="foundFlashSale" value="true" />
@@ -288,7 +294,9 @@
 																								value="${f.discountedPrice }" />
 																						</c:when>
 																					</c:choose>
-																				</c:forEach>
+																				</c:forEach> <c:if test="${p.quantityInStock==0 }">
+																					<span class="out-of-stock">Tạm hết hàng</span>
+																				</c:if>
 																			</a>
 																			<div class="button-head">
 																				<div class="product-action">
@@ -304,10 +312,10 @@
 																							vào yêu thích</span></a> <a title="Compare" href="#">
 																				</div>
 																				<div class="product-action-2">
-																					<a title="Add to cart" href="#"
+																					<a title="Add to cart" href="#" class="addToCart"
 																						data-product-id="${p.productId}"
-																						data-user-id="${user.userId}">Thêm vào giỏ
-																						hàng</a>
+																						data-user-id="${userLogin.userId}">Thêm vào
+																						giỏ hàng</a>
 																				</div>
 																			</div>
 																		</div>
@@ -340,6 +348,7 @@
 																	</div>
 																</div>
 															</c:if>
+															<%-- </c:if> --%>
 														</c:if>
 													</c:if>
 												</c:forEach>
@@ -697,10 +706,7 @@
 										<span id="qtyStock"></span>
 									</div>
 								</div>
-								<div class="d-flex" id="review-product-price">
-								
-														
-								</div>
+								<div class="d-flex" id="review-product-price"></div>
 								<div class="quickview-peragraph mb-3" id="quickview-description">
 
 								</div>
@@ -725,8 +731,9 @@
 									<!--/ End Input Order -->
 								</div>
 								<div class="add-to-cart">
-									<a href="#" class="btn">Thêm vào giỏ hàng</a> <a href="#"
-										class="btn min"><i class="ti-heart"></i></a>
+									<a href="#" class="btn addToCart" data-product-id=""
+										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a> <a
+										href="#" class="btn min"><i class="ti-heart"></i></a>
 									<!--  <a href="#"
 										class="btn min"><i class="fa fa-compress"></i></a> -->
 								</div>
@@ -795,7 +802,7 @@
 
 
 	<script src="js/choose-product.js"></script>
-
+	<script src="js/cart-script.js"></script>
 
 	<script type="text/javascript">
 		$('.single-item-slider').slick({

@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -103,7 +104,7 @@ public class Product {
 	@JsonManagedReference
 	private List<DetailDescription> productDetailDescription;
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", fetch =  FetchType.EAGER)
 	@JsonManagedReference 
 	private List<Image> productImage;
 
@@ -111,7 +112,7 @@ public class Product {
 	@JsonIgnore
 	private List<InvoiceDetail> productInvoiceDetail;
 
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "product", fetch =  FetchType.EAGER)
 	@JsonManagedReference 
 	private List<PromotionalDetails> productPromotionalDetails;
 

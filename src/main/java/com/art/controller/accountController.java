@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.art.DAO.Activity.CartDAO;
 import com.art.DAO.User.InforAddressDAO;
 import com.art.DAO.User.UserCustomDAO;
+import com.art.Entities.Activity.Cart;
 import com.art.Entities.User.InforAddress;
 import com.art.Entities.User.UserCustom;
 import com.art.service.CookieService;
@@ -48,6 +50,8 @@ public class accountController {
 
 	@Autowired
 	ParamService paramService;
+	@Autowired
+	CartDAO cartDAO;
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -73,6 +77,12 @@ public class accountController {
 						cookieService.remove("LGemail");
 					}
 					System.out.println("đăng nhập thành công");
+					for (Cart c : cartDAO.findByUser(user)) {
+						System.out.println(c.getProduct().getProductId());
+						
+					}
+					sessionService.set("sizeInCart", cartDAO.findByUser(user).size());
+					sessionService.setCart(cartDAO.findByUser(user));
 					if (user.getRoleName().getRoleName().equals("admin")) {
 						return "redirect:/admin/dashboard";
 					} else {

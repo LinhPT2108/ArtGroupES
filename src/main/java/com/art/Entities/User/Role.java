@@ -8,11 +8,13 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Data
 public class Role {
 	@Id
 	private String roleName;

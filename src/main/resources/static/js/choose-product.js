@@ -17,6 +17,7 @@ $(document).ready(function() {
 
 	$('.quickViews').click(function() {
 		let productId = $(this).data('product-id');
+		$('.addToCart').data('product-id', productId);
 		console.log(productId)
 		let sliderDiv = $(".quickview-slider-active");  // Chọn phần tử <div>
 		// Gọi cuộc gọi Ajax để lấy dữ liệu sản phẩm
@@ -44,15 +45,19 @@ $(document).ready(function() {
 					// Chờ đợi tất cả hình ảnh được nạp xong
 					appendImages(images);
 					console.log(data)
-					let originalPrice = data.price;
-					let priceDiscounted = data.productPromotionalDetails[0] != null ? data.productPromotionalDetails[0].discountedPrice : '';
+					let originalPrice = formatCurrency(data.price);
+					let priceDiscounted = data.productPromotionalDetails[0] != null ? formatCurrency(data.productPromotionalDetails[0].discountedPrice) : '';
 					console.log(priceDiscounted)
+
 					if (priceDiscounted == '') {
-						$('#review-product-price').html('<h3 id="originalPrice" class="ml-3 text-danger" >' + originalPrice + '</h3>')
+						$('#review-product-price').html('<h3 id="originalPrice" class="ml-3 text-danger" > <fmt:formatNumber' +
+							'type = "number" pattern = "###,###,###"' +
+							' value = "' + originalPrice + '" /> đ</h3 > ')
+
 					} else {
 
-						$('#review-product-price').html('<h3 id="originalPrice" class=""><del>' + originalPrice + '</del></h3>' +
-							'<h3 class="ml-3 text-danger" id="discountedPrice">' + priceDiscounted + '</h3>		')
+						$('#review-product-price').html('<h3 id="originalPrice" class=""><del>' + originalPrice + ' đ</del></h3>' +
+							'<h3 class="ml-3 text-danger" id="discountedPrice">'+priceDiscounted+'đ</h3>')
 					}
 				}
 			},
@@ -77,21 +82,18 @@ $(document).ready(function() {
 			$.each(images, function(index, image) {
 				var img = new Image();
 				var itemClass = activeImg ? 'active' : '';
-
 				sliderDiv.append(
 					'<div class="carousel-item ' + itemClass + '">' +
 					'<img class="d-block w-100" src="images/products/' + image.image + '" alt="First slide">' +
 					'</div>'
 				);
-
 				activeImg = false;
-
 				img.src = 'images/products/' + image.image;
 			});
 
 		}
-
-
 	});
-
+	function formatCurrency(number) {
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	}
 });
