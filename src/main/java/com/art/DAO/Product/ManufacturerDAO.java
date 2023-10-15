@@ -1,12 +1,8 @@
 package com.art.DAO.Product;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Product.Manufacturer;
-import com.art.Entities.User.UserCustom;
 
 public interface ManufacturerDAO extends JpaRepository<Manufacturer, Integer>{
 
