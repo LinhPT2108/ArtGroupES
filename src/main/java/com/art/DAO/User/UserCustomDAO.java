@@ -28,8 +28,9 @@ public interface UserCustomDAO extends JpaRepository<UserCustom, String> {
 //	// Tìm kiếm người dùng dựa trên vai trò
 //	List<UserCustom> findByRole(Role role);
 //
-//	// Tìm kiếm người dùng dựa trên email
-//	UserCustom findByEmail(String email);
+	// Tìm kiếm người dùng dựa trên email
+	List<UserCustom> findByEmail(String email);
+	
 //
 //	// Tìm kiếm người dùng dựa trên họ tên chứa một từ khóa
 //	List<UserCustom> findByFullnameContainingIgnoreCase(String keyword);

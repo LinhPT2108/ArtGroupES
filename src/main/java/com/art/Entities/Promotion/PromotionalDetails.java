@@ -1,6 +1,7 @@
 package com.art.Entities.Promotion;
 
 import com.art.Entities.Product.Product;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,10 +23,12 @@ public class PromotionalDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "flashSale_id")
 	private FlashSale flashSale;

@@ -1,6 +1,7 @@
 package com.art.Entities.Product;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.hibernate.annotations.Nationalized;
 
@@ -16,9 +17,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -42,4 +46,22 @@ public class Manufacturer {
 	@OneToMany(mappedBy = "manufacturerProduct")
 	private List<Product> manufacturer;
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Manufacturer other = (Manufacturer) obj;
+		return id == other.id;
+	}
+
+	
 }
