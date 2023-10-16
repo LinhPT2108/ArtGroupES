@@ -63,6 +63,7 @@ public class productController {
 		model.addAttribute("views", "product-form");
 		model.addAttribute("title", "Quản lí sản phẩm");
 		model.addAttribute("typeButton", "Thêm");
+		model.addAttribute("products", pdDAO.findAll());
 
 		return "admin/index";
 	}

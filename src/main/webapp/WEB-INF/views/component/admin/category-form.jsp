@@ -27,28 +27,34 @@
 			</div>
 			<div class="col-12">
 				<form:button class="btn btn-primary">${typeButton}</form:button>
-					<form:button formmethod="post"
+				<form:button formmethod="post"
 					formaction="/admin/category/${categoryId}" class="btn btn-warning">Cập nhật</form:button>
 			</div>
 		</div>
 	</form:form>
 	<hr>
-	<table border="1" style="width: 50%">
-		<tr>
-			<th>ID</th>
-			<th>Loại sản phẩm</th>
-			<th>Trạng thái</th>
-			<th>Người tạo</th>
-			<th></th>
-		</tr>
-		<c:forEach items="${cts}" var="category">
-			<tr>
-				<td>${category.categoryId}</td>
-				<td>${category.categoryName}</td>
-				<td>${category.del?'Tồn tại':'Không tồn tại'}</td>
-				<td>${category.user.userId}</td>
-				<td><a href="/admin/category/edit/${category.categoryId}">Edit</a></td>
-			</tr>
-		</c:forEach>
-	</table>
+	<div class="table-responsive">
+		<table id="statisticalTable" class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Loại sản phẩm</th>
+					<th>Trạng thái</th>
+					<th>Người tạo</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${cts}" var="category">
+					<tr>
+						<td>${category.categoryId}</td>
+						<td>${category.categoryName}</td>
+						<td>${category.del?'Tồn tại':'Không tồn tại'}</td>
+						<td>${category.user.userId}</td>
+						<td><a href="/admin/category/edit/${category.categoryId}">Edit</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 </div>

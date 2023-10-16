@@ -36,7 +36,7 @@ public class Category {
 	private String categoryName;
 
 	@Column
-	private boolean del ;
+	private boolean del;
 
 	@ManyToOne
 	@JoinColumn(name = "userCategory")

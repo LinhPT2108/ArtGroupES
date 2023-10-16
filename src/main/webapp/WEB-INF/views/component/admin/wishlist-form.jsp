@@ -3,7 +3,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-this is wishlist form
+
 <div class="site-product">
 	<form:form cssClass="row g-3 needs-validation" action="/admin/product"
 		modelAttribute="pd" method="POST" id="formProduct">

@@ -3,6 +3,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <div class="site-product">
 	<form:form cssClass="row g-3 needs-validation" action="/admin/product"
 		modelAttribute="pd" method="POST" id="formProduct">
@@ -124,69 +126,122 @@
 	</form:form>
 	<div id="errorMessages"></div>
 </div>
+
+<div class="table-responsive mt-3">
+	<table id="statisticalTable" class="table table-hover">
+		<thead>
+			<tr>
+				<th>Mã sản phẩm</th>
+				<th>Tên sản phẩm</th>
+				<th>Số lượng</th>
+				<th>Đơn giá</th>
+				<th>Ngày tạo</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="product" items="${products}">
+				<tr>
+					<td>${product.productId}</td>
+					<td>${product.productName}</td>
+					<td>${product.quantityInStock}</td>
+					<td><fmt:setLocale value="vi_VN" /> <fmt:formatNumber
+							value="${product.price}" type="currency" currencyCode="VND"
+							maxFractionDigits="0" minFractionDigits="0" /></td>
+					<td><fmt:formatDate value="${product.createdDate}"
+							pattern="dd/MM/yyyy" /></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+
 <script type="text/javascript">
-function generateRandomString() {
-    var randomString = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < 8; i++) {
-        randomString += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
+	function generateRandomString() {
+		var randomString = '';
+		var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		var charactersLength = characters.length;
+		for (var i = 0; i < 8; i++) {
+			randomString += characters.charAt(Math.floor(Math.random()
+					* charactersLength));
+		}
 
-    var currentTimeMillis = new Date().getTime();
+		var currentTimeMillis = new Date().getTime();
 
-    var finalString = randomString + currentTimeMillis.toString();
+		var finalString = randomString + currentTimeMillis.toString();
 
-    return finalString;
-}
+		return finalString;
+	}
 
-var randomString = generateRandomString();
+	var randomString = generateRandomString();
 
-document.getElementById('productId').value = randomString;
+	document.getElementById('productId').value = randomString;
 
-	$(document).ready(function() {
-		$('#formProduct').submit(function(event) {
-			event.preventDefault(); 
+	$(document)
+			.ready(
+					function() {
+						$('#formProduct')
+								.submit(
+										function(event) {
+											event.preventDefault();
 
-			// Lấy dữ liệu từ form
-			var formData = $(this).serialize();
+											// Lấy dữ liệu từ form
+											var formData = $(this).serialize();
 
-			$.ajax({
-				type : 'POST',
-				url : '/admin/product',
-				data : formData,
-				success : function(data) {
-					if (data == 'success') {
-						Swal
-						.fire({
-							icon: 'success',
-							title: 'Thêm thành công',
-							text: "Sản phẩm đã được thêm vào hệ thống !",
-							showConfirmButton: true,
-							timer: 1500
-						});
-						console.log(formData);
-					} else {
-						$("#productNameError").html(data.productName);
-						$("#categoryProductError").html(data.categoryProduct);
-						$("#manufacturerProductError").html(data.manufacturerProduct);
-						$("#quantityInStockError").html(data.quantityInStock);
-						$("#priceError").html(data.price);
-						Swal
-						.fire({
-							icon: 'error',
-							title: 'Thêm sản phẩm thất bại',
-							text: "Vui lòng kiểm tra lại thông tin !",
-							showConfirmButton: true,
-							timer: 1500
-						});
-						console.log(data)
-					}
-				},
-				error : function(xhr, status, error) {
-					console.log('Ajax errors');
-				}
-			});
-		});
-	});
+											$
+													.ajax({
+														type : 'POST',
+														url : '/admin/product',
+														data : formData,
+														success : function(data) {
+															if (data == 'success') {
+																Swal
+																		.fire({
+																			icon : 'success',
+																			title : 'Thêm thành công',
+																			text : "Sản phẩm đã được thêm vào hệ thống !",
+																			showConfirmButton : true,
+																			timer : 1500
+																		});
+																console
+																		.log(formData);
+															} else {
+																$(
+																		"#productNameError")
+																		.html(
+																				data.productName);
+																$(
+																		"#categoryProductError")
+																		.html(
+																				data.categoryProduct);
+																$(
+																		"#manufacturerProductError")
+																		.html(
+																				data.manufacturerProduct);
+																$(
+																		"#quantityInStockError")
+																		.html(
+																				data.quantityInStock);
+																$("#priceError")
+																		.html(
+																				data.price);
+																Swal
+																		.fire({
+																			icon : 'error',
+																			title : 'Thêm sản phẩm thất bại',
+																			text : "Vui lòng kiểm tra lại thông tin !",
+																			showConfirmButton : true,
+																			timer : 1500
+																		});
+																console
+																		.log(data)
+															}
+														},
+														error : function(xhr,
+																status, error) {
+															console
+																	.log('Ajax errors');
+														}
+													});
+										});
+					});
 </script>

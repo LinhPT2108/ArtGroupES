@@ -33,22 +33,28 @@
 		</div>
 	</form:form>
 	<hr>
-	<table border="1" style="width: 50%">
-		<tr>
-			<th>ID</th>
-			<th>Tên thương hiệu</th>
-			<th>Trạng thái</th>
-			<th>Người tạo</th>
-			<th></th>
-		</tr>
-		<c:forEach items="${manufacturers}" var="manufacturer">
-			<tr>
-				<td>${manufacturer.id}</td>
-				<td>${manufacturer.manufacturerName}</td>
-				<td>${manufacturer.del?'Tồn tại':'Không tồn tại'}</td>
-				<td>${manufacturer.user.userId}</td>
-				<td><a href="/admin/manufacturer/edit/${manufacturer.id}">Edit</a></td>
-			</tr>
-		</c:forEach>
-	</table>
+	<div class="table-responsive">
+		<table id="statisticalTable" class="table table-hover" >
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Tên thương hiệu</th>
+					<th>Trạng thái</th>
+					<th>Người tạo</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${manufacturers}" var="manufacturer">
+					<tr>
+						<td>${manufacturer.id}</td>
+						<td>${manufacturer.manufacturerName}</td>
+						<td>${manufacturer.del?'Tồn tại':'Không tồn tại'}</td>
+						<td>${manufacturer.user.userId}</td>
+						<td><a href="/admin/manufacturer/edit/${manufacturer.id}">Edit</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 </div>

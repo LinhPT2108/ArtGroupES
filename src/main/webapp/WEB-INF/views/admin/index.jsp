@@ -24,6 +24,7 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 </head>
+<link rel="stylesheet" type="text/css" href="../../css/admin-page.css">
 
 <body>
 	<!--  Body Wrapper -->
@@ -179,7 +180,7 @@
 	<script src="../../assets/js/sidebarmenu.js"></script>
 	<script src="../../assets/js/app.min.js"></script>
 	<script src="../../assets/js/datatables-simple-demo.js"></script>
-	<c:if test="${views=='dashboard'||views=='statistical-revenue' }">
+	<c:if test="${views=='dashboard'}">
 		<script src="../../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
 		<script src="../../assets/libs/simplebar/dist/simplebar.js"></script>
 		<script src="../../assets/js/dashboard.js"></script>
