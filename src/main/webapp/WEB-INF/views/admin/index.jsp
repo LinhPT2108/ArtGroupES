@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -8,14 +9,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title }</title>
-<link rel="shortcut icon" type="image/png"
-	href="../../images/favicon.png" />
-<link rel="stylesheet" href="../../assets/css/styles.min.css" />
-<c:if test="${views=='product-form' }">
-<link rel="stylesheet" href="../../assets/css/productStyle.css" />
-</c:if>
 
-	<script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
+<link rel="shortcut icon" type="image/png"
+	href="../../../images/favicon.png" />
+<link rel="stylesheet" href="../../../assets/css/styles.min.css" />
+
+<script
+	src="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.js"/>"></script>
+<link rel="stylesheet"
+	href="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.css"/>">
+<c:if test="${views=='product-form' }">
+	<link rel="stylesheet" href="../../../assets/css/productStyle.css" />
+</c:if>
+<c:if test="${views=='userCustom-form' }">
+	<link rel="stylesheet" href="../../../assets/css/userCustom.css" />
+</c:if>
+<script src="../../../assets/libs/jquery/dist/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -30,7 +40,7 @@
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
 					<a href="./index.html" class="text-nowrap logo-img"> <img
-						src="../../assets/images/logos/logo.png" width="180" alt="" />
+						src="../../../assets/images/logos/logo.png" width="180" alt="" />
 					</a>
 					<div
 						class="close-btn d-xl-none d-block sidebartoggler cursor-pointer"
@@ -73,7 +83,7 @@
 							</span> <span class="hide-menu">Banner</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
-							href="./ui-typography.html" aria-expanded="false"> <span>
+							href="/admin/userCustom" aria-expanded="false"> <span>
 									<i class="ti ti-users"></i>
 							</span> <span class="hide-menu">Tài khoản</span>
 						</a></li>
@@ -102,7 +112,7 @@
 			<!--  Header Start -->
 			<header class="app-header">
 				<nav class="navbar navbar-expand-lg navbar-light">
-				<ul class="navbar-nav">
+					<ul class="navbar-nav">
 						<h2>${title }</h2>
 					</ul>
 					<ul class="navbar-nav">
@@ -119,7 +129,7 @@
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="../../assets/images/profile/user-1.jpg" alt=""
+									<img src="../../../assets/images/profile/user-1.jpg" alt=""
 									width="35" height="35" class="rounded-circle">
 							</a>
 								<div
@@ -147,20 +157,26 @@
 				</nav>
 			</header>
 			<!--  Header End -->
-			<div class="container-fluid px-0">
+			<div class="container-fluid">
 				<jsp:include page="../component/admin/${views}.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>
-	<script src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="../../assets/js/sidebarmenu.js"></script>
-	<script src="../../assets/js/app.min.js"></script>
+	<script
+		src="../../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="../../../assets/js/sidebarmenu.js"></script>
+	<script src="../../../assets/js/app.min.js"></script>
 	<c:if test="${views=='dashboard' }">
-		<script src="../../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-		<script src="../../assets/libs/simplebar/dist/simplebar.js"></script>
-		<script src="../../assets/js/dashboard.js"></script>
+		<script src="../../../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+		<script src="../../../assets/libs/simplebar/dist/simplebar.js"></script>
+		<script src="../../../assets/js/dashboard.js"></script>
 	</c:if>
-	<c:if test="${views=='product-form' }">	<script src="../../assets/js/product.js"></script>
+	<c:if test="${views=='product-form' }">
+		<script src="../../../assets/js/product.js"></script>
+	</c:if>
+	<c:if test="${views=='userCustom-form' }">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="../../../assets/js/userCustom.js"></script>
 	</c:if>
 </body>
 

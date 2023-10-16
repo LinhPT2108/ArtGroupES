@@ -94,11 +94,13 @@
 				<div
 					class="d-flex  border border-right-0 border-top-0 border-left-0 pb-2">
 					<div class="avatar">
-						<img alt="" src="../../images/PC04750.jpg" class="rounded-circle"
-							width="60px" height="60px">
+						<img alt=""
+							src="../images/avatar/${userLogin.image!=null?userLogin.image:'default-avatar.jpg'}"
+							class="rounded-circle" width="60px" height="60px"
+							id="avatar-right">
 					</div>
 					<div class="username p-2 d-flex flex-column">
-						<span class="font-weight-bold">nguyentcpc04750</span>
+						<span class="font-weight-bold">${userLogin.fullname }</span>
 						<div class="bot">
 							<i class="ti ti-pencil"></i> <span>Sửa hồ sơ</span>
 						</div>
@@ -165,7 +167,8 @@
 						<div class="border-0 mb-1">
 							<a
 								class="btn-default border-0 bg-white font-weight-normal stardust-dropdown item-custom p-0"
-								href="/account/viewed-list"> <i class="ti ti-eye mr-2"></i>Sản phẩm đã xem
+								href="/account/viewed-list"> <i class="ti ti-eye mr-2"></i>Sản
+								phẩm đã xem
 							</a>
 						</div>
 					</div>

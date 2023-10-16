@@ -31,8 +31,8 @@ public interface PromotionalDetailsDAO extends JpaRepository<PromotionalDetails,
 //	List<PromotionalDetails> findByStatus(boolean promotionStatus);
 //
 //	// Tìm PromotionalDetails theo ID của Product
-//	List<PromotionalDetails> findByProduct_ProductId(int productId);
+	List<PromotionalDetails> findByProduct_ProductId(String productId);
 //
 //	// Tìm PromotionalDetails theo ID của FlashSale
-//	List<PromotionalDetails> findByFlashSale_FlashSaleId(int flashSaleId);
+	List<PromotionalDetails> findByFlashSale_Id(int id);
 }
