@@ -16,7 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,7 +36,7 @@ public class Category {
 	private String categoryName;
 
 	@Column
-	private boolean del;
+	private boolean del ;
 
 	@ManyToOne
 	@JoinColumn(name = "userCategory")
