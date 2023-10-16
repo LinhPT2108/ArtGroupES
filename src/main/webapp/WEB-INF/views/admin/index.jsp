@@ -78,6 +78,11 @@
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="./ui-forms.html" aria-expanded="false"> <span> <i
 									class="ti ti-file-description"></i>
+							</span> <span class="hide-menu">Quản lý hóa đơn</span>
+						</a></li>
+						<li class="sidebar-item"><a class="sidebar-link"
+							href="./ui-forms.html" aria-expanded="false"> <span> <i
+									class="ti ti-file-description"></i>
 							</span> <span class="hide-menu">Banner</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
