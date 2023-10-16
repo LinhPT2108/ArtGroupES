@@ -19,7 +19,7 @@ VALUES  ( 1 , -- is_del - bit
           'linhptpc04737@fpt.edu.vn' , -- email - varchar(255)
           N'Phan Tuấn Linh' , -- fullname - nvarchar(255)
           'linhptpc04737.png' , -- image - varchar(255)
-          '123123' , -- password - varchar(255)
+          '123123a' , -- password - varchar(255)
           'user' , -- role - varchar(255)
           'linhptpc04737'  -- user_id - varchar(255)
         ),
@@ -27,7 +27,7 @@ VALUES  ( 1 , -- is_del - bit
           'nguyentcpc04750@fpt.edu.vn' , -- email - varchar(255)
           N'Trần Chí Nguyễn' , -- fullname - nvarchar(255)
           'nguyentcpc04750.png' , -- image - varchar(255)
-          '123123' , -- password - varchar(255)
+          '123123a' , -- password - varchar(255)
           'admin' , -- role - varchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
@@ -35,7 +35,7 @@ VALUES  ( 1 , -- is_del - bit
           'nhintpc04729@fpt.edu.vn' , -- email - varchar(255)
           N'Nguyễn Tấn Nhi' , -- fullname - nvarchar(255)
           'nhintpc04729.png' , -- image - varchar(255)
-          '123123' , -- password - varchar(255)
+          '123123a' , -- password - varchar(255)
           'shipper' , -- role - varchar(255)
           'nhintpc04729'  -- user_id - varchar(255)
         );
@@ -1051,35 +1051,53 @@ INSERT INTO dbo.invoice
         ( total_amount ,
           invoice_date ,
           note ,
-          user_invoice
+          user_invoice,
+		  status
         )
 VALUES  ( 18000000 , -- total_amount - float
           '2023-09-01' , -- invoice_date - datetime2(6)
           N'' , -- note - nvarchar(255)
-          'linhptpc04737'  -- user_id - varchar(255)
+          'linhptpc04737',  -- user_id - varchar(255)
+		  3
         ),
 		( 17980000 , -- total_amount - float
           '2023-10-01' , -- invoice_date - datetime2(6)
           N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
-          'linhptpc04737'  -- user_id - varchar(255)
+          'linhptpc04737',  -- user_id - varchar(255)
+		  3
         ),
 		( 44650000 , -- total_amount - float
           '2023-10-05' , -- invoice_date - datetime2(6)
           N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
-          'linhptpc04737'  -- user_id - varchar(255)
+          'linhptpc04737',  -- user_id - varchar(255)
+		  3
         ),
 		( 144950000 , -- total_amount - float
           '2023-10-10' , -- invoice_date - datetime2(6)
           N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
-          'linhptpc04737'  -- user_id - varchar(255)
+          'linhptpc04737',  -- user_id - varchar(255)
+		  3
         ),
 		( 374800000 , -- total_amount - float
           '2023-10-15' , -- invoice_date - datetime2(6)
           N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
-          'linhptpc04737'  -- user_id - varchar(255)
+          'linhptpc04737',  -- user_id - varchar(255)
+		  3
+        ),
+		( 11090000 , -- total_amount - float
+          '2023-10-16' , -- invoice_date - datetime2(6)
+          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          'linhptpc04737',  -- user_id - varchar(255)
+		  2
+        ),
+		( 10590000 , -- total_amount - float
+          '2023-10-16' , -- invoice_date - datetime2(6)
+          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          'linhptpc04737',  -- user_id - varchar(255)
+		  1
         );
 GO
-
+SELECT * FROM dbo.product
 INSERT INTO dbo.invoice_detail
         ( invoice_id ,
           price ,
@@ -1185,6 +1203,16 @@ VALUES  ( 1 , -- invoice_id - int
           14990000 , -- price - numeric(38, 2)
           10 , -- quantity - int
           'QA65Q60B'  -- product_id - varchar(255)
+        ),
+		( 6 , -- invoice_id - int
+          11090000 , -- price - numeric(38, 2)
+          1 , -- quantity - int
+          'UA55AU8100'  -- product_id - varchar(255)
+        ),
+		( 7 , -- invoice_id - int
+          10590000 , -- price - numeric(38, 2)
+          1 , -- quantity - int
+          'UA55BU8000'  -- product_id - varchar(255)
         );
 
 GO 

@@ -1,16 +1,16 @@
 package com.art.DAO.Promotion;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-import com.art.Entities.Product.Product;
-import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.Promotion.InvoiceDetail;
 
 public interface InvoiceDetailDAO extends JpaRepository<InvoiceDetail, Integer> {
 
+	@Query("SELECT id.product, p.productName, COUNT(id.product) FROM InvoiceDetail id JOIN id.product p GROUP BY id.product, p.productName ORDER BY COUNT(id.product) DESC")
+	List<Object[]> countProductsOrderByCountDesc();
 //	@SuppressWarnings("unchecked")
 //	// Thêm hoặc cập nhật một InvoiceDetail
 //	InvoiceDetail save(InvoiceDetail invoiceDetail);

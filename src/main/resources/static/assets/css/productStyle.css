@@ -111,6 +111,7 @@
     transform: translateX(109px);
     height: 100%;
     width: 39px;
+    padding: 20px 0;
     background-color: #34974d;
     display: flex;
     align-items: center;

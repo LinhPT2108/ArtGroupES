@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Nationalized;
+
 import com.art.Entities.User.UserCustom;
 
 import jakarta.persistence.CascadeType;
@@ -42,6 +44,10 @@ public class Invoice {
 	private BigDecimal totalAmount;
 
 	@Column
+	private int status;
+	
+	@Column
+	@Nationalized
 	private String note;
 
 	@OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)

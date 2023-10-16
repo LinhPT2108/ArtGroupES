@@ -3,8 +3,8 @@ package com.art.DAO.User;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-import com.art.Entities.User.Role;
 import com.art.Entities.User.UserCustom;
 
 public interface UserCustomDAO extends JpaRepository<UserCustom, String> {
@@ -30,9 +30,12 @@ public interface UserCustomDAO extends JpaRepository<UserCustom, String> {
 //
 	// Tìm kiếm người dùng dựa trên email
 	List<UserCustom> findByEmail(String email);
-	
+
+	@Query("SELECT u.userId, u.fullname, u.email, COUNT(i.id) " + "FROM UserCustom u " + "LEFT JOIN u.userInvoice i "
+			+ "GROUP BY u.userId, u.fullname, u.email")
+	List<Object[]> getUsersWithInvoiceCount();
 //
 //	// Tìm kiếm người dùng dựa trên họ tên chứa một từ khóa
 //	List<UserCustom> findByFullnameContainingIgnoreCase(String keyword);
-	
+
 }

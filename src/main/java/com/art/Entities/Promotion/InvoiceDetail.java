@@ -2,6 +2,7 @@ package com.art.Entities.Promotion;
 
 import java.math.BigDecimal;
 
+import com.art.Entities.Activity.Comment;
 import com.art.Entities.Product.Product;
 
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,5 +39,7 @@ public class InvoiceDetail {
 
 	@Column
     private BigDecimal price;
-
+	
+	@OneToOne(mappedBy = "invoiceDetail")
+	private Comment comment;
 }

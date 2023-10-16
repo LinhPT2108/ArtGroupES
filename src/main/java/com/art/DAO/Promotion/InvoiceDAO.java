@@ -1,16 +1,29 @@
 package com.art.DAO.Promotion;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.art.Entities.Promotion.Invoice;
-import com.art.Entities.User.UserCustom;
 
-public interface InvoiceDAO extends JpaRepository<Invoice, Integer>{
+public interface InvoiceDAO extends JpaRepository<Invoice, Integer> {
 
+	@Query("SELECT i.invoiceDate FROM Invoice i GROUP BY i.invoiceDate")
+	List<String> getLabelsRevenueByDate();
+	@Query("SELECT SUM(i.totalAmount) FROM Invoice i GROUP BY i.invoiceDate")
+	List<Double> getPriceRevenueByDate();
+	@Query("SELECT MONTH(i.invoiceDate) FROM Invoice i GROUP BY MONTH(i.invoiceDate)")
+	List<Integer> getMonthLabelsRevenue();
+	@Query("SELECT SUM(i.totalAmount) FROM Invoice i GROUP BY MONTH(i.invoiceDate)")
+	List<Double> getTotalAmountByMonth();
+	@Query("SELECT YEAR(i.invoiceDate) FROM Invoice i GROUP BY YEAR(i.invoiceDate)")
+	List<Integer> getYearLabelsRevenue();
+	@Query("SELECT SUM(i.totalAmount) FROM Invoice i GROUP BY YEAR(i.invoiceDate)")
+	List<Double> getTotalAmountByYear();
+	
+	List<Invoice> findAllByOrderByInvoiceDateAsc();
+	List<Invoice> findAllByOrderByInvoiceDateDesc();
 //	@SuppressWarnings("unchecked")
 //	// Thêm hoặc cập nhật một Invoice
 //    Invoice save(Invoice invoice);
