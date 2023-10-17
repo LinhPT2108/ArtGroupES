@@ -22,7 +22,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor	
 @AllArgsConstructor
 @Entity
 public class Category {
@@ -61,6 +61,6 @@ public class Category {
 	public int hashCode() {
 		return Objects.hash(categoryId);
 	}
-
+	
 	
 }
