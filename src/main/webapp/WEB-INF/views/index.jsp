@@ -76,7 +76,6 @@
 	<!-- Header -->
 	<jsp:include page="component/_header.jsp"></jsp:include>
 	<!--/ End Header -->
-
 	<!-- Slider Area -->
 	<section class="hero-slider mt-3 container-fluid">
 		<!-- Single Slider -->

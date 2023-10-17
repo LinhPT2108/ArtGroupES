@@ -3,9 +3,12 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <div class="site-product">
 	<form:form cssClass="row g-3 needs-validation" action="/admin/product"
-		modelAttribute="pd" method="POST" id="formProduct">
+		modelAttribute="pd" method="POST" id="formProduct"
+		enctype="multipart/form-data">
 		<div class="col-xs-12 col-md-7">
 			<div class="row">
 				<form:hidden path="productId" value="" />
@@ -47,23 +50,22 @@
 				</div>
 				<div class="col-12 mb-3">
 					<form:label path="" cssClass="form-label mb-3">Thông tin chi tiết:</form:label>
-					<div class="describe row">
+					<div class="describe row description-container">
 						<div class="col-xs-12 col-md-6 mb-3 ">
 							<div class=" border border-1 p-3 position-relative">
 								<span class="position-absolute z-3 bg-white" style="top: -13px">Mô
 									tả 1:</span>
 								<div class="mb-3">
 									<div class="form-floating">
-										<form:input type="text" cssClass="form-control" path=""
-											id="tieude1" placeholder="124"></form:input>
-										<form:label path="" id="tieude1">Tiêu đề:</form:label>
+										<input type="text" class="form-control" id="tieude1"
+											placeholder="124"></input> <label for="tieude1">Tiêu
+											đề:</label>
 									</div>
 								</div>
 								<div class="form-floating">
-									<form:textarea cssClass="form-control"
-										placeholder="Leave a comment here" path=""
-										style="height: 100px;"></form:textarea>
-									<form:label path="">Nội dung:</form:label>
+									<textarea class="form-control"
+										placeholder="Leave a comment here" style="height: 100px;" id="noidung1"></textarea>
+									<label path="">Nội dung:</label>
 								</div>
 							</div>
 						</div>
@@ -87,7 +89,7 @@
 			<div class="col-12">
 				<form:button class="btn btn-primary" type="submit"
 					id="btnAddProduct">${typeButton }</form:button>
-				<form:button formmethod="post"
+				<form:button formmethod="post" class="btn btn-info"
 					formaction="/admin/product/${productId }">Cập nhật</form:button>
 			</div>
 
@@ -95,9 +97,10 @@
 		<div class="col-xs-12 col-md-5">
 			<div class="mb-3">
 				<form:label path="" cssClass="form-label">Hình ảnh:</form:label>
+				<small class="text-danger fst-italic" id="imageError"></small>
 				<ul id="imageList">
-					<li class="" style="list-style: none;"><form:label
-							cssClass="custum-file-upload" path="">
+					<li class="" style="list-style: none;"><label
+						class="custum-file-upload">
 							<div class="icon">
 								<svg xmlns="http://www.w3.org/2000/svg" fill=""
 									viewBox="0 0 24 24">
@@ -115,78 +118,83 @@
 							</div>
 							<div class="text">
 								<span>Tải ảnh lên</span>
-							</div>
-							<form:input type="file" path="" id="file"></form:input>
-						</form:label></li>
+							</div> <input type="file" name="listImage" id="listImage" multiple
+							accept=".jpg,.jpeg,.png">
+					</label></li>
+					<li class="" id="listImg"></li>
 				</ul>
 			</div>
 		</div>
 	</form:form>
 	<div id="errorMessages"></div>
 </div>
-<script type="text/javascript">
-function generateRandomString() {
-    var randomString = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < 8; i++) {
-        randomString += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
 
-    var currentTimeMillis = new Date().getTime();
-
-    var finalString = randomString + currentTimeMillis.toString();
-
-    return finalString;
+<div class="table-responsive mt-3">
+	<table id="statisticalTable" class="table table-hover">
+		<thead>
+			<tr>
+				<th>Mã sản phẩm</th>
+				<th>Tên sản phẩm</th>
+				<th>Số lượng</th>
+				<th>Đơn giá</th>
+				<th>Ngày tạo</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="product" items="${products}">
+				<tr>
+					<td>${product.productId}</td>
+					<td>${product.productName}</td>
+					<td>${product.quantityInStock}</td>
+					<td><fmt:setLocale value="vi_VN" /> <fmt:formatNumber
+							value="${product.price}" type="currency" currencyCode="VND"
+							maxFractionDigits="0" minFractionDigits="0" /></td>
+					<td><fmt:formatDate value="${product.createdDate}"
+							pattern="dd/MM/yyyy" /></td>
+					<td class="d-flex justify-content-between"><a type="button"
+						class="btn btn-secondary"
+						href="/admin/product/edit/${product.productId}">Cập nhật</a> <a
+						type="button" class="btn btn-danger"
+						href="/admin/product/remove/${product.productId}">Xóa</a></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
+<style>
+.image-container {
+	position: relative;
 }
 
-var randomString = generateRandomString();
+.delete-button {
+	position: absolute;
+	top: -10px;
+	right: -5px;
+	background: red;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+</style>
+<script type="text/javascript">
+	function generateRandomString() {
+		var randomString = '';
+		var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		var charactersLength = characters.length;
+		for (var i = 0; i < 8; i++) {
+			randomString += characters.charAt(Math.floor(Math.random()
+					* charactersLength));
+		}
 
-document.getElementById('productId').value = randomString;
+		var currentTimeMillis = new Date().getTime();
 
-	$(document).ready(function() {
-		$('#formProduct').submit(function(event) {
-			event.preventDefault(); 
+		var finalString = randomString + currentTimeMillis.toString();
 
-			// Lấy dữ liệu từ form
-			var formData = $(this).serialize();
+		return finalString;
+	}
 
-			$.ajax({
-				type : 'POST',
-				url : '/admin/product',
-				data : formData,
-				success : function(data) {
-					if (data == 'success') {
-						Swal
-						.fire({
-							icon: 'success',
-							title: 'Thêm thành công',
-							text: "Sản phẩm đã được thêm vào hệ thống !",
-							showConfirmButton: true,
-							timer: 1500
-						});
-						console.log(formData);
-					} else {
-						$("#productNameError").html(data.productName);
-						$("#categoryProductError").html(data.categoryProduct);
-						$("#manufacturerProductError").html(data.manufacturerProduct);
-						$("#quantityInStockError").html(data.quantityInStock);
-						$("#priceError").html(data.price);
-						Swal
-						.fire({
-							icon: 'error',
-							title: 'Thêm sản phẩm thất bại',
-							text: "Vui lòng kiểm tra lại thông tin !",
-							showConfirmButton: true,
-							timer: 1500
-						});
-						console.log(data)
-					}
-				},
-				error : function(xhr, status, error) {
-					console.log('Ajax errors');
-				}
-			});
-		});
-	});
+	var randomString = generateRandomString();
+
+	document.getElementById('productId').value = randomString;
 </script>

@@ -7,9 +7,9 @@ import com.art.Entities.Product.Image;
 public interface ImageDAO extends JpaRepository<Image, Integer>{
 
 	
-//	@SuppressWarnings("unchecked")
-//	// Thêm hoặc cập nhật một hình ảnh
-//	Image save(Image image);
+	@SuppressWarnings("unchecked")
+	// Thêm hoặc cập nhật một hình ảnh
+	Image save(Image image);
 //	
 //	// Xóa một hình ảnh dựa trên ID
 //	void deleteById(int imageId);

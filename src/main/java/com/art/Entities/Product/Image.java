@@ -25,8 +25,8 @@ public class Image {
 
 	@Column
 	private String image;
-	
-	@JsonBackReference
+
+	@JsonBackReference("productImageReference")
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.tags.shaded.org.apache.bcel.generic.I2F;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,17 +15,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.art.DAO.Product.CategoryDAO;
+import com.art.DAO.Product.DetailDescriptionDAO;
+import com.art.DAO.Product.ImageDAO;
 import com.art.DAO.Product.ManufacturerDAO;
 import com.art.DAO.Product.ProductDAO;
 import com.art.Entities.Product.Category;
+import com.art.Entities.Product.DetailDescription;
+import com.art.Entities.Product.Image;
 import com.art.Entities.Product.Manufacturer;
 import com.art.Entities.Product.Product;
+import com.art.service.ParamService;
+import com.art.service.SessionService;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
+@MultipartConfig(maxFileSize = 99999999, maxRequestSize = 99999999)
 @Controller
 @RequestMapping("/admin")
 public class productController {
@@ -33,10 +46,17 @@ public class productController {
 	@Autowired
 	ManufacturerDAO mnDAO;
 	@Autowired
-	
 	ProductDAO pdDAO;
 	@Autowired
 	HttpServletResponse response;
+	@Autowired
+	ImageDAO imgDao;
+	@Autowired
+	ParamService paramService;
+	@Autowired
+	SessionService sessionService;
+	@Autowired
+	DetailDescriptionDAO detailDescriptionDAO;
 
 	@ModelAttribute("categoriesList")
 	public Map<Category, String> getCategories() {
@@ -64,23 +84,81 @@ public class productController {
 		model.addAttribute("views", "product-form");
 		model.addAttribute("title", "Quản lí sản phẩm");
 		model.addAttribute("typeButton", "Thêm");
+		model.addAttribute("products", pdDAO.findAll());
 
 		return "admin/index";
 	}
 
 	@PostMapping("/product")
-	public ResponseEntity<?> createProduct(@Valid @ModelAttribute("pd") Product product, BindingResult result) {
+	public ResponseEntity<?> createProduct(@Valid @ModelAttribute("pd") Product product, BindingResult result,
+			@RequestParam("listImage") MultipartFile[] listImage, @RequestParam("descriptions") String descriptions) {
+
+		Map<String, String> errors = new HashMap<>();
+		System.out.println(descriptions);
+		if (descriptions.length()==32) {
+			errors.put("detailDecription", "Vui lòng nhập ít nhất 1 mô tả");
+		}
+//		Gson gson = new Gson();
+//		// Xử lý dữ liệu mô tả
+//		// Sử dụng TypeToken để chuyển đổi chuỗi JSON thành danh sách các đối tượng Map
+//		List<Map<String, String>> list = gson.fromJson(descriptions, new TypeToken<List<Map<String, String>>>() {
+//		}.getType());
+//
+//		// In ra danh sách
+//		for (Map<String, String> map : list) {
+//			System.out.println(123);
+//			System.out.println(map.get("tieuDe"));
+//			System.out.println(map.get("description"));
+//		}
+
+		for (MultipartFile image : listImage) {
+			if (!image.isEmpty()) {
+				System.out.println(image.getOriginalFilename());
+			} else {
+				errors.put("image", "Vui lòng chọn ít nhất 1 ảnh");
+			}
+		}
 		if (result.hasErrors()) {
 			// Trả lỗi về Json
-			Map<String, String> errors = new HashMap<>();
 			for (FieldError error : result.getFieldErrors()) {
 				errors.put(error.getField(), error.getDefaultMessage());
 			}
 			return ResponseEntity.ok(errors);
-		} else {
-			pdDAO.save(product);
 		}
 
+		if (errors.isEmpty()) {
+			try {
+				product.setUser(sessionService.get("userLogin"));
+				pdDAO.save(product);
+			} catch (Exception e) {
+				// TODO: handle exception
+				return ResponseEntity.ok("fail");
+			}
+			for (MultipartFile img : listImage) {
+				Image image = new Image();
+				image.setImage(paramService.save(img, "images/products").getName());
+				image.setProduct(product);
+				imgDao.save(image);
+			}
+
+			Gson gson = new Gson();
+			List<Map<String, String>> list = gson.fromJson(descriptions, new TypeToken<List<Map<String, String>>>() {
+			}.getType());
+
+			for (Map<String, String> map : list) {
+				System.out.println(map.values());
+			}
+			for (Map<String, String> map : list) {
+
+				DetailDescription detailDescription = new DetailDescription();
+				detailDescription.setTile((map.get("tieuDe")));
+				detailDescription.setDescription(map.get("description"));
+				detailDescription.setProduct(product);
+
+				detailDescriptionDAO.save(detailDescription);
+			}
+
+		}
 		return ResponseEntity.ok("success");
 	}
 
