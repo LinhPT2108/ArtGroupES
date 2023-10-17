@@ -10,6 +10,9 @@
 		<thead>
 			<tr>
 				<th>STT</th>
+				<th>Mã sản phẩm</th>
+				<th>Hãng sản xuất</th>
+				<th>Loại sản phẩm</th>
 				<th>Tên sản phẩm</th>
 				<th>Số lượt bán</th>
 			</tr>
@@ -17,7 +20,10 @@
 		<tbody>
 			<c:forEach var="bestSeller" items="${bestSellers}" varStatus="loop">
 				<tr>
-					<td>${loop.index +1 }</td>
+					<td>${loop.index }</td>
+					<td>${bestSeller[0].productId }</td>
+					<td>${bestSeller[0].manufacturerProduct.manufacturerName }</td>
+					<td>${bestSeller[0].categoryProduct.categoryName }</td>
 					<td>${bestSeller[1]}</td>
 					<td>${bestSeller[2]}</td>
 				</tr>

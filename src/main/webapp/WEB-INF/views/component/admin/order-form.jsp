@@ -9,11 +9,12 @@
 	<table id="statisticalTable" class="table table-hover">
 		<thead>
 			<tr>
-				<th>ID</th>
-				<th>UserName</th>
-				<th>CreatedDate</th>
-				<th>Total</th>
-				<th>Note</th>
+				<th>STT</th>
+				<th>Họ tên</th>
+				<th>Ngày mua</th>
+				<th>Tổng tiền</th>
+				<th>Trạng thái</th>
+				<th>Ghi chú</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -26,7 +27,7 @@
 					<td><fmt:setLocale value="vi_VN" /> <fmt:formatNumber
 							value="${item.totalAmount}" type="currency" currencyCode="VND"
 							maxFractionDigits="0" minFractionDigits="0" /></td>
-
+					<td>${item.status==1?'Đang xử lý':item.status==2?'Đang giao hàng':'Giao hàng thành công' }</td>
 					<td>${item.note}</td>
 				</tr>
 			</c:forEach>
