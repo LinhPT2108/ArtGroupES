@@ -68,7 +68,7 @@ $(function () {
       show: true,
       min: 0,
       max: 400,
-      tickAmount: 4,
+      tickAmount: 8,
       labels: {
         style: {
           cssClass: "grey--text lighten-2--text fill-color",

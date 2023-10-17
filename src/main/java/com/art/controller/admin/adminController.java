@@ -14,5 +14,4 @@ public class adminController {
 		model.addAttribute("title", "Trang chủ");
 		return "admin/index";
 	}
-
 }
