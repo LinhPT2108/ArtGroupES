@@ -35,28 +35,28 @@ public class categoryController {
 	@Autowired
 	SessionService sessionService;
 
-
-
 	@GetMapping("/category")
 	public String category(@ModelAttribute("ct") Category ct, Model model) {
-
 		model.addAttribute("views", "category-form");
 		model.addAttribute("title", "Phân loại sản phẩm");
-		model.addAttribute("typeButton", "Thêm");
-
 		return "admin/index";
+	}
+
+	@ModelAttribute("cts")
+	public List<Category> getUsercustoms() {
+		return caDao.findAll();
 	}
 
 	@RequestMapping("/category/edit/{categoryId}")
 	public String edit(@ModelAttribute("ct") Category ct, Model model, @PathVariable("categoryId") Integer categoryId) {
-		
-		System.out.println(categoryId);
+		model.addAttribute("views", "category-form");
+		model.addAttribute("title", "Phân loại sản phẩm");
+
 		ct = caDao.findById(categoryId).get();
-		System.out.println(ct + "abc");
-		model.addAttribute("categories", ct);
-		List<Category> items = caDao.findAll();
-		model.addAttribute("categories", ct);
-		return "redirect:/admin/category";
+		model.addAttribute("ct", ct);
+		List<Category> cts = caDao.findAll();
+		model.addAttribute("cts", cts);
+		return "admin/index";
 	}
 
 	@PostMapping("/category/create")
@@ -67,9 +67,27 @@ public class categoryController {
 		return "redirect:/admin/category";
 	}
 
-	@ModelAttribute("cts")
-	public List<Category> getUsercustoms() {
-		return caDao.findAll();
+	@PostMapping("/category/update")
+	public String update(@ModelAttribute("ct") Category ct) {
+
+		UserCustom user = sessionService.get("userLogin");
+		ct.setUser(user);
+		categoryReponsitory.save(ct);
+		return "redirect:/admin/category";
+	}
+
+	@RequestMapping("/category/delete/{categoryId}")
+	public String create(@ModelAttribute("ct") Category ct, @PathVariable("categoryId") Integer categoryId,
+			Model model) {
+		model.addAttribute("views", "category-form");
+		model.addAttribute("title", "Phân loại sản phẩm");
+
+		ct = caDao.findById(categoryId).get();
+		model.addAttribute("ct", ct);
+		List<Category> cts = caDao.findAll();
+		model.addAttribute("cts", cts);
+		categoryReponsitory.deleteById(categoryId);
+		return "redirect:/admin/category";
 	}
 
 }

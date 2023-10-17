@@ -4,8 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <div class="site-category">
-	<form:form cssClass="row g-3 needs-validation"
-		action="/admin/category/create" modelAttribute="ct" method="POST">
+	<form:form cssClass="row g-3 needs-validation" action="/admin/category"
+		modelAttribute="ct" method="POST">
 		<div class="col-xs-12 col-md-7">
 			<div class="row">
 
@@ -13,7 +13,7 @@
 				<div class="col-12 mb-3">
 					<form:label path="categoryName" cssClass="form-label">Loại sản phẩm</form:label>
 					<form:input type="text" cssClass="form-control" path="categoryName"
-						autocomplete="none"></form:input>
+						autocomplete="none" placeholder="Vui lòng nhập loại sản phẩm"></form:input>
 				</div>
 
 				<div class="col-md-6 mb-3">
@@ -26,14 +26,16 @@
 				</div>
 			</div>
 			<div class="col-12">
-				<form:button class="btn btn-primary">${typeButton}</form:button>
-					<form:button formmethod="post"
-					formaction="/admin/category/${categoryId}" class="btn btn-warning">Cập nhật</form:button>
+		
+				<button formaction="/admin/category/create" class="btn btn-primary">Create</button>
+				<button formaction="/admin/category/update" class="btn btn-warning">Update</button>
+				<button formaction="/admin/category/delete/${categoryId}" class="btn btn-danger">Delete</button>
+				<a href="/admin/category" class="btn btn-info">Reset</a>
 			</div>
 		</div>
 	</form:form>
 	<hr>
-	<table border="1" style="width: 50%">
+	<table border="2" style="width: 60%" class="table table-bordered border-primary">
 		<tr>
 			<th>ID</th>
 			<th>Loại sản phẩm</th>

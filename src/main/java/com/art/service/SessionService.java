@@ -1,6 +1,5 @@
 package com.art.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +13,8 @@ public class SessionService {
 	/**
 	 * Đọc giá trị của attribute trong session
 	 * 
-	 * @param name tên attribute
+	 * @param name   tên attribute
+	 * @param string
 	 * @return giá trị đọc được hoặc null nếu không tồn tại
 	 */
 	@SuppressWarnings("unchecked")
@@ -40,4 +40,8 @@ public class SessionService {
 	public void remove(String name) {
 		session.removeAttribute(name);
 	}
+
+	
+	
+	
 }
