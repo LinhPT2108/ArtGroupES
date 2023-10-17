@@ -1367,6 +1367,53 @@ VALUES  ( '2023-10-02' , -- date - date
         );
 GO 
 
+INSERT INTO dbo.promotional_details
+        ( discounted_price ,
+          flash_sale_id ,
+          status ,
+          product_id
+        )
+VALUES  ( 2000000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          '32V35KP'  -- product_id - varchar(255)
+        ),
+		( 8490000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          '50UQ7550PSF'  -- product_id - varchar(255)
+        ),
+		( 12990000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          '65NANO76SQA'  -- product_id - varchar(255)
+        ),
+		( 13000000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          'AR13CYFAAWKNSV'  -- product_id - varchar(255)
+        ),
+		( 20000000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          'GR-B256JDS'  -- product_id - varchar(255)
+        ),
+		( 10999000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          'MSAGA-10CRDN8'  -- product_id - varchar(255)
+        ),
+		( 7250000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          'UA43BU8000'  -- product_id - varchar(255)
+        ),
+		( 17700000.0 , -- discounted_price - float
+          3 , -- flash_sale_id - int
+          0 , -- status - bit
+          'ZTNQ18GPLA0'  -- product_id - varchar(255)
+        );
+GO
 
 
 --SELECT * FROM dbo.invoice_detail
