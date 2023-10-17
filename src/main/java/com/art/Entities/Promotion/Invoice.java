@@ -45,9 +45,6 @@ public class Invoice {
 	
 	@Column
 	private int status;
-
-	@Column
-	private int status;
 	
 	@Column
 	@Nationalized

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.art.Entities.Promotion.Invoice;
+import com.art.Entities.User.UserCustom;
 
 public interface InvoiceDAO extends JpaRepository<Invoice, Integer> {
 
