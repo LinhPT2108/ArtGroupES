@@ -57,10 +57,8 @@
 <link rel="stylesheet"
 	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick-theme.css"/>">
 
-<%-- <link rel="stylesheet"
-	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">  --%>
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">  
 </head>
 <body class="js">
 
@@ -239,8 +237,8 @@
 									<c:if test="${c.del }">
 										<c:if test="${i.index<=5 }">
 											<li class="nav-item"><a
-												class="nav-link link-product-highlight" data-toggle="tab"
-												href="#${c.categoryId }" role="tab">${c.categoryName }</a></li>
+												class="nav-link link-product-highlight ${i.index== 0?'active':'' }" data-toggle="tab"
+												href="#category${c.categoryId }" role="tab">${c.categoryName }</a></li>
 										</c:if>
 
 									</c:if>
@@ -252,15 +250,14 @@
 							<!-- Start Single Tab -->
 
 							<c:forEach items="${listCategories }" var="c" varStatus="i">
-							<c:set var="countProduct" value="0"></c:set>
+								<c:set var="countProduct" value="0"></c:set>
 								<c:if test="${i.index<=5 }">
 									<div
-										class="tab-pane fade tab-product-highlight ${i.index==0?'active show':'' }"
-										id="${c.categoryId }" role="tabpanel">
+										class="tab-pane fade tab-product-highlight ${i.index== 0?'active show':'' }"
+										id="category${c.categoryId }" role="tabpanel">
 										<div class="tab-single">
 											<div class="row">
 												<c:forEach items="${listProduct }" var="p" varStatus="ic">
-													<%-- <c:if test="${ic.index<=7 }"> --%>
 													<c:if test="${!p.del}">
 														<c:if
 															test="${c.categoryId == p.categoryProduct.categoryId }">
@@ -348,7 +345,7 @@
 																	</div>
 																</div>
 															</c:if>
-															<%-- </c:if> --%>
+
 														</c:if>
 													</c:if>
 												</c:forEach>
@@ -392,7 +389,9 @@
 														<img src="images/products/${p.productImage[0].image }"
 															alt="${p.productName }"
 															style="height: 115px !important; width: 100% !important">
-														<a href="/add-to-cart/${p.productId }" class="buy"><i
+														<a href="/add-to-cart/${p.productId }"
+															data-product-id="${p.productId}"
+															data-user-id="${userLogin.userId}" class="buy addToCart"><i
 															class="fa fa-shopping-bag"></i></a>
 													</div>
 												</div>
@@ -719,7 +718,7 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input type="text" name="quant[1]" class="input-number"
+										<input type="text" name="quant[1]" class="input-number qty"
 											data-min="1" data-max="1000" value="1">
 										<div class="button plus">
 											<button type="button" class="btn btn-primary btn-number"

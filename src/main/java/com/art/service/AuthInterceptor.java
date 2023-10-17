@@ -57,7 +57,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 	private boolean hasAccess(UserCustom user, String requestURI) {
 		// Thêm logic kiểm tra quyền truy cập của người dùng ở đây
 		// Ví dụ: Kiểm tra vai trò của người dùng và đường dẫn yêu cầu
-		if (user.getRoleName().getRoleName().equals("admin") && !requestURI.startsWith("/checkout")) {
+		if (user.getRoleName().getRoleName().equals("admin") && !requestURI.startsWith("/checkout") && !requestURI.contains("cart")) {
 			return true;
 		} else if (user.getRoleName().getRoleName().equals("user") && !requestURI.contains("/admin")) {
 			return true;

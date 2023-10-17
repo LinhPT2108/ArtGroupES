@@ -7,12 +7,11 @@ $(document).ready(function() {
 	$('.nav-link.link-product-highlight').on('click', function() {
 		// Lấy id của tab-pane tương ứng
 		var tabId = $(this).attr('href').substring(1);
-
 		// Xóa lớp "showw" và "active" khỏi tất cả các tab-pane
-		$('.tab-pane').removeClass('showw active');
+		$('.tab-pane').removeClass('show active');
 
 		// Thêm lớp "showw" và "active" vào tab-pane tương ứng
-		$('#' + tabId).addClass('showw active');
+		$('#' + tabId).addClass('show active');
 	});
 
 	$('.quickViews').click(function() {
@@ -50,14 +49,13 @@ $(document).ready(function() {
 					console.log(priceDiscounted)
 
 					if (priceDiscounted == '') {
-						$('#review-product-price').html('<h3 id="originalPrice" class="ml-3 text-danger" > <fmt:formatNumber' +
-							'type = "number" pattern = "###,###,###"' +
-							' value = "' + originalPrice + '" /> đ</h3 > ')
+						$('#review-product-price').html('<h3 id="originalPrice" class="ml-3 text-danger" >'
+							+ originalPrice + ' đ</h3 > ')
 
 					} else {
 
 						$('#review-product-price').html('<h3 id="originalPrice" class=""><del>' + originalPrice + ' đ</del></h3>' +
-							'<h3 class="ml-3 text-danger" id="discountedPrice">'+priceDiscounted+'đ</h3>')
+							'<h3 class="ml-3 text-danger" id="discountedPrice">' + priceDiscounted + 'đ</h3>')
 					}
 				}
 			},

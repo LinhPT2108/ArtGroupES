@@ -103,7 +103,7 @@ public class cartController {
 			if (cart.getProduct().getProductId().equals(productID)) {
 				Cart cartPlus = cart;
 				cartPlus.setCartId(cart.getCartId());
-				cartPlus.setQuantity(cart.getQuantity() + 1);
+				cartPlus.setQuantity(cart.getQuantity() + quantityInCart);
 				System.out.println(cartPlus.getCartId());
 				caDAO.save(cartPlus);
 				List<Cart> listC = caDAO.findByUser(uLogin);

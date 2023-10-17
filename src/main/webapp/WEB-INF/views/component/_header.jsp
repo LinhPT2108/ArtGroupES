@@ -113,14 +113,13 @@
 							<a href="/account/profile" class="single-icon"><i
 								class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							<!-- Shopping Item -->
-							<div class="shopping-item p-0" style="right: 40px">
+							<div class="shopping-item p-0" style="right: 40px; max-width: 250px; overflow-y: auto">
 								<ul class="list-group list-group-flush">
-
 									<c:choose>
 										<c:when test="${userLogin!=null }">
 											<li class="list-group-item"><a href="/account/profile">Thông
 													tin tài khoản</a></li>
-											<li class="list-group-item"><a href="/account/Invoice">Đơn
+											<li class="list-group-item"><a href="/account/purchased-order/3">Đơn
 													mua</a></li>
 											<li class="list-group-item"><a href="#">Đổi mật khẩu</a></li>
 											<li class="list-group-item"><a href="/account/logout">Đăng
@@ -159,11 +158,12 @@
 													<div
 														class="nothing d-flex flex-column align-items-center justify-content-center">
 														<i class="bi bi-cart-x display-1"></i> <span>Chưa
-															có sản phẩm</span>
+															 có sản phẩm</span>
 													</div>
 												</c:when>
 												<c:otherwise>
-													<li><c:forEach var="cart" items="${carts}">
+													<c:forEach var="cart" items="${carts}">
+														<li>
 															<div class="mb-2 productInCart" id="${cart.cartId}">
 																<a class="cart-img"
 																	href="/products/${cart.product.productId }"><img
@@ -214,7 +214,8 @@
 																</p>
 
 															</div>
-														</c:forEach></li>
+														</li>
+													</c:forEach>
 												</c:otherwise>
 											</c:choose>
 										</ul>

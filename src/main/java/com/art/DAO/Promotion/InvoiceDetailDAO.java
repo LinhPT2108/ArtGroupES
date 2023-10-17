@@ -1,12 +1,7 @@
 package com.art.DAO.Promotion;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.art.Entities.Product.Product;
-import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.Promotion.InvoiceDetail;
 
 public interface InvoiceDetailDAO extends JpaRepository<InvoiceDetail, Integer> {

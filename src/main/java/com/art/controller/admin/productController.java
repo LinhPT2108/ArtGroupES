@@ -33,6 +33,7 @@ public class productController {
 	@Autowired
 	ManufacturerDAO mnDAO;
 	@Autowired
+	
 	ProductDAO pdDAO;
 	@Autowired
 	HttpServletResponse response;

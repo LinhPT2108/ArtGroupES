@@ -1,12 +1,8 @@
 package com.art.DAO.Product;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Product.Image;
-import com.art.Entities.Product.Product;
 
 public interface ImageDAO extends JpaRepository<Image, Integer>{
 

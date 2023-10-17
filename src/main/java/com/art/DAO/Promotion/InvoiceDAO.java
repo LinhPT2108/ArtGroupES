@@ -1,15 +1,15 @@
 package com.art.DAO.Promotion;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.User.UserCustom;
 
-public interface InvoiceDAO extends JpaRepository<Invoice, Integer>{
+public interface InvoiceDAO extends JpaRepository<Invoice, Integer> {
 
 //	@SuppressWarnings("unchecked")
 //	// Thêm hoặc cập nhật một Invoice
@@ -25,9 +25,13 @@ public interface InvoiceDAO extends JpaRepository<Invoice, Integer>{
 //    // Kiểm tra sự tồn tại của FlashSale theo ID
 //    boolean existsById(int flashSaleId);
 //    
-//	// tìm kiếm hóa đơn theo người dùng
-//	List<Invoice> findByUser(UserCustom user);
-//
+	// tìm kiếm hóa đơn theo người dùng
+	List<Invoice> findByUser(UserCustom user);
+
+	//hóa đơn theo người dùng và trạng thái hóa đơn
+	
+	Page<Invoice> findByUserAndStatus(UserCustom user, int Status,Pageable pageable);
+//	
 //	// Tìm kiếm các hóa đơn có ngày nằm trong khoảng từ một ngày bắt đầu đến một ngày kết thúc
 //    List<Invoice> findByInvoiceDateBetween(Date startDate, Date endDate);
 //

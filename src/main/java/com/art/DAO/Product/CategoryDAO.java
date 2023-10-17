@@ -1,13 +1,8 @@
 package com.art.DAO.Product;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.art.Entities.Activity.WishList;
 import com.art.Entities.Product.Category;
-import com.art.Entities.User.UserCustom;
 
 public interface CategoryDAO extends JpaRepository<Category, Integer> {
 

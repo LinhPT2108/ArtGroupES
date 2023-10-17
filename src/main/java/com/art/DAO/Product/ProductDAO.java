@@ -1,8 +1,5 @@
 package com.art.DAO.Product;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Product.Product;

@@ -68,7 +68,8 @@
 	<link rel="stylesheet" href="../../css/purchased-order.css">
 </c:if>
 <link rel="stylesheet" href="../../css/profile.css">
-
+<link rel="stylesheet"
+	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />"> 
 </head>
 <body class="js">
 
@@ -146,11 +147,11 @@
 								aria-labelledby="headingTwo" data-parent="#accordion">
 								<div class="px-4">
 									<div class="list-group list-group-flush">
-										<a href="/account/purchased-order"
+										<a href="/account/purchased-order/3"
 											class="list-group-item list-group-item-action item-custom  item-custom-option">Hoàn
-											thành</a> <a href="#"
+											thành</a> <a href="/account/purchased-order/2"
 											class="list-group-item list-group-item-action item-custom item-custom-option">Đang
-											giao hàng</a> <a href="#"
+											giao hàng</a> <a href="/account/purchased-order/1"
 											class="list-group-item list-group-item-action item-custom item-custom-option">Đang
 											xử lí</a>
 									</div>
@@ -231,7 +232,9 @@
 		<script src="../../js/isotope.pkgd.js"></script>
 		<script src="../../js/filter.js"></script>
 	</c:if>
-
+<c:if test="${views =='purchasedOrder'}">
+		<script src="../../js/comment.js"></script>
+	</c:if>
 	<script>
 		var currentURL = window.location.pathname;
 		var allCollapses = document.querySelectorAll(".collapse");

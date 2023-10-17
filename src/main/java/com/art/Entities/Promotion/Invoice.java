@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Nationalized;
+
 import com.art.Entities.User.UserCustom;
 
 import jakarta.persistence.CascadeType;
@@ -29,7 +31,7 @@ public class Invoice {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name="userInvoice")
+	@JoinColumn(name = "userInvoice")
 	private UserCustom user;
 
 	@Column
@@ -37,6 +39,9 @@ public class Invoice {
 
 	@Column
 	private BigDecimal totalAmount;
+	
+	@Column
+	private int status;
 
 	@Column
 	private String note;

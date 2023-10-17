@@ -3,21 +3,13 @@ package com.art.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
 import com.art.DAO.Activity.CartDAO;
 import com.art.DAO.Promotion.FlashSaleDAO;
 import com.art.DAO.Promotion.PromotionalDetailsDAO;
-import com.art.DAO.User.UserCustomDAO;
 import com.art.Entities.Activity.Cart;
 import com.art.Entities.Promotion.FlashSale;
 import com.art.Entities.Promotion.PromotionalDetails;

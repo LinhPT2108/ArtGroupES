@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.art.DAO.Activity.CartDAO;
+import com.art.DAO.Promotion.InvoiceDAO;
+import com.art.DAO.Promotion.InvoiceDetailDAO;
 import com.art.DAO.User.InforAddressDAO;
 import com.art.DAO.User.UserCustomDAO;
 import com.art.Entities.Activity.Cart;
+import com.art.Entities.Activity.Comment;
+import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.User.InforAddress;
 import com.art.Entities.User.UserCustom;
 import com.art.service.CookieService;
@@ -44,14 +50,16 @@ public class accountController {
 	InforAddressDAO infDAO;
 	@Autowired
 	CookieService cookieService;
-
 	@Autowired
 	SessionService sessionService;
-
 	@Autowired
 	ParamService paramService;
 	@Autowired
 	CartDAO cartDAO;
+	@Autowired
+	InvoiceDAO ivDao;
+	@Autowired
+	InvoiceDetailDAO invoiceDetailDAO;
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -79,7 +87,7 @@ public class accountController {
 					System.out.println("đăng nhập thành công");
 					for (Cart c : cartDAO.findByUser(user)) {
 						System.out.println(c.getProduct().getProductId());
-						
+
 					}
 					sessionService.set("sizeInCart", cartDAO.findByUser(user).size());
 					sessionService.setCart(cartDAO.findByUser(user));
@@ -293,10 +301,26 @@ public class accountController {
 		return ResponseEntity.ok("success");
 	}
 
-	@GetMapping("/purchased-order")
-	public String purchasedOrder(Model model) {
-		model.addAttribute("title", "Đơn hàng đã hoàn thành");
+	@GetMapping("/purchased-order/{type}")
+	public String purchasedOrder(@ModelAttribute("cmt") Comment cmt, Model model, @PathVariable("type") int type,
+			@RequestParam("p") Optional<Integer> p) {
+		if (type == 1) {
+			model.addAttribute("title", "Đơn hàng đang đuọc xử lí");
+		} else if (type == 2) {
+			model.addAttribute("title", "Đơn hàng đang giao hàng");
+		} else {
+			model.addAttribute("title", "Đơn hàng đã hoàn thành");
+		}
 		model.addAttribute("views", "purchasedOrder");
+		UserCustom userID = sessionService.get("userLogin");
+		Sort sort = Sort.by(Direction.DESC, "invoiceDate");
+		Pageable pageable = PageRequest.of(p.orElse(0), 4, sort);
+		Page<Invoice> listInvoice = ivDao.findByUserAndStatus(userID, type, pageable);
+		System.out.println(listInvoice.getTotalElements());
+
+		model.addAttribute("sizeInvoice", listInvoice.getTotalElements());
+		model.addAttribute("listInvoice", listInvoice);
+		model.addAttribute("typeInvoice", type);
 		return "account";
 	}
 
