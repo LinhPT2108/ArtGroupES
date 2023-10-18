@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.tags.shaded.org.apache.bcel.generic.I2F;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,7 @@ import com.art.DAO.Activity.CartDAO;
 import com.art.DAO.Promotion.InvoiceDAO;
 import com.art.DAO.Promotion.InvoiceDetailDAO;
 import com.art.DAO.User.InforAddressDAO;
+import com.art.DAO.User.RoleDAO;
 import com.art.DAO.User.UserCustomDAO;
 import com.art.Entities.Activity.Cart;
 import com.art.Entities.Activity.Comment;
@@ -60,6 +62,8 @@ public class accountController {
 	InvoiceDAO ivDao;
 	@Autowired
 	InvoiceDetailDAO invoiceDetailDAO;
+	@Autowired
+	RoleDAO roleDAO;
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -113,8 +117,46 @@ public class accountController {
 	}
 
 	@GetMapping("/register")
-	public String regis() {
+	public String regis(@ModelAttribute("us") UserCustom us, Model model) {
+		model.addAttribute("title", "Đăng ký");
 		return "register";
+	}
+
+	@PostMapping("/register")
+	public ResponseEntity<?> register(@Valid @ModelAttribute("us") UserCustom us, BindingResult rs, Model model) {
+		System.out.println(us.toString());
+		String confirmPass = paramService.getString("confirmPassword", "");
+		Map<String, String> errors = new HashMap<>();
+		System.out.println(confirmPass);
+		if (!confirmPass.equals(us.getPassword())) {
+			errors.put("confirmPassword", "Xác nhận mật khẩu không chính xác");
+		}
+
+		if (!usDAO.findByEmail(us.getEmail()).isEmpty()) {
+			errors.put("email", "Email đã tồn tại");
+		}
+
+		if (rs.hasErrors()) {
+			for (FieldError error : rs.getFieldErrors()) {
+				errors.put(error.getField(), error.getDefaultMessage());
+			}
+			return ResponseEntity.ok(errors);
+		}
+
+		if (!errors.isEmpty()) {
+			return ResponseEntity.ok(errors);
+		} else {
+			us.setDel(true);
+			us.setRoleName(roleDAO.getById("user"));
+			try {
+				usDAO.save(us);
+			} catch (Exception e) {
+				// TODO: handle exception
+				return ResponseEntity.ok("fail");
+			}
+		}
+
+		return ResponseEntity.ok("success");
 	}
 
 	@GetMapping(value = "/profile")
@@ -308,8 +350,10 @@ public class accountController {
 			model.addAttribute("title", "Đơn hàng đang đuọc xử lí");
 		} else if (type == 2) {
 			model.addAttribute("title", "Đơn hàng đang giao hàng");
-		} else {
+		} else if(type==3){
 			model.addAttribute("title", "Đơn hàng đã hoàn thành");
+		}else {
+			model.addAttribute("title", "Đơn hàng hủy");
 		}
 		model.addAttribute("views", "purchasedOrder");
 		UserCustom userID = sessionService.get("userLogin");
@@ -322,6 +366,19 @@ public class accountController {
 		model.addAttribute("listInvoice", listInvoice);
 		model.addAttribute("typeInvoice", type);
 		return "account";
+	}
+
+	@PostMapping("/purchased-order/remove/{id}")
+	public ResponseEntity<?> removeInvoice(@PathVariable("id") int invoiceId) {
+		try {
+			Invoice Invoice = ivDao.getById(invoiceId);
+			Invoice.setStatus(-1);
+			ivDao.save(Invoice);
+			return ResponseEntity.ok("success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.ok("fail");
+		}
 	}
 
 	@GetMapping("/wish-list")

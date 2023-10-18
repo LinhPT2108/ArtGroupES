@@ -106,6 +106,8 @@ public class StatisticalController {
 		model.addAttribute("views", "best-seller-form");
 		model.addAttribute("title", "Thống kê sản phẩm bán chạy");
 
+		
+		//sản phẩm bán chạy
 		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
 		
 		return "admin/index";

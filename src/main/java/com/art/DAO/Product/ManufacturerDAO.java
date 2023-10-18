@@ -1,5 +1,7 @@
 package com.art.DAO.Product;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Product.Manufacturer;
@@ -20,7 +22,7 @@ public interface ManufacturerDAO extends JpaRepository<Manufacturer, Integer>{
 //	List<Manufacturer> findByManufacturerName(String manufacturerName);
 //
 //	// Lấy tất cả nhà sản xuất với trạng thái xóa
-//    List<Manufacturer> findByDel(boolean isDel);
+    List<Manufacturer> findByDel(boolean isDel);
 //
 //    // Lấy tất cả nhà sản xuất theo người tạo
 //    List<Manufacturer> findByUser(UserCustom user);

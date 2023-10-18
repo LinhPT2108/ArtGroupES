@@ -58,7 +58,7 @@
 	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick-theme.css"/>">
 
 <link rel="stylesheet"
-	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">  
+	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">
 </head>
 <body class="js">
 
@@ -236,8 +236,9 @@
 									<c:if test="${c.del }">
 										<c:if test="${i.index<=5 }">
 											<li class="nav-item"><a
-												class="nav-link link-product-highlight ${i.index== 0?'active':'' }" data-toggle="tab"
-												href="#category${c.categoryId }" role="tab">${c.categoryName }</a></li>
+												class="nav-link link-product-highlight ${i.index== 0?'active':'' }"
+												data-toggle="tab" href="#category${c.categoryId }"
+												role="tab">${c.categoryName }</a></li>
 										</c:if>
 
 									</c:if>

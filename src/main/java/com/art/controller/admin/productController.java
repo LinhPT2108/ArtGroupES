@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.tags.shaded.org.apache.bcel.generic.I2F;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,7 +37,7 @@ import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
-@MultipartConfig(maxFileSize = 99999999, maxRequestSize = 99999999)
+@MultipartConfig(maxFileSize = 999999999, maxRequestSize = 999999999)
 @Controller
 @RequestMapping("/admin")
 public class productController {
@@ -60,7 +60,7 @@ public class productController {
 
 	@ModelAttribute("categoriesList")
 	public Map<Category, String> getCategories() {
-		List<Category> listCate = caDAO.findAll();
+		List<Category> listCate = caDAO.findByDel(true);
 		Map<Category, String> map = new HashMap<>();
 		for (Category c : listCate) {
 			map.put(c, c.getCategoryName());
@@ -70,7 +70,7 @@ public class productController {
 
 	@ModelAttribute("manufacturerList")
 	public Map<Manufacturer, String> getManufacturers() {
-		List<Manufacturer> listManu = mnDAO.findAll();
+		List<Manufacturer> listManu = mnDAO.findByDel(true);
 		Map<Manufacturer, String> map = new HashMap<>();
 		for (Manufacturer c : listManu) {
 			map.put(c, c.getManufacturerName());
@@ -84,7 +84,7 @@ public class productController {
 		model.addAttribute("views", "product-form");
 		model.addAttribute("title", "Quản lí sản phẩm");
 		model.addAttribute("typeButton", "Thêm");
-		model.addAttribute("products", pdDAO.findAll());
+		model.addAttribute("products", pdDAO.findByDel(false));
 
 		return "admin/index";
 	}
@@ -95,7 +95,7 @@ public class productController {
 
 		Map<String, String> errors = new HashMap<>();
 		System.out.println(descriptions);
-		if (descriptions.length()==32) {
+		if (descriptions.length() == 32 || descriptions.length() == 2) {
 			errors.put("detailDecription", "Vui lòng nhập ít nhất 1 mô tả");
 		}
 //		Gson gson = new Gson();
@@ -160,6 +160,24 @@ public class productController {
 
 		}
 		return ResponseEntity.ok("success");
+	}
+
+	@PostMapping("/product/remove/{id}")
+	public ResponseEntity<?> removeProduct(@PathVariable("id") String id) {
+		try {
+			if (pdDAO.getById(id) == null) {
+				return ResponseEntity.ok("fail");
+			} else {
+				Product pd = pdDAO.getById(id);
+				pd.setDel(true);
+				pdDAO.save(pd);
+				return ResponseEntity.ok("success");
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.ok("fail");
+		}
 	}
 
 }

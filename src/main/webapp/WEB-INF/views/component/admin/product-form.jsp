@@ -50,6 +50,7 @@
 				</div>
 				<div class="col-12 mb-3">
 					<form:label path="" cssClass="form-label mb-3">Thông tin chi tiết:</form:label>
+					<small class="text-danger fst-italic" id="detailDecriptionError"></small>
 					<div class="describe row description-container">
 						<div class="col-xs-12 col-md-6 mb-3 ">
 							<div class=" border border-1 p-3 position-relative">
@@ -64,7 +65,8 @@
 								</div>
 								<div class="form-floating">
 									<textarea class="form-control"
-										placeholder="Leave a comment here" style="height: 100px;" id="noidung1"></textarea>
+										placeholder="Leave a comment here" style="height: 100px;"
+										id="noidung1"></textarea>
 									<label path="">Nội dung:</label>
 								</div>
 							</div>
@@ -119,7 +121,7 @@
 							<div class="text">
 								<span>Tải ảnh lên</span>
 							</div> <input type="file" name="listImage" id="listImage" multiple
-							accept=".jpg,.jpeg,.png">
+							accept=".jpg,.jpeg,.png" onchange="checkFileSize(this)">
 					</label></li>
 					<li class="" id="listImg"></li>
 				</ul>
@@ -154,8 +156,8 @@
 							pattern="dd/MM/yyyy" /></td>
 					<td class="d-flex justify-content-between"><a type="button"
 						class="btn btn-secondary"
-						href="/admin/product/edit/${product.productId}">Cập nhật</a> <a
-						type="button" class="btn btn-danger"
+						href="/admin/product/edit/${product.productId}">Chỉnh sửa</a> <a
+						type="button" class="btn btn-danger btnDelProduct"
 						href="/admin/product/remove/${product.productId}">Xóa</a></td>
 				</tr>
 			</c:forEach>

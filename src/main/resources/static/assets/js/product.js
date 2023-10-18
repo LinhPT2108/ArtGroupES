@@ -31,30 +31,69 @@ function themMoTa() {
 	const addButton = document.querySelector(".button");
 	addButton.parentElement.insertBefore(newRow, addButton);
 }
+function checkFileSize(e) {
+	var file_list = e.files;
+	var totalSize = 0; // Tổng kích thước của tất cả các tệp
+
+	for (var i = 0; i < file_list.length; i++) {
+		var file = file_list[i];
+		var fileExtension = file.name.split('.')[file.name.split('.').length - 1].toLowerCase();
+		var iConvert;
+
+		if (file.size > (1024 * 1024)) {
+			iConvert = (file.size / (1024 * 1024)).toFixed(2); // Chuyển đổi thành MB
+		} else {
+			iConvert = (file.size / 1024).toFixed(2); // Chuyển đổi thành KB
+		}
+
+		totalSize += file.size;
+
+		txt = "File type: " + fileExtension + "\n";
+		txt += "Size: " + iConvert + (file.size > (1024 * 1024) ? " MB" : " KB") + "\n";
+	}
+
+	if (totalSize > 10 * 1024 * 1024) {
+		console.log('Vượt quá kích thước');
+		Swal.fire({
+			icon: 'warning',
+			title: 'Vượt quá kích thước',
+			text: "Vui lòng chọn ảnh kích thước lớn nhỏ hơn 10MB !",
+			showConfirmButton: true
+		});
+		e.value = null;
+	}
+}
+
 
 function layDuLieuMoTa() {
 	const moTaContainers = document.querySelectorAll(".description-container");
 	const moTaObjects = [];
 
 	moTaContainers.forEach((container, index) => {
-		const tieuDe = container.querySelector(`#tieude${index + 1}`).value;
-		const noiDung = container.querySelector(`#noidung${index + 1}`).value;
+		const tieuDe = container.querySelector(`#tieude${index + 1}`).value == null ? '' : container.querySelector(`#tieude${index + 1}`).value;
+		const noiDung = container.querySelector(`#noidung${index + 1}`).value == null ? '' : container.querySelector(`#noidung${index + 1}`).value;
 
-		const moTa = {
-			tieuDe: tieuDe,
-			description: noiDung
-		};
+		// Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
+		if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
+			const moTa = {
+				tieuDe: tieuDe,
+				description: noiDung
+			};
 
-		moTaObjects.push(moTa);
+			moTaObjects.push(moTa);
+		}
 	});
 
 	return moTaObjects;
 }
 
 
+
 function xoaMoTa(button) {
+	counter = counter - 1;
 	button.parentElement.parentElement.remove();
 }
+
 $(document).ready(function() {
 	const fileInput = $("#listImage");
 	const previewImages = $("#listImg");
@@ -114,7 +153,32 @@ $(document).ready(function() {
 							showConfirmButton: true,
 							timer: 1500
 						});
+
 					console.log(formData);
+					let timerInterval
+					Swal.fire({
+						title: 'Dữ liệu đang được thêm vào hệ thông!',
+						html: 'sẽ làm mới trang trong <b></b> mili giây.',
+						timer: 1500,
+						allowOutsideClick: false,
+						timerProgressBar: true,
+						didOpen: () => {
+							Swal.showLoading()
+							const b = Swal.getHtmlContainer().querySelector('b')
+							timerInterval = setInterval(() => {
+								b.textContent = Swal.getTimerLeft()
+							}, 100)
+						},
+						willClose: () => {
+							clearInterval(timerInterval)
+						}
+					}).then((result) => {
+						/* Read more about handling dismissals below */
+						if (result.dismiss === Swal.DismissReason.timer) {
+							console.log('I was closed by the timer')
+							location.reload();
+						}
+					})
 				} else {
 
 					$("#productNameError").html('');
@@ -122,13 +186,15 @@ $(document).ready(function() {
 					$("#manufacturerProductError").html('');
 					$("#quantityInStockError").html('');
 					$("#priceError").html('');
-					$('#imageError').html('')
+					$('#imageError').html('');
+					$('#detailDecriptionError').html('');
 					$("#productNameError").html(data.productName);
 					$("#categoryProductError").html(data.categoryProduct);
 					$("#manufacturerProductError").html(data.manufacturerProduct);
 					$("#quantityInStockError").html(data.quantityInStock);
 					$("#priceError").html(data.price);
-					$('#imageError').html(data.image)
+					$('#imageError').html(data.image);
+					$('#detailDecriptionError').html(data.detailDecription);
 					Swal.fire({
 						icon: 'error',
 						title: 'Thêm sản phẩm thất bại',
@@ -145,4 +211,57 @@ $(document).ready(function() {
 			}
 		});
 	});
+
+	$('.btnDelProduct').click(function(e) {
+		e.preventDefault();
+		console.log('del')
+		Swal.fire({
+			icon: 'info',
+			title: 'Bạn muốn xóa sản phẩm đã chọn ?',
+			text: 'Ấn OK để xóa !',
+			confirmButtonText: 'OK',
+			showCancelButton: true,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var hrefValue = $(this).attr("href");
+				$.ajax({
+					type: 'POST',
+					url: hrefValue,
+					success: function(resp) {
+						console.log(resp)
+						if (resp == 'success') {
+							Swal.fire({
+									icon: 'success',
+									title: 'Xóa thành công',
+									text: "Sản phẩm đã được xóa !",
+									showConfirmButton: true,
+									timer: 1500
+								});
+							location.reload();
+						} else if (resp == 'fail') {
+							Swal
+								.fire({
+									icon: 'error',
+									title: 'Xóa thất bại',
+									text: "Có lỗi xảy ra, vui lòng thử lại !",
+									showConfirmButton: false,
+									timer: 1500
+								});
+						}
+					},
+					error: function(xhr,
+						status, error) {
+						Swal
+							.fire({
+								icon: 'error',
+								title: 'Xoa thất bại',
+								text: "Có lỗi xảy ra, vui lòng thử lại !",
+								showConfirmButton: false,
+								timer: 1500
+							});
+					}
+				});
+			}
+		})
+	})
 });

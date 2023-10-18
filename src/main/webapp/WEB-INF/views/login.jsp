@@ -91,10 +91,10 @@
 					<small class="text-danger">${mess  }</small>
 				</div>
 				<button class="enter" type="submit">ĐĂNG NHẬP</button>
-				<a href="/forgot-pass"
+				<a href="/account/forgot-pass"
 					class="text-muted text-decoration forgot-pass">Bạn quên mật
 					khẩu ?</a> <span>BẠN CHƯA CÓ TÀI KHOẢN? HÃY ĐĂNG KÝ <a
-					href="/register" class="register"><u>TẠI ĐÂY.</u></a></span>
+					href="/account/register" class="register"><u>TẠI ĐÂY.</u></a></span>
 			</div>
 		</form>
 	</div>

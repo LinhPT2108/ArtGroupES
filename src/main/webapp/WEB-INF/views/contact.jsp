@@ -259,6 +259,6 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
-
+	<script src="js/cart-script.js"></script>
 </body>
 </html>
