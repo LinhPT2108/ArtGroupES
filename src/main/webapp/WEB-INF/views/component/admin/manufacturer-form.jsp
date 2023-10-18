@@ -13,7 +13,8 @@
 				<div class="col-12 mb-3">
 					<form:label path="manufacturerName" cssClass="form-label">Tên Thương Hiệu</form:label>
 					<form:input type="text" cssClass="form-control"
-						path="manufacturerName" autocomplete="none" placeholder="Vui lòng nhập tên thương hiệu"></form:input>
+						path="manufacturerName" autocomplete="none"
+						placeholder="Vui lòng nhập tên thương hiệu"></form:input>
 				</div>
 
 				<div class="col-md-6 mb-3">
@@ -26,31 +27,39 @@
 				</div>
 			</div>
 			<div class="col-12">
-				<button formaction="/admin/manufacturer/create" class="btn btn-primary">Create</button>
-				<button formaction="/admin/manufacturer/update" class="btn btn-warning">Update</button>
-				<button formaction="/admin/manufacturer/delete/${id}" class="btn btn-danger">Delete</button>
+				<button formaction="/admin/manufacturer/create"
+					class="btn btn-primary">Create</button>
+				<button formaction="/admin/manufacturer/update"
+					class="btn btn-warning">Update</button>
+				<button formaction="/admin/manufacturer/delete/${id}"
+					class="btn btn-danger">Delete</button>
 				<a href="/admin/manufacturer" class="btn btn-info">Reset</a>
 			</div>
 		</div>
 	</form:form>
 	<hr>
-	<table border="2" style="width: 60%" class="table table-bordered border-primary">
-		<tr>
-			<th>ID</th>
-			<th>Tên thương hiệu</th>
-			<th>Trạng thái</th>
-			<th>Người tạo</th>
-			<th></th>
-		</tr>
-		<c:forEach items="${mns}" var="manufacturer">
-			<tr>
-				<td>${manufacturer.id}</td>
-				<td>${manufacturer.manufacturerName}</td>
-				<td>${manufacturer.del?'Tồn tại':'Không tồn tại'}</td>
-				<td>${manufacturer.user.userId}</td>
-				<td><a href="/admin/manufacturer/edit/${manufacturer.id}">Edit</a></td>
-			</tr>
-		</c:forEach>
-	</table>
-
+	<div class="table-responsive">
+		<table id="statisticalTable" class="table table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Tên thương hiệu</th>
+					<th>Trạng thái</th>
+					<th>Người tạo</th>
+					<th>Thao tác</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${mns}" var="manufacturer">
+					<tr>
+						<td>${manufacturer.id}</td>
+						<td>${manufacturer.manufacturerName}</td>
+						<td>${manufacturer.del?'Tồn tại':'Không tồn tại'}</td>
+						<td>${manufacturer.user.userId}</td>
+						<td><a href="/admin/manufacturer/edit/${manufacturer.id}">Edit</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 </div>

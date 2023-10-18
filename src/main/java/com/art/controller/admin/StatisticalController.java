@@ -6,23 +6,21 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.art.DAO.Promotion.InvoiceDAO;
 import com.art.DAO.Promotion.InvoiceDetailDAO;
 import com.art.DAO.User.UserCustomDAO;
 import com.art.Entities.Product.Product;
+import com.art.Entities.Promotion.Invoice;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,15 +34,6 @@ public class StatisticalController {
 	
 	@Autowired
 	UserCustomDAO uDAO;
-	
-	@GetMapping("/statistical-revenue")
-	public String showRevenues(@ModelAttribute("pd") Product pd, Model model, @RequestParam("p") Optional<Integer> p) {
-
-		model.addAttribute("views", "revenue-form");
-		model.addAttribute("title", "Thống kê doanh thu");
-
-		return "admin/index";
-	}
 	
 	 @GetMapping("/statistical-revenue/daily-revenue")
 	    public ResponseEntity<?> getDailyRevenue() {
@@ -92,10 +81,29 @@ public class StatisticalController {
 		model.addAttribute("views", "order-form");
 		model.addAttribute("title", "Thống kê đơn hàng");
 		model.addAttribute("invoice", revenueService.findAllByOrderByInvoiceDateDesc());
+		System.out.println("status: "+revenueService.findAllByOrderByInvoiceDateDesc().get(0).getStatus());
 
+		System.out.println(revenueService.findAllByOrderByInvoiceDateDesc().get(0).getStatus()==1?"ok":"fail");
 		return "admin/index";
 	}
 
+    @PostMapping("/update-status")
+    @ResponseBody
+    public ResponseEntity<String> updateStatus(@RequestParam int itemId, @RequestParam Integer status) {
+        // Gọi phương thức service để cập nhật trạng thái hóa đơn
+    	updateStatusOrder(itemId, status);
+        return ResponseEntity.ok("Cập nhật trạng thái thành công");
+    }
+    
+    public void updateStatusOrder(int itemId, Integer status) {
+        Optional<Invoice> optionalInvoice = Optional.of(revenueService.findById(itemId));
+        if (optionalInvoice.isPresent()) {
+            Invoice invoice = optionalInvoice.get();
+            invoice.setStatus(status);
+            revenueService.save(invoice);
+        }
+    }
+	
 	@GetMapping("/statistical-wishlist")
 	public String showWishlists(@ModelAttribute("pd") Product pd, Model model) {
 

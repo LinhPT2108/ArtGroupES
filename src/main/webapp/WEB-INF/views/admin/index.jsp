@@ -10,8 +10,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title }</title>
 <link rel="shortcut icon" type="image/png"
-	href="../../images/favicon.png" />
-<link rel="stylesheet" href="../../assets/css/styles.min.css" />
+	href="../../../images/favicon.png" />
+<link rel="stylesheet" href="../../../assets/css/styles.min.css" />
 
 <script
 	src="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.js"/>"></script>
@@ -20,11 +20,11 @@
 <c:if test="${views=='product-form' }">
 	<link rel="stylesheet" href="../../../assets/css/productStyle.css" />
 </c:if>
-<script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="../../../assets/libs/jquery/dist/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 </head>
-<link rel="stylesheet" type="text/css" href="../../css/admin-page.css">
+<link rel="stylesheet" type="text/css" href="../../../css/admin-page.css">
 
 <body>
 	<!--  Body Wrapper -->
@@ -37,8 +37,8 @@
 			<div>
 				<div
 					class="brand-logo d-flex align-items-center justify-content-between">
-					<a href="./index.html" class="text-nowrap logo-img"> <img
-						src="../../assets/images/logos/logo.png" width="180" alt="" />
+					<a href="/admin/dashboard" class="text-nowrap logo-img"> <img
+						src="../../../assets/images/logos/logo.png" width="180" alt="" />
 					</a>
 					<div
 						class="close-btn d-xl-none d-block sidebartoggler cursor-pointer"
@@ -76,7 +76,7 @@
 							</span> <span class="hide-menu">Sản phẩm</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
-							href="./ui-forms.html" aria-expanded="false"> <span> <i
+							href="/admin/statistical-order" aria-expanded="false"> <span> <i
 									class="ti ti-file-description"></i>
 							</span> <span class="hide-menu">Quản lý hóa đơn</span>
 						</a></li>
@@ -93,21 +93,12 @@
 						<li class="nav-small-cap"><i
 							class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
 							class="hide-menu">THỐNG KÊ & DOANH THU</span></li>
-						<li class="sidebar-item"><a class="sidebar-link"
-							href="/admin/statistical-revenue" aria-expanded="false"> <span>
-									<i class="ti ti-login"></i>
-							</span> <span class="hide-menu">Doanh thu</span>
-						</a></li>
-						<li class="sidebar-item"><a class="sidebar-link"
-							href="/admin/statistical-order" aria-expanded="false"> <span>
-									<i class="ti ti-user-plus"></i>
-							</span> <span class="hide-menu">Đơn hàng</span>
-						</a></li>
-						<li class="sidebar-item"><a class="sidebar-link"
+							
+						<!-- <li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/statistical-wishlist" aria-expanded="false"> <span>
 									<i class="ti ti-user-plus"></i>
 							</span> <span class="hide-menu">Lượt thích</span>
-						</a></li>
+						</a></li> -->
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/statistical-best-seller" aria-expanded="false">
 								<span> <i class="ti ti-user-plus"></i>
@@ -147,7 +138,7 @@
 							<li class="nav-item dropdown"><a
 								class="nav-link nav-icon-hover" href="javascript:void(0)"
 								id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-									<img src="../images/avatar/${userLogin.image }" alt=""
+									<img src="../../../images/avatar/${userLogin.image }" alt=""
 									width="35" height="35" class="rounded-circle">
 							</a>
 								<div
@@ -173,18 +164,18 @@
 		</div>
 	</div>
 	<script
-		src="../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="../../assets/js/sidebarmenu.js"></script>
-	<script src="../../assets/js/app.min.js"></script>
-	<script src="../../assets/js/datatables-simple-demo.js"></script>
+		src="../../../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="../../../assets/js/sidebarmenu.js"></script>
+	<script src="../../../assets/js/app.min.js"></script>
+	<script src="../../../assets/js/datatables-simple-demo.js"></script>
 	<c:if test="${views=='dashboard'}">
-		<script src="../../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-		<script src="../../assets/libs/simplebar/dist/simplebar.js"></script>
-		<script src="../../assets/js/dashboard.js"></script>
+		<script src="../../../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+		<script src="../../../assets/libs/simplebar/dist/simplebar.js"></script>
+		<script src="../../../assets/js/dashboard.js"></script>
 
 	</c:if>
 	<c:if test="${views=='product-form' }">
-		<script src="../../assets/js/product.js"></script>
+		<script src="../../../assets/js/product.js"></script>
 	</c:if>
 	<script
 		src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>

@@ -11,21 +11,18 @@
 							<div class="logo">
 								<a href="index.html"><img src="../../images/logo2.png" alt="#"></a>
 							</div>
-							<p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-							<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
+							<p class="text">Sản phẩm của chúng tôi chất lượng đặt lên hàng đầu, uy tín lâu dài trong việc kinh doanh.</p>
+							<p class="call">Có bất kỳ câu hỏi? Hãy gọi cho chúng tôi 24/7<span><a href="tel:0909123123">0909 123 123</a></span></p>
 						</div>
 						<!-- End Single Widget -->
 					</div>
 					<div class="col-lg-2 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer links">
-							<h4>Information</h4>
+							<h4>Thông tin</h4>
 							<ul>
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Faq</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Help</a></li>
+								<li><a href="#">Về chúng tôi</a></li>
+								<li><a href="#">Liên hệ</a></li>
 							</ul>
 						</div>
 						<!-- End Single Widget -->
@@ -33,13 +30,11 @@
 					<div class="col-lg-2 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer links">
-							<h4>Customer Service</h4>
+							<h4>Dịch vụ khách hàng</h4>
 							<ul>
-								<li><a href="#">Payment Methods</a></li>
-								<li><a href="#">Money-back</a></li>
-								<li><a href="#">Returns</a></li>
-								<li><a href="#">Shipping</a></li>
-								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="#">Thanh toán tại cửa hàng</a></li>
+								<li><a href="#">Chuyển khoản</a></li>
+								<li><a href="#">Đổi trả trong 30 ngày</a></li>
 							</ul>
 						</div>
 						<!-- End Single Widget -->
@@ -47,14 +42,14 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer social">
-							<h4>Get In Tuch</h4>
+							<h4>Địa chỉ liên hệ</h4>
 							<!-- Single Widget -->
 							<div class="contact">
 								<ul>
-									<li>NO. 342 - London Oxford Street.</li>
-									<li>012 United Kingdom.</li>
-									<li>info@eshop.com</li>
-									<li>+032 3456 7890</li>
+									<li>Toà nhà FPT Polytechnic,</li>
+									<li>Đ. Số 22, Thường Thạnh,</li>
+									<li>Cái Răng, Cần Thơ</li>
+									<li><a tel="+840948922927">0948 922 927</a></li>
 								</ul>
 							</div>
 							<!-- End Single Widget -->
@@ -77,7 +72,7 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-								<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+								<p>Copyright © 2020 <a href="#">ArtGroupES</a>  -  All Rights Reserved.</p>
 							</div>
 						</div>
 						<div class="col-lg-6 col-12">

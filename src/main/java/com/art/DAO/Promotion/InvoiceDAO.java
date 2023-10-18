@@ -24,6 +24,8 @@ public interface InvoiceDAO extends JpaRepository<Invoice, Integer> {
 	
 	List<Invoice> findAllByOrderByInvoiceDateAsc();
 	List<Invoice> findAllByOrderByInvoiceDateDesc();
+	
+    Invoice findById(int id);
 //	@SuppressWarnings("unchecked")
 //	// Thêm hoặc cập nhật một Invoice
 //    Invoice save(Invoice invoice);

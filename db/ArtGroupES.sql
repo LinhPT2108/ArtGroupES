@@ -1097,7 +1097,7 @@ VALUES  ( 18000000 , -- total_amount - float
 		  1
         );
 GO
-SELECT * FROM dbo.product
+
 INSERT INTO dbo.invoice_detail
         ( invoice_id ,
           price ,

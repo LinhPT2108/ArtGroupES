@@ -263,10 +263,10 @@
 																			<a href="/products/${p.productId}"> <img
 																				class="default-img"
 																				src="images/products/${p.productImage[0].image }"
-																				alt="${p.productName }" height="350" width="250">
+																				alt="${p.productName }" height="190" width="250">
 																				<img class="hover-img"
 																				src="images/products/${p.productImage[1].image }"
-																				alt="${p.productName }" height="350" width="250">
+																				alt="${p.productName }" height="190" width="250">
 																				<c:set var="foundFlashSale" value="false" /> <c:set
 																					var="priceDiscount" value="0" /> <c:forEach
 																					var="f" items="${listPdFlashsale}">

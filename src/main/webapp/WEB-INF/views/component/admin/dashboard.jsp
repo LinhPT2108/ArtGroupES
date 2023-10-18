@@ -13,14 +13,14 @@
 					<div class="mb-3 mb-sm-0">
 						<h5 class="card-title fw-semibold">Doanh thu theo ngày</h5>
 					</div>
-					<div>
+					<!-- <div>
 						<select class="form-select">
 							<option value="1">March 2023</option>
 							<option value="2">April 2023</option>
 							<option value="3">May 2023</option>
 							<option value="4">June 2023</option>
 						</select>
-					</div>
+					</div> -->
 				</div>
 				<div id="chart"></div>
 			</div>
@@ -222,7 +222,7 @@
 						<tbody>
 							<c:forEach var="bestSeller" items="${bestSellers}"
 								varStatus="loop">
-								<c:if test="${loop.index<4 }">
+								<c:if test="${loop.index<5 }">
 									<tr>
 										<td class="border-bottom-0"><h6 class="fw-semibold mb-0">${loop.index +1}</h6></td>
 										<td class="border-bottom-0">
