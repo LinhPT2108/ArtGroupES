@@ -4,8 +4,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <div class="site-category">
-	<form:form cssClass="row g-3 needs-validation"
-		action="/admin/category/create" modelAttribute="ct" method="POST">
+	<form:form cssClass="row g-3 needs-validation" action="/admin/category"
+		modelAttribute="ct" method="POST">
 		<div class="col-xs-12 col-md-7">
 			<div class="row">
 
@@ -13,7 +13,7 @@
 				<div class="col-12 mb-3">
 					<form:label path="categoryName" cssClass="form-label">Loại sản phẩm</form:label>
 					<form:input type="text" cssClass="form-control" path="categoryName"
-						autocomplete="none"></form:input>
+						autocomplete="none" placeholder="Vui lòng nhập loại sản phẩm"></form:input>
 				</div>
 
 				<div class="col-md-6 mb-3">
@@ -26,35 +26,31 @@
 				</div>
 			</div>
 			<div class="col-12">
-				<form:button class="btn btn-primary">${typeButton}</form:button>
-				<form:button formmethod="post"
-					formaction="/admin/category/${categoryId}" class="btn btn-warning">Cập nhật</form:button>
+		
+				<button formaction="/admin/category/create" class="btn btn-primary">Create</button>
+				<button formaction="/admin/category/update" class="btn btn-warning">Update</button>
+				<button formaction="/admin/category/delete/${categoryId}" class="btn btn-danger">Delete</button>
+				<a href="/admin/category" class="btn btn-info">Reset</a>
 			</div>
 		</div>
 	</form:form>
 	<hr>
-	<div class="table-responsive">
-		<table id="statisticalTable" class="table table-hover">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Loại sản phẩm</th>
-					<th>Trạng thái</th>
-					<th>Người tạo</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${cts}" var="category">
-					<tr>
-						<td>${category.categoryId}</td>
-						<td>${category.categoryName}</td>
-						<td>${category.del?'Tồn tại':'Không tồn tại'}</td>
-						<td>${category.user.userId}</td>
-						<td><a href="/admin/category/edit/${category.categoryId}">Edit</a></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
+	<table border="2" style="width: 60%" class="table table-bordered border-primary">
+		<tr>
+			<th>ID</th>
+			<th>Loại sản phẩm</th>
+			<th>Trạng thái</th>
+			<th>Người tạo</th>
+			<th></th>
+		</tr>
+		<c:forEach items="${cts}" var="category">
+			<tr>
+				<td>${category.categoryId}</td>
+				<td>${category.categoryName}</td>
+				<td>${category.del?'Tồn tại':'Không tồn tại'}</td>
+				<td>${category.user.userId}</td>
+				<td><a href="/admin/category/edit/${category.categoryId}">Edit</a></td>
+			</tr>
+		</c:forEach>
+	</table>
 </div>
