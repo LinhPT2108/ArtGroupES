@@ -3,6 +3,7 @@ package com.art.Entities.User;
 import java.util.List;
 
 import org.hibernate.annotations.Nationalized;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.art.Entities.Activity.Banner;
 import com.art.Entities.Activity.Cart;
