@@ -24,7 +24,8 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 </head>
-<link rel="stylesheet" type="text/css" href="../../../css/admin-page.css">
+<link rel="stylesheet" type="text/css"
+	href="../../../css/admin-page.css">
 
 <body>
 	<!--  Body Wrapper -->
@@ -62,27 +63,27 @@
 							class="hide-menu">GIAO DIỆN QUẢN LÍ</span></li>
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/manufacturer" aria-expanded="false"> <span>
-									<i class="ti ti-article"></i>
+									<i class="ti ti-package"></i>
 							</span> <span class="hide-menu">Thương hiệu</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/category" aria-expanded="false"> <span> <i
-									class="ti ti-category"></i>
+									class="ti ti-folder"></i>
 							</span> <span class="hide-menu">Loại sản phâm</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/product" aria-expanded="false"> <span> <i
-									class="ti ti-cards"></i>
+									class="ti ti-tag"></i>
 							</span> <span class="hide-menu">Sản phẩm</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
-							href="/admin/statistical-order" aria-expanded="false"> <span> <i
-									class="ti ti-file-description"></i>
+							href="/admin/statistical-order" aria-expanded="false"> <span>
+									<i class="ti ti-receipt"></i>
 							</span> <span class="hide-menu">Quản lý hóa đơn</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="./ui-forms.html" aria-expanded="false"> <span> <i
-									class="ti ti-file-description"></i>
+									class="ti ti-slideshow"></i>
 							</span> <span class="hide-menu">Banner</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
@@ -93,7 +94,7 @@
 						<li class="nav-small-cap"><i
 							class="ti ti-dots nav-small-cap-icon fs-4"></i> <span
 							class="hide-menu">THỐNG KÊ & DOANH THU</span></li>
-							
+
 						<!-- <li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/statistical-wishlist" aria-expanded="false"> <span>
 									<i class="ti ti-user-plus"></i>
@@ -101,12 +102,12 @@
 						</a></li> -->
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/statistical-best-seller" aria-expanded="false">
-								<span> <i class="ti ti-user-plus"></i>
+								<span> <i class="ti ti-trophy"></i>
 							</span> <span class="hide-menu">Sản phẩm bán chạy</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
 							href="/admin/statistical-orders-by-user" aria-expanded="false">
-								<span> <i class="ti ti-user-plus"></i>
+								<span> <i class="ti ti-clipboard"></i>
 							</span> <span class="hide-menu">Đơn hàng theo tài khoản</span>
 						</a></li>
 					</ul>

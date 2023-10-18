@@ -37,6 +37,7 @@ import com.art.Entities.User.InforAddress;
 import com.art.Entities.User.UserCustom;
 import com.art.service.CookieService;
 import com.art.service.ParamService;
+import com.art.service.PasswordEncryption;
 import com.art.service.SessionService;
 
 import jakarta.validation.Valid;
@@ -75,9 +76,10 @@ public class accountController {
 		Boolean rm = paramService.getBoolean("chkRemember", false);
 		System.out.println(email + " - " + password + " - " + rm);
 		try {
+			
 			UserCustom user = usDAO.findByEmail(email).get(0);
 			if (user.isDel()) {
-				if (password.equals(user.getPassword())) {
+				if ( PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
 					sessionService.set("userLogin", user);
 					if (rm) {
 						cookieService.add("LGemail", email, 12);

@@ -19,7 +19,7 @@ VALUES  ( 1 , -- is_del - bit
           'linhptpc04737@fpt.edu.vn' , -- email - varchar(255)
           N'Phan Tuấn Linh' , -- fullname - nvarchar(255)
           'linhptpc04737.png' , -- image - varchar(255)
-          '123123a' , -- password - varchar(255)
+          'pgPPTyq4xNL/lOXiLqlAA7/gWAA=' , -- password đã được mã hóa 
           'user' , -- role - varchar(255)
           'linhptpc04737'  -- user_id - varchar(255)
         ),
@@ -27,7 +27,7 @@ VALUES  ( 1 , -- is_del - bit
           'nguyentcpc04750@fpt.edu.vn' , -- email - varchar(255)
           N'Trần Chí Nguyễn' , -- fullname - nvarchar(255)
           'nguyentcpc04750.png' , -- image - varchar(255)
-          '123123a' , -- password - varchar(255)
+          'pgPPTyq4xNL/lOXiLqlAA7/gWAA=' , -- password đã được mã hóa 
           'admin' , -- role - varchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
@@ -35,7 +35,7 @@ VALUES  ( 1 , -- is_del - bit
           'nhintpc04729@fpt.edu.vn' , -- email - varchar(255)
           N'Nguyễn Tấn Nhi' , -- fullname - nvarchar(255)
           'nhintpc04729.png' , -- image - varchar(255)
-          '123123a' , -- password - varchar(255)
+          'pgPPTyq4xNL/lOXiLqlAA7/gWAA=' , -- password đã được mã hóa 
           'shipper' , -- role - varchar(255)
           'nhintpc04729'  -- user_id - varchar(255)
         );

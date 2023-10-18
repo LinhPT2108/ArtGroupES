@@ -92,7 +92,7 @@ public class productController {
 	@PostMapping("/product")
 	public ResponseEntity<?> createProduct(@Valid @ModelAttribute("pd") Product product, BindingResult result,
 			@RequestParam("listImage") MultipartFile[] listImage, @RequestParam("descriptions") String descriptions) {
-
+		
 		Map<String, String> errors = new HashMap<>();
 		System.out.println(descriptions);
 		if (descriptions.length()==32) {

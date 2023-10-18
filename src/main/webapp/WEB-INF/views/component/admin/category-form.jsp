@@ -16,14 +16,6 @@
 						autocomplete="none" placeholder="Vui lòng nhập loại sản phẩm"></form:input>
 				</div>
 
-				<div class="col-md-6 mb-3">
-					<form:label path="" class="form-label">Trạng Thái</form:label>
-					<br>
-					<form:radiobutton path="del" value="true" />
-					Tồn tại
-					<form:radiobutton path="del" value="false" />
-					Không tồn tại
-				</div>
 			</div>
 			<div class="col-12">
 
@@ -52,7 +44,7 @@
 					<tr>
 						<td>${category.categoryId}</td>
 						<td>${category.categoryName}</td>
-						<td>${category.del?'Tồn tại':'Không tồn tại'}</td>
+						<td>${category.del?'Hoạt động':'Ngừng kinh doanh'}</td>
 						<td>${category.user.userId}</td>
 						<td><a href="/admin/category/edit/${category.categoryId}">Edit</a></td>
 					</tr>
@@ -61,3 +53,36 @@
 		</table>
 	</div>
 </div>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var table = $('#statisticalTable').DataTable();
+
+    // Tạo radio buttons
+    var radioHtml = `
+        <div class="mb-3">
+            <label>
+                <input type="radio" name="statusFilter" value="" checked> Tất cả
+            </label>
+            <label class="mx-2">
+                <input type="radio" name="statusFilter" value="Tồn tại"> Hoạt động
+            </label>
+            <label>
+                <input type="radio" name="statusFilter" value="Không tồn tại"> Ngừng kinh doanh
+            </label>
+        </div>
+    `;
+    
+    // Thêm radio buttons vào phần tử có class "table-responsive"
+    $('.table-responsive').prepend(radioHtml);
+    
+    // Xử lý sự kiện khi radio buttons được chọn
+    $('input[name="statusFilter"]').on('change', function() {
+        var selectedValue = $(this).val();
+        
+        // Lọc dữ liệu trong cột "Trạng thái" của DataTable
+        table.column(2).search(selectedValue).draw();
+    });
+});
+</script>
