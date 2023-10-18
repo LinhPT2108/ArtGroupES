@@ -63,6 +63,7 @@ public class categoryController {
 	public String create(@ModelAttribute("ct") Category ct) {
 		UserCustom user = sessionService.get("userLogin");
 		ct.setUser(user);
+		ct.setDel(true);
 		categoryReponsitory.save(ct);
 		return "redirect:/admin/category";
 	}

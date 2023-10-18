@@ -13,7 +13,7 @@
 					<div class="top-left">
 						<ul class="list-main">
 							<li><i class="ti-headphone-alt"></i>  <a href="tel:0909123123">+84 909 123 123</a> </li>
-							<li><i class="ti-email"></i> artdevk18@gmail.com</li>
+							<li><i class="ti-email"></i> <a href="mailto:artdevk18@gmail.com">artdevk18@gmail.com</a></li>
 						</ul>
 					</div>
 					<!--/ End Top Left -->
