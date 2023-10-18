@@ -578,7 +578,7 @@ Version:1.0
 	transform: translateY(0px);
 	opacity: 1;
 	visibility: visible;
-	
+
 }
 
 .header .shopping .dropdown-cart-header {
@@ -2630,6 +2630,8 @@ Version:1.0
 
 .shop .nice-select .list li {
 	color: #666;
+	text-wrap: wrap;
+	border-bottom: 1px solid;
 	border-radius: 0px;
 }
 
@@ -3803,10 +3805,9 @@ Version:1.0
 
 .shop.checkout .nice-select {
 	width: 100%;
-	height: 45px;
 	line-height: 50px;
-	margin-bottom: 25px;
-	background: #F6F7FB;
+/*	margin-bottom: 25px;
+*/	background: #F6F7FB;
 	border-radius: 0px;
 	border: none;
 }
@@ -3814,7 +3815,7 @@ Version:1.0
 .shop.checkout .nice-select .list {
 	width: 100%;
 	height: 300px;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 
 .shop.checkout .nice-select .list li {}

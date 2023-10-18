@@ -3,10 +3,12 @@ package com.art.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.eclipse.tags.shaded.org.apache.bcel.generic.RETURN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,12 @@ public class cartController {
 	private UserCustomDAO usDAO;
 	@Autowired
 	private PromotionalDetailsDAO pmtDAO;
+
+	@GetMapping("")
+	public String getCartProp(Model model) {
+		model.addAttribute("inSiteCart", true);
+		return "cart";
+	}
 
 	@PostMapping("/get-cart-info")
 	public ResponseEntity<?> getCart() {
@@ -138,6 +146,34 @@ public class cartController {
 		}
 	}
 
+	@PostMapping("/update-cart")
+	public ResponseEntity<?> updateCart(Model model) {
+		int cartId = param.getInt("cartId", 0);
+		String productId = param.getString("quantity", "");
+		int quantity = param.getInt("quantity", 1);
+
+		try {
+			Cart cart = caDAO.getById(cartId);
+			if (cart == null) {
+				return ResponseEntity.ok("fail");
+			} else {
+				cart.setQuantity(quantity);
+				caDAO.save(cart);
+				List<Cart> listC = caDAO.findByUser(session.get("userLogin"));
+				session.setCart(listC);
+
+				int cartCount = listC.size();
+				Double totalPrice = session.totalPriceCartByUserId(session.get("userLogin"));
+
+				String jsonResponse = "{\"cartCount\":" + cartCount + ", \"totalPrice\":" + totalPrice + "}";
+				return ResponseEntity.ok(jsonResponse);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.ok("fail");
+		}
+	}
+
 	@RequestMapping("/remove/{id}")
 	public ResponseEntity<?> removeItems(@PathVariable("id") int id) {
 		System.out.println(id);
@@ -151,7 +187,8 @@ public class cartController {
 			int cartCount = listCarts.size();
 			Double totalPrice = session.totalPriceCartByUserId(userCustom);
 
-			String jsonResponse = "{\"cartCount\":" + cartCount + ", \"cartId\":" + id + ", \"totalPrice\":" + totalPrice + "}";
+			String jsonResponse = "{\"cartCount\":" + cartCount + ", \"cartId\":" + id + ", \"totalPrice\":"
+					+ totalPrice + "}";
 			return ResponseEntity.ok(jsonResponse);
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -26,13 +26,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 		System.out.println(requestURI);
 		// Kiểm tra quyền truy cập
 		if (user == null && requiresAuthentication(requestURI)) {
-			// Người dùng chưa đăng nhập và yêu cầu truy cập trang cần đăng nhập, chuyển
-			// hướng đến trang đăng nhập
 			response.sendRedirect("/account/login");
 			return false;
 		} else if (user != null && !hasAccess(user, requestURI)) {
-			// Người dùng đã đăng nhập và không có quyền truy cập trang này, chuyển hướng
-			// đến trang cần thiết (ví dụ: /access-denied)
 			System.out.println(1);
 			response.sendRedirect("/access-denied");
 			return false;
@@ -46,17 +42,12 @@ public class AuthInterceptor implements HandlerInterceptor {
 		return true;
 	}
 
-	// Kiểm tra xem yêu cầu có cần đăng nhập không
 	private boolean requiresAuthentication(String requestURI) {
 		return !requestURI.equals("/account/login") && !requestURI.equals("/account/register")
 				&& !requestURI.equals("/account/forgot-password");
-	}
+	} 
 
-	// Kiểm tra xem người dùng có quyền truy cập vào đường dẫn hay không (tùy thuộc
-	// vào logic của bạn)
 	private boolean hasAccess(UserCustom user, String requestURI) {
-		// Thêm logic kiểm tra quyền truy cập của người dùng ở đây
-		// Ví dụ: Kiểm tra vai trò của người dùng và đường dẫn yêu cầu
 		if (user.getRoleName().getRoleName().equals("admin") && !requestURI.startsWith("/checkout") && !requestURI.contains("cart")) {
 			return true;
 		} else if (user.getRoleName().getRoleName().equals("user") && !requestURI.contains("/admin")) {

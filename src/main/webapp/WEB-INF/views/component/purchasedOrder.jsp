@@ -7,7 +7,7 @@
 <div class="content-profile">
 	<div
 		class="title  border border-right-0 border-top-0 border-left-0 py-2 d-flex justify-content-between">
-		<span class="display-6">Đơn hàng đã hoàn thành</span> <span
+		<span class="display-6">${title }</span> <span
 			class="display-7 font-weight-bold">Số lượng: ${sizeInvoice }</span>
 	</div>
 	<div class="main-content p-3">
@@ -31,6 +31,10 @@
 								<c:when test="${typeInvoice==2 }">
 									<span class="text-warning mr-3"><i class="ti ti-truck"></i>
 										Đang giao hàng</span>
+								</c:when>
+								<c:when test="${typeInvoice==-1}">
+									<span class="text-danger mr-3"><i class="ti ti-truck"></i>
+										Đã hủy</span>
 								</c:when>
 								<c:otherwise>
 									<span class="text-success mr-3"><i class="ti ti-check"></i>
@@ -63,7 +67,7 @@
 										<span class="text-muted fs-6">Loại hàng:
 											${p.product.categoryProduct.categoryName}</span> <span
 											class="text-muted ">Hãng:
-											${p.product.manufacturerProduct.manufacturerName}</span> <span>x3</span>
+											${p.product.manufacturerProduct.manufacturerName}</span> <span>${p.quantity }</span>
 									</div>
 
 								</div>
@@ -88,8 +92,8 @@
 									<span
 										class="font-weight-bold float-right text-danger align-self-end mt-3"><fmt:formatNumber
 											type="number" pattern="###,###,###" value="${p.price}" /> ₫</span>
-									<c:set var="totalPrice" value="${totalPrice + p.price}"
-										scope="page"></c:set>
+									<c:set var="totalPrice"
+										value="${(totalPrice + p.price*p.quantity)}" scope="page"></c:set>
 								</div>
 							</div>
 						</div>
@@ -98,8 +102,11 @@
 					<div
 						class="site-button d-flex justify-content-beetween align-items-center">
 						<div class="col-4">
-							<a class="btn-success p-2 rounded text-white" href="#"
-								role="button">Mua lại</a>
+							<c:if test="${typeInvoice==1 }">
+								<a class="btn-danger p-2 rounded text-white" href="#"
+									id="cancel-order" data-invoice-id="${iv.id }" role="button">Hủy
+									đơn hàng</a>
+							</c:if>
 						</div>
 						<div class="price col-8">
 							<div class="float-end">
@@ -301,6 +308,52 @@
 				selectedPageValue = parseInt(selectedPageValue, 10) - 1; // Giảm giá trị đi 1
 				window.location.href = "?p=" + selectedPageValue;
 			}
+		});
+		$('#cancel-order').click(function(e){
+			e.preventDefault();
+			let invoiceId = $(this).data('invoice-id');
+			console.log(invoiceId);
+			Swal.fire({
+				text: "Bạn có muốn hủy đơn hàng đã chọn không ?",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Trở lại',
+				confirmButtonText: 'Có'
+			}).then((result) => {
+				if (result.isConfirmed) {
+						$.ajax({
+							url: '/account/purchased-order/remove/' + invoiceId,
+							type: "POST",
+							success: function(response) {
+								if (response == 'fail') {
+									Swal.fire({
+										icon: 'warning',
+										title: 'Có lỗi xảy ra, vui lòng thử lại !',
+										showConfirmButton: true
+									});
+								} else {
+									Swal.fire({
+										icon: 'success',
+										title: 'Hủy đơn hàng thành công!',
+										showConfirmButton: true
+									});
+									window.location.href = '/account/purchased-order/-1';
+								}
+							},
+							error: function(xhr, status, error) {
+								Swal.fire({
+									icon: 'error',
+									title: 'Hủy đơn hàng thất bại',
+									text: "Có lỗi xảy ra, vui lòng thử lại !",
+									showConfirmButton: false,
+									timer: 1500
+								});
+							}
+						});
+					}
+				})
 		});
 	});
 </script>

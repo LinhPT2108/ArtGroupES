@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	console.log('this is cart js');
+
 	$('.addToCart').click(function(e) {
 		e.preventDefault();
 		let productId = $(this).data('product-id');
@@ -166,8 +167,75 @@ $(document).ready(function() {
 
 });
 function formatCurrency(number) {
-	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+
+function changeQuantityProduct(cartId, productId, quantity, quantityInStock, price) {
+	console.log(cartId + " - " + productId + " - " + quantity + " - " + quantityInStock + " - " + price)
+
+	if (parseInt(quantity) <= 0) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Opps....',
+			text: "Vui lòng nhập số lượng lớn hơn 0 !",
+			showConfirmButton: true,
+		});
+		$(".input-quantity").val(1);
+		return;
+	} else if (parseInt(quantity) > parseInt(quantityInStock)) {
+		Swal.fire({
+			icon: 'error',
+			title: 'Opps....',
+			text: "Số lượng vượt quá số lượng tồn kho !",
+			showConfirmButton: true,
+		});
+		$(".input-quantity").val(1);
+		return;
+	} else {
+		console.log(1)
+		$.ajax({
+			url: "/cart/update-cart",
+			type: "POST",
+			data: {
+				cartId: cartId,
+				productId: productId,
+				quantity: quantity
+			},
+			success: function(resp) {
+				if (resp == 'fail') {
+					Swal.fire({
+						icon: 'error',
+						title: 'Opps....',
+						text: "Có lỗi xảy ra khi thay đổi số lượng !",
+						showConfirmButton: true,
+					});
+				} else {
+					var json = JSON.parse(resp);
+					console.log(json.cartCount);
+					console.log(json.totalPrice);
+
+					let cartCount = json.cartCount;
+					let totalPrice = json.totalPrice;
+					let totalAmount = parseFloat(quantity) * parseFloat(price);
+					console.log(ship)
+					console.log(totalAmount)
+					$('.total-amount' + cartId).html(formatCurrency(totalAmount) + " ₫")
+					$('#totalCart').html(formatCurrency(totalPrice) + " ₫");
+					if (totalPrice > 3000000) {
+						$('#totalPriceAmount').html(formatCurrency(totalPrice) + " ₫")
+					} else {
+						$('#totalPriceAmount').html(formatCurrency(totalPrice + 50000) + " ₫")
+					}
+				}
+			},
+			error: function(error) {
+				alert("Something error ! " + error);
+			}
+		})
+	}
+}
+
 
 function removeCartItem(cartId, buttonElement) {
 	console.log(cartId)
@@ -211,6 +279,70 @@ function removeCartItem(cartId, buttonElement) {
 								'<i class="bi bi-cart-x display-1"></i> <span>Chưa' +
 								'có sản phẩm</span>' +
 								'</div>');
+						}
+						console.log('del ok')
+						Swal.fire(
+							'Deleted!',
+							'Xóa thành công !',
+							'success'
+						)
+					}
+				},
+				error: function(xhr, status, error) {
+					Swal.fire({
+						icon: 'error',
+						title: 'Thêm vào giỏ hàng thất bại',
+						text: "Có lỗi xảy ra, vui lòng thử lại !",
+						showConfirmButton: false,
+						timer: 1500
+					});
+				}
+			});
+
+		}
+	})
+
+}
+
+
+function removeCartItem2(cartId, buttonElement) {
+	console.log(cartId)
+	Swal.fire({
+		text: "Bạn có muốn xóa sản phẩm đã chọn khỏi giỏ hàng ?",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		cancelButtonText: 'Trở lại',
+		confirmButtonText: 'Có'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			let method = 'POST';
+
+			$.ajax({
+				url: 'cart/remove/' + cartId,
+				type: method,
+				success: function(response) {
+					console.log(method)
+					var jsonRemove = JSON.parse(response);
+					console.log(jsonRemove)
+					if (response == 'fail') {
+						Swal.fire({
+							icon: 'warning',
+							title: 'Có lỗi xảy ra, vui lòng thử lại !',
+							showConfirmButton: true
+						});
+					} else {
+						let cartCount = jsonRemove.cartCount;
+						let totalPrice = jsonRemove.totalPrice;
+						console.log(totalPrice)
+						$('.total-count').html(cartCount);
+						$('#totalCart').html(formatCurrency(totalPrice) + " ₫");
+						let cartItem = document.getElementById(cartId)
+						console.log(cartItem)
+						cartItem.remove();
+						if (cartCount == 0) {
+							$('.right').remove();
 						}
 						console.log('del ok')
 						Swal.fire(
