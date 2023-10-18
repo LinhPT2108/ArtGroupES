@@ -18,7 +18,7 @@
 <link rel="stylesheet"
 	href="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.css"/>">
 <c:if test="${views=='product-form' }">
-	<link rel="stylesheet" href="../../assets/css/productStyle.css" />
+	<link rel="stylesheet" href="../../../assets/css/productStyle.css" />
 </c:if>
 <script src="../../assets/libs/jquery/dist/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css"
