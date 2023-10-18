@@ -63,31 +63,30 @@ public class categoryController {
 	public String create(@ModelAttribute("ct") Category ct) {
 		UserCustom user = sessionService.get("userLogin");
 		ct.setUser(user);
+		ct.setDel(true);
 		categoryReponsitory.save(ct);
 		return "redirect:/admin/category";
 	}
 
-	@PostMapping("/category/update")
+	@RequestMapping("/category/update")
 	public String update(@ModelAttribute("ct") Category ct) {
 
 		UserCustom user = sessionService.get("userLogin");
 		ct.setUser(user);
+		ct.setDel(true);
 		categoryReponsitory.save(ct);
 		return "redirect:/admin/category";
 	}
 
-	@RequestMapping("/category/delete/{categoryId}")
-	public String create(@ModelAttribute("ct") Category ct, @PathVariable("categoryId") Integer categoryId,
-			Model model) {
-		model.addAttribute("views", "category-form");
-		model.addAttribute("title", "Phân loại sản phẩm");
+	@RequestMapping("/category/delete")
+	public String delete(@ModelAttribute("ct") Category ct) {
 
-		ct = caDao.findById(categoryId).get();
-		model.addAttribute("ct", ct);
-		List<Category> cts = caDao.findAll();
-		model.addAttribute("cts", cts);
-		categoryReponsitory.deleteById(categoryId);
+		UserCustom user = sessionService.get("userLogin");
+		ct.setUser(user);
+		ct.setDel(false);
+		categoryReponsitory.save(ct);
 		return "redirect:/admin/category";
 	}
-
+	
+	
 }
