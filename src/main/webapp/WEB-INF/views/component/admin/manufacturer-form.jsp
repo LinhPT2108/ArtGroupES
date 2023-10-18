@@ -32,7 +32,7 @@
 	<hr>
 
 	<div class="table-responsive">
-		<table id="statisticalTable" class="table table-hover">
+		<table id="statisticalTableManu" class="table table-hover">
 			<thead>
 				<tr>
 					<th>ID</th>
@@ -59,7 +59,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    var table = $('#statisticalTable').DataTable();
+    var table = $('#statisticalTableManu').DataTable();
 
     // Tạo radio buttons
     var radioHtml = `
@@ -68,10 +68,10 @@ $(document).ready(function() {
                 <input type="radio" name="statusFilter" value="" checked> Tất cả
             </label>
             <label class="mx-2">
-                <input type="radio" name="statusFilter" value="Tồn tại"> Hoạt động
+                <input type="radio" name="statusFilter" value="Hoạt động"> Hoạt động
             </label>
             <label>
-                <input type="radio" name="statusFilter" value="Không tồn tại"> Ngừng hợp tác
+                <input type="radio" name="statusFilter" value="Ngừng hợp tác"> Ngừng hợp tác
             </label>
         </div>
     `;
