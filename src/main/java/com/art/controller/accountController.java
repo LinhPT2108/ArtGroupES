@@ -151,6 +151,7 @@ public class accountController {
 			us.setDel(true);
 			us.setRoleName(roleDAO.getById("user"));
 			try {
+				us.setPassword(PasswordEncryption.toSHA1(us.getPassword()));
 				usDAO.save(us);
 			} catch (Exception e) {
 				// TODO: handle exception

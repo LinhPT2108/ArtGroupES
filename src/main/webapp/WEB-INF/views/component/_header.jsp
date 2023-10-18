@@ -12,7 +12,7 @@
 					<!-- Top Left -->
 					<div class="top-left">
 						<ul class="list-main">
-							<li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
+							<li><i class="ti-headphone-alt"></i>  <a href="tel:0909123123">+84 909 123 123</a> </li>
 							<li><i class="ti-email"></i> artdevk18@gmail.com</li>
 						</ul>
 					</div>
