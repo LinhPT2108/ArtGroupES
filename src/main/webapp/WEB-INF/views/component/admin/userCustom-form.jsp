@@ -6,12 +6,12 @@
 <div class="site-product">
 	<form:form cssClass="row g-3 needs-validation"
 		action="/admin/userCustom" modelAttribute="userCustom" method="POST"
-		id="formUserCustom">
+		id="formUserCustom" enctype="multipart/form-data">
 		<div class="row">
 			<div class="col-xs-12 col-md-7">
 				<div class="row">
 					<div class="col-12 mb-3">
-						<%-- <form:label path="userId" cssClass="form-label">UserId:</form:label> --%>
+						<%--  <form:label path="userId" cssClass="form-label">UserId:</form:label>  --%>
 						<form:input type="hidden" cssClass="form-control" path="userId" 
 							readonly="true"></form:input>
 						<form:errors path="userId" cssClass="text-danger"></form:errors>
@@ -55,11 +55,10 @@
 			<div class="col-xs-12 col-md-5">
 				<div class="mb-3">
 					<form:label path="image" cssClass="form-label">Hình ảnh</form:label> <br>
-					<form:label cssClass="custum-file-upload" path="image">
-						<img alt="" src="" id="image" width="300" height="300" style="margin: 10px">
-						<form:input type="file" path="image"  id="imageFile"
-						accept="image/gif, image/jpeg, image/png" onchange="chooseFile(this)"></form:input>
-					</form:label>
+					<img alt="" src="../../../images/avatar/${userCustom.image }" id="image" width="300" height="300" style="margin: 10px">
+						
+						<input name="avatar" type="file" id="imageFile" 
+						accept="image/gif, image/jpeg, image/png" onchange="chooseFile(this)"/>
 				</div>
 			</div>
 		</div>
