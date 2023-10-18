@@ -339,6 +339,14 @@
 										title: 'Hủy đơn hàng thành công!',
 										showConfirmButton: true
 									});
+										showConfirmButton: true,
+										allowOutsideClick: false,
+										allowEscapeKey: false
+									}).then((result) => {
+										if (result.isConfirmed) {
+									window.location.href = '/account/purchased-order/-1';
+										}
+
 									window.location.href = '/account/purchased-order/-1';
 								}
 							},

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.art.DAO.Activity.BannerDAO;
 import com.art.DAO.Product.ProductDAO;
 import com.art.DAO.Promotion.FlashSaleDAO;
+import com.art.DAO.Promotion.InvoiceDetailDAO;
 import com.art.DAO.Promotion.PromotionalDetailsDAO;
 import com.art.Entities.Product.Product;
 import com.art.Entities.Promotion.FlashSale;
@@ -26,12 +27,15 @@ public class indexController {
 	ProductDAO pdDAO;
 	@Autowired
 	PromotionalDetailsDAO pmtDAO;
+	@Autowired
+	InvoiceDetailDAO idDAO;
 
 	@GetMapping({ "/", "", "/index" })
 	public String home(Model model) {
 		model.addAttribute("listBanner", bnDao.findAll());
 
 		model.addAttribute("listProduct", pdDAO.findAll());
+		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
 
 		FlashSale endDay = lsDAO.findByIsStatus(false).get(0);
 
