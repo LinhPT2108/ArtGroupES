@@ -63,6 +63,7 @@ public class manufacturerController {
 	public String createManufacturer(@ModelAttribute("mn") Manufacturer mn) {
 		UserCustom user = sessionService.get("userLogin");
 		mn.setUser(user);
+		mn.setDel(true);
 		mnDAO.save(mn);
 		return "redirect:/admin/manufacturer";
 	}
