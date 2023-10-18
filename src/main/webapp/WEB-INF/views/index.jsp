@@ -134,7 +134,7 @@
 									<div class="mb-3 ">
 										<div class="card h-100 mx-3">
 											<input type="hidden" name="productId" value="${p.productId}">
-											<a href="/products/${p.productId}"><img
+											<a href="<%-- /products/${p.productId} --%>#"><img
 												src="images/products/${p.productImage[0].image }"
 												class="card-img-top" alt="${p.productName }"
 												style="height: 318px !important;"></a>
@@ -265,7 +265,7 @@
 																<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 																	<div class="single-product h-100">
 																		<div class="product-img">
-																			<a href="/products/${p.productId}"> <img
+																			<a href="<%-- /products/${p.productId} --%>#"> <img
 																				class="default-img"
 																				src="images/products/${p.productImage[0].image }"
 																				alt="${p.productName }" height="190" width="250">

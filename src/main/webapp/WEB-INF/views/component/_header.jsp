@@ -11,8 +11,9 @@
 					<!-- Top Left -->
 					<div class="top-left">
 						<ul class="list-main">
-							<li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
-							<li><i class="ti-email"></i> artdevk18@gmail.com</li>
+							<li><i class="ti-headphone-alt"></i> <a
+								href="tel:0948922927">0948-922-927</a></li>
+							<li><i class="ti-email"></i> nguyentcpc04750@fpt.edu.vn</li>
 						</ul>
 					</div>
 					<!--/ End Top Left -->
@@ -113,14 +114,15 @@
 							<a href="/account/profile" class="single-icon"><i
 								class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							<!-- Shopping Item -->
-							<div class="shopping-item p-0" style="right: 40px; max-width: 250px; overflow-y: auto">
+							<div class="shopping-item p-0"
+								style="right: 40px; max-width: 250px; overflow-y: auto">
 								<ul class="list-group list-group-flush">
 									<c:choose>
 										<c:when test="${userLogin!=null }">
 											<li class="list-group-item"><a href="/account/profile">Thông
 													tin tài khoản</a></li>
-											<li class="list-group-item"><a href="/account/purchased-order/3">Đơn
-													mua</a></li>
+											<li class="list-group-item"><a
+												href="/account/purchased-order/3">Đơn mua</a></li>
 											<li class="list-group-item"><a href="#">Đổi mật khẩu</a></li>
 											<li class="list-group-item"><a href="/account/logout">Đăng
 													xuất</a></li>
@@ -158,7 +160,7 @@
 													<div
 														class="nothing d-flex flex-column align-items-center justify-content-center">
 														<i class="bi bi-cart-x display-1"></i> <span>Chưa
-															 có sản phẩm</span>
+															có sản phẩm</span>
 													</div>
 												</c:when>
 												<c:otherwise>

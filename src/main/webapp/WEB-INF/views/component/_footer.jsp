@@ -49,7 +49,7 @@
 									<li>Toà nhà FPT Polytechnic,</li>
 									<li>Đ. Số 22, Thường Thạnh,</li>
 									<li>Cái Răng, Cần Thơ</li>
-									<li><a tel="+840948922927">0948 922 927</a></li>
+									<li><a class="text-warning" href="tel:0948922927">0948 922 927</a></li>
 								</ul>
 							</div>
 							<!-- End Single Widget -->
