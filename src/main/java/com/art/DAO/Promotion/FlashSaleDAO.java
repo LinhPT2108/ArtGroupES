@@ -1,15 +1,10 @@
 package com.art.DAO.Promotion;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.art.Entities.Promotion.FlashSale;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 
 public interface FlashSaleDAO extends JpaRepository<FlashSale, Integer> {
 

@@ -1,7 +1,5 @@
 package com.art.DAO.Promotion;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Promotion.Voucher;

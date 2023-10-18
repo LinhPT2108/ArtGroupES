@@ -12,21 +12,20 @@ import com.art.Entities.User.UserCustom;
 public interface CartDAO extends JpaRepository<Cart, Integer> {
 	
 	// Thêm hoặc cập nhật một giỏ hàng
-//	@SuppressWarnings("unchecked")
-//	Cart save(Cart cart);
-//	
-//	// Xóa một giỏ hàng theo ID
-//	void deleteById(int cartId);
-//	
-//	// Tìm giỏ hàng theo ID
-//	Optional<Cart> findById(int cartId);
-//	
-//	// Lấy tất cả các giỏ hàng của một người dùng
-//	List<Cart> findByUser(UserCustom user);
-//	
-//	// Lấy tất cả các giỏ hàng chứa một sản phẩm
-//	List<Cart> findByProduct(Product product);
-//
-//	// Lấy tất cả các giỏ hàng chứa một sản phẩm
-//	List<Cart> findByPrice(double price);
+	@SuppressWarnings("unchecked")
+	Cart save(Cart cart);
+	
+	// Xóa một giỏ hàng theo ID
+	void deleteById(int cartId);
+	// Tìm giỏ hàng theo ID
+	Optional<Cart> findById(int cartId);
+	
+	// Lấy tất cả các giỏ hàng của một người dùng
+	List<Cart> findByUser(UserCustom user);
+	
+	// Lấy tất cả các giỏ hàng chứa một sản phẩm
+	List<Cart> findByProduct(Product product);
+	
+	Cart findByProductAndUser(Product product, UserCustom user);
+
 }

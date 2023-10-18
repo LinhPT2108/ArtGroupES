@@ -33,7 +33,7 @@ public class DetailDescription {
 	@Nationalized
 	private String description;
 
-	@JsonBackReference
+	@JsonBackReference("productDetailReference")
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;

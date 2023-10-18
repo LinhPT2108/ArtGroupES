@@ -33,7 +33,7 @@ public class Invoice {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name="userInvoice")
+	@JoinColumn(name = "userInvoice")
 	private UserCustom user;
 
 	@Temporal(TemporalType.DATE)
@@ -42,7 +42,7 @@ public class Invoice {
 
 	@Column
 	private BigDecimal totalAmount;
-
+	
 	@Column
 	private int status;
 	

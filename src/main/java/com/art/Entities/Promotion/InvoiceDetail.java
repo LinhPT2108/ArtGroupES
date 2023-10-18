@@ -23,22 +23,22 @@ import lombok.NoArgsConstructor;
 @Entity
 public class InvoiceDetail {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "invoice_id")
-    private Invoice invoice;
+	@ManyToOne
+	@JoinColumn(name = "invoice_id")
+	private Invoice invoice;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
-	@Column
-    private int quantity;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Product product;
 
 	@Column
-    private BigDecimal price;
+	private int quantity;
+
+	@Column
+	private BigDecimal price;
 	
 	@OneToOne(mappedBy = "invoiceDetail")
 	private Comment comment;

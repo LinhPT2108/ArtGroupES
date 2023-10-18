@@ -80,7 +80,7 @@
 				</div>
 
 				<div class="inputBox">
-					<input type="password" required="required" name="lGpassword" value="123123a"> 
+					<input type="password" required="required" name="lGpassword" value=""> 
 					<span>Mật khẩu</span>
 				</div>
 				<div class="form-check m-0">

@@ -7,6 +7,7 @@ import org.hibernate.annotations.Nationalized;
 import com.art.Entities.Product.Product;
 import com.art.Entities.Promotion.InvoiceDetail;
 import com.art.Entities.User.UserCustom;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,34 +28,38 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Comment {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Column
 	private int star;
-	
+
 	@Column
 	private String image;
-	
+
 	@Column
 	@Nationalized
 	private String content;
-	
-	@Temporal(TemporalType.DATE)
+
 	@Column
+	@Temporal(TemporalType.DATE)
 	private Date date;
-	
+
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "userComment")
 	private UserCustom user;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 	
+	@JsonBackReference
 	@OneToOne
-	@JoinColumn(name="invoiceDetail")
+	@JoinColumn(name = "invoiceDetail")
 	private InvoiceDetail invoiceDetail;
+
 }
