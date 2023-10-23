@@ -22,8 +22,8 @@ public interface UserCustomDAO extends JpaRepository<UserCustom, String> {
 //	// Tìm kiếm người dùng dựa trên họ tên
 //	UserCustom findByFullname(String fullname);
 //
-//	// Tìm kiếm người dùng dựa trên trạng thái is_del
-//	List<UserCustom> findByDel(boolean _del);
+	// Tìm kiếm người dùng dựa trên trạng thái is_del
+	List<UserCustom> findByDel(boolean _del);
 //
 //	// Tìm kiếm người dùng dựa trên vai trò
 //	List<UserCustom> findByRole(Role role);

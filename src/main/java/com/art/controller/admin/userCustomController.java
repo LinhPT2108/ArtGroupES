@@ -117,7 +117,7 @@ public class userCustomController {
 	}
 
 	@RequestMapping("/userCustom/delete/{userId}")
-	public String updateUserCustom(@PathVariable("userId") String userId, Model model) {
+	public String deleteUserCustom(@PathVariable("userId") String userId, Model model,@ModelAttribute("userCustom") UserCustom userCustom) {
 		List<Role> listRole = roleDAO.findAll();
 		model.addAttribute("views", "userCustom-form");
 		model.addAttribute("title", "Quản lí tài khoản");
@@ -125,7 +125,8 @@ public class userCustomController {
 		model.addAttribute("updateButton", "Cập nhật");
 		model.addAttribute("deleteButton", "Xóa");
 		model.addAttribute("roles", listRole);
-		userCustomDAO.deleteById(userId);
+		userCustom.setDel(false);
+		userCustomDAO.save(userCustom);
 		return "redirect:/admin/userCustom";
 	}
 }
