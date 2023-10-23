@@ -15,7 +15,7 @@ INSERT INTO dbo.user_custom
           role ,
           user_id
         )
-VALUES  ( 1 , -- is_del - bit
+VALUES  ( 0 , -- is_del - bit
           'linhptpc04737@fpt.edu.vn' , -- email - varchar(255)
           N'Phan Tuấn Linh' , -- fullname - nvarchar(255)
           'linhptpc04737.png' , -- image - varchar(255)
@@ -23,7 +23,7 @@ VALUES  ( 1 , -- is_del - bit
           'user' , -- role - varchar(255)
           'linhptpc04737'  -- user_id - varchar(255)
         ),
-		( 1 , -- is_del - bit
+		( 0 , -- is_del - bit
           'nguyentcpc04750@fpt.edu.vn' , -- email - varchar(255)
           N'Trần Chí Nguyễn' , -- fullname - nvarchar(255)
           'nguyentcpc04750.png' , -- image - varchar(255)
@@ -31,7 +31,7 @@ VALUES  ( 1 , -- is_del - bit
           'admin' , -- role - varchar(255)
           'nguyentcpc04750'  -- user_id - varchar(255)
         ),
-		( 1 , -- is_del - bit
+		( 0 , -- is_del - bit
           'nhintpc04729@fpt.edu.vn' , -- email - varchar(255)
           N'Nguyễn Tấn Nhi' , -- fullname - nvarchar(255)
           'nhintpc04729.png' , -- image - varchar(255)

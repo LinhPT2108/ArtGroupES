@@ -148,50 +148,55 @@
 				</div>
 				<ul class="timeline-widget mb-0 position-relative mb-n5">
 					<c:forEach var="item" items="${invoice}" varStatus="loop">
-						<li class="timeline-item d-flex position-relative overflow-hidden">
-							<div class="timeline-time text-dark flex-shrink-0 text-end">
-								<fmt:formatDate value="${item.invoiceDate}" pattern="dd/MM/yyyy" />
-							</div>
-							<div
-								class="timeline-badge-wrap d-flex flex-column align-items-center">
-								<c:choose>
-									<c:when test="${loop.index == 1}">
-										<span
-											class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
-									</c:when>
-									<c:when test="${loop.index  == 2}">
-										<span
-											class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
-									</c:when>
-									<c:when test="${loop.index  == 3}">
-										<span
-											class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-									</c:when>
-									<c:when test="${loop.index  == 4}">
-										<span
-											class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
-									</c:when>
-									<c:when test="${loop.index  == 5}">
-										<span
-											class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
-									</c:when>
-									<c:otherwise>
-										<span
-											class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-									</c:otherwise>
-								</c:choose>
+						<c:if test="${loop.index < 6}">
+							<li
+								class="timeline-item d-flex position-relative overflow-hidden">
+								<div class="timeline-time text-dark flex-shrink-0 text-end">
+									<fmt:formatDate value="${item.invoiceDate}"
+										pattern="dd/MM/yyyy" />
+								</div>
+								<div
+									class="timeline-badge-wrap d-flex flex-column align-items-center">
+									<c:choose>
+										<c:when test="${loop.index == 1}">
+											<span
+												class="timeline-badge border-2 border border-primary flex-shrink-0 my-8"></span>
+										</c:when>
+										<c:when test="${loop.index  == 2}">
+											<span
+												class="timeline-badge border-2 border border-info flex-shrink-0 my-8"></span>
+										</c:when>
+										<c:when test="${loop.index  == 3}">
+											<span
+												class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
+										</c:when>
+										<c:when test="${loop.index  == 4}">
+											<span
+												class="timeline-badge border-2 border border-danger flex-shrink-0 my-8"></span>
+										</c:when>
+										<c:when test="${loop.index  == 5}">
+											<span
+												class="timeline-badge border-2 border border-warning flex-shrink-0 my-8"></span>
+										</c:when>
+										<c:otherwise>
+											<span
+												class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
+										</c:otherwise>
+									</c:choose>
 
-								<span class="timeline-badge-border d-block flex-shrink-0"></span>
-							</div>
-							<div class="timeline-desc fs-3 text-dark mt-n1">
-								KH: <span class="text-dark fw-bolder fs-3">${item.user.fullname }</span>
-								đặt đơn trị giá
-								<fmt:setLocale value="vi_VN" />
-								<span class="text-danger fw-bolder fs-3"><fmt:formatNumber
-										value="${item.totalAmount}" type="currency" currencyCode="VND"
-										maxFractionDigits="0" minFractionDigits="0" /></span>
-							</div>
-						</li>
+									<span class="timeline-badge-border d-block flex-shrink-0"></span>
+								</div>
+								<div class="timeline-desc fs-3 text-dark mt-n1">
+									KH: <span class="text-dark fw-bolder fs-3">${item.user.fullname }</span>
+									đặt đơn trị giá
+									<fmt:setLocale value="vi_VN" />
+									<span class="text-danger fw-bolder fs-3"><fmt:formatNumber
+											value="${item.totalAmount}" type="currency"
+											currencyCode="VND" maxFractionDigits="0"
+											minFractionDigits="0" /></span>
+								</div>
+							</li>
+						</c:if>
 					</c:forEach>
 				</ul>
 			</div>
@@ -232,7 +237,7 @@
 										<td class="border-bottom-0">
 											<p class="mb-0 fw-normal">${bestSeller[1]}</p>
 										</td>
-										
+
 										<td class="border-bottom-0">
 											<h6 class="fw-semibold mb-0 fs-4 text-danger">
 												<fmt:setLocale value="vi_VN" />
@@ -253,7 +258,6 @@
 	</div>
 </div>
 <div class="py-6 px-6 text-center">
-	<p class="mb-0 fs-4 fw-bold">
-		ArtGroupES &copy by FPT Polytechnic Cần Thơ
-	</p>
+	<p class="mb-0 fs-4 fw-bold">ArtGroupES &copy by FPT Polytechnic
+		Cần Thơ</p>
 </div>

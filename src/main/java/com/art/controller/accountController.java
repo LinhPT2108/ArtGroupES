@@ -80,9 +80,11 @@ public class accountController {
 		Boolean rm = paramService.getBoolean("chkRemember", false);
 		System.out.println(email + " - " + password + " - " + rm);
 		try {
-			
 			UserCustom user = usDAO.findByEmail(email).get(0);
-			if (user.isDel()) {
+			System.out.println("opass: "+user.getPassword());
+			System.out.println("opass: "+ PasswordEncryption.toSHA1(password));
+			System.out.println(user.isDel());
+			if (!user.isDel()) {
 				if ( PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
 					sessionService.set("userLogin", user);
 					if (rm) {
