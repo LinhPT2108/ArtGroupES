@@ -66,6 +66,9 @@ public class UserCustom {
 	private String email;
 	
 	@Column
+	private String verifyCode;
+	
+	@Column
 	private boolean del;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)

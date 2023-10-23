@@ -37,7 +37,9 @@ import com.art.Entities.Activity.Comment;
 import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.User.InforAddress;
 import com.art.Entities.User.UserCustom;
+import com.art.model.MailInfo;
 import com.art.service.CookieService;
+import com.art.service.MailerServiceImpl;
 import com.art.service.ParamService;
 import com.art.service.PasswordEncryption;
 import com.art.service.SessionService;
@@ -65,6 +67,8 @@ public class accountController {
 	InvoiceDetailDAO invoiceDetailDAO;
 	@Autowired
 	RoleDAO roleDAO;
+	@Autowired
+	MailerServiceImpl mailService;
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -81,11 +85,11 @@ public class accountController {
 		System.out.println(email + " - " + password + " - " + rm);
 		try {
 			UserCustom user = usDAO.findByEmail(email).get(0);
-			System.out.println("opass: "+user.getPassword());
-			System.out.println("opass: "+ PasswordEncryption.toSHA1(password));
+			System.out.println("opass: " + user.getPassword());
+			System.out.println("opass: " + PasswordEncryption.toSHA1(password));
 			System.out.println(user.isDel());
 			if (!user.isDel()) {
-				if ( PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
+				if (PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
 					sessionService.set("userLogin", user);
 					if (rm) {
 						cookieService.add("LGemail", email, 12);
@@ -153,15 +157,66 @@ public class accountController {
 			us.setDel(true);
 			us.setRoleName(roleDAO.getById("user"));
 			try {
+				String verify = PasswordEncryption.getRandomString(8);
 				us.setPassword(PasswordEncryption.toSHA1(us.getPassword()));
+				us.setVerifyCode(verify);
 				usDAO.save(us);
+				sessionService.set("userRegister", us);
+				mailService.sendVerify(new MailInfo(us.getEmail(), "Xác nhận tài khoản ArtGroupES", "Chào mừng bạn đến với ART GROUP EST.2023. Đây là mã xác nhận của bạn: "+verify));
 			} catch (Exception e) {
-				// TODO: handle exception
 				return ResponseEntity.ok("fail");
 			}
 		}
-
 		return ResponseEntity.ok("success");
+	}
+
+	@GetMapping("/verify-code")
+	public String verify(Model model) {
+		model.addAttribute("title", "Xác thực tài khoản");
+		model.addAttribute("userRegister", sessionService.get("sessionService"));
+		return "verify";
+	}
+
+	@PostMapping("/verify-code/{id}")
+	public ResponseEntity<?> verifyCode(@Valid @PathVariable("id") String id, @ModelAttribute("verifyCode") String code,
+			BindingResult rs, Model model) {
+		Map<String, String> errors = new HashMap<>();
+		UserCustom user = usDAO.getOne(id);
+		System.out.println("user: " + user.getFullname());
+		System.out.println("code: " + code);
+		if (user != null) {
+			if (!user.getVerifyCode().equalsIgnoreCase(code)) {
+				errors.put("verifyCode", "Mã xác nhận không đúng !");
+			}
+
+			System.out.println("code 1: " + code);
+			if (rs.hasErrors()) {
+				for (FieldError error : rs.getFieldErrors()) {
+					errors.put(error.getField(), error.getDefaultMessage());
+				}
+
+				System.out.println("code e: " + code);
+				return ResponseEntity.ok(errors);
+			}
+			if (!errors.isEmpty()) {
+				System.out.println("code e: " + code);
+				return ResponseEntity.ok(errors);
+			} else {
+				if (user.getVerifyCode().equalsIgnoreCase(code)) {
+					user.setVerifyCode("");
+					user.setDel(false);
+					System.out.println("code: " + code);
+					try {
+						usDAO.save(user);
+					} catch (Exception e) {
+						return ResponseEntity.ok("fail");
+					}
+				}
+			}
+			return ResponseEntity.ok("success");
+		} else {
+			return ResponseEntity.ok("fail");
+		}
 	}
 
 	@GetMapping(value = "/profile")
@@ -355,9 +410,9 @@ public class accountController {
 			model.addAttribute("title", "Đơn hàng đang đuọc xử lí");
 		} else if (type == 2) {
 			model.addAttribute("title", "Đơn hàng đang giao hàng");
-		} else if(type==3){
+		} else if (type == 3) {
 			model.addAttribute("title", "Đơn hàng đã hoàn thành");
-		}else {
+		} else {
 			model.addAttribute("title", "Đơn hàng hủy");
 		}
 		model.addAttribute("views", "purchasedOrder");

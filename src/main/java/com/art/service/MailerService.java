@@ -13,6 +13,8 @@ public interface MailerService {
 	 */
 	void send(MailInfo mail) throws MessagingException;
 
+	void sendVerify(MailInfo mail) throws MessagingException;
+
 	/**
 	 * Gửi email đơn giản
 	 * 

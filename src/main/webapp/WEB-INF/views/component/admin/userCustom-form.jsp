@@ -41,10 +41,10 @@
 						<form:errors path="password" cssClass="text-danger"></form:errors>
 					</div>
 					<div class="col-12 mb-3">
-					<form:label path="del" cssClass="form-label">Trạng thái:</form:label>
-						<form:radiobutton path="del" value="true" label="Đang hoạt động"/>
-						<form:radiobutton path="del" value="false" label="Ngưng hoạt động"/>
-					<form:errors path="del" cssClass="text-danger"></form:errors>
+						<form:label path="del" cssClass="form-label">Trạng thái:</form:label>
+						<form:radiobutton path="del" value="false" label="Đang hoạt động" />
+						<form:radiobutton path="del" value="true" label="Đã bị khóa" />
+						<form:errors path="del" cssClass="text-danger"></form:errors>
 					</div>
 				</div>
 				<div class="col-12">
@@ -72,36 +72,34 @@
 	</form:form>
 	<hr>
 	<br>
-	<div class="row">
-		<div class="col-xs-12 col-md-12">
-			<div class="row">
-				<table border="1" style="width: 100%">
+	<div class="table-responsive">
+		<table id="statisticalTable" class="table table-hover">
+			<thead>
+				<tr>
+					<th>Email</th>
+					<th>Fullname</th>
+					<th>Role</th>
+					<th>Image</th>
+					<th>Trạng thái</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="userCustom" items="${userCustoms}">
 					<tr>
-						<th>Email</th>
-						<th>Fullname</th>
-						<th>Role</th>
-						<th>Image</th>
-						<th>Trạng thái</th>
-						<th></th>
+						<td>${userCustom.email}</td>
+						<td>${userCustom.fullname}</td>
+						<td>${userCustom.roleName.roleName}</td>
+						<td>${userCustom.image}</td>
+						<td><c:choose>
+								<c:when test="${userCustom.del == true}">Đã bị khóa</c:when>
+								<c:otherwise>Đang hoạt động</c:otherwise>
+							</c:choose></td>
+						<td><a href="/admin/userCustom/edit/${userCustom.userId}">Edit</a></td>
 					</tr>
-					<c:forEach var="userCustom" items="${userCustoms}">
-						<tr>
-							<td>${userCustom.email}</td>
-							<td>${userCustom.fullname}</td>
-							<td>${userCustom.roleName.roleName}</td>
-							<td>${userCustom.image}</td>
-							<td>
-								<c:choose>
-									<c:when test="${userCustom.del == true}">Đang hoạt động</c:when>
-									<c:otherwise>Ngưng hoạt động</c:otherwise>
-								</c:choose>
-							</td>	
-							<td><a href="/admin/userCustom/edit/${userCustom.userId}">Edit</a></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
-		</div>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 
 </div>
