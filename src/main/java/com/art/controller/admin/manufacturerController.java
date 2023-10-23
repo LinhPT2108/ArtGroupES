@@ -68,24 +68,23 @@ public class manufacturerController {
 		return "redirect:/admin/manufacturer";
 	}
 
-	@PostMapping("/manufacturer/update")
+	@RequestMapping("/manufacturer/update")
 	public String updateManufacturer(@ModelAttribute("mn") Manufacturer mn) {
 		UserCustom user = sessionService.get("userLogin");
 		mn.setUser(user);
+		mn.setDel(true);
 		mnDAO.save(mn);
 		return "redirect:/admin/manufacturer";
 	}
+	
+	@RequestMapping("/manufacturer/delete")
+	public String delete(@ModelAttribute("mn") Manufacturer mn) {
 
-	@RequestMapping("/manufacturer/delete/{id}")
-	public String create(@ModelAttribute("mn") Manufacturer mn, @PathVariable("id") Integer id, Model model) {
-		model.addAttribute("views", "manufacturer-form");
-		model.addAttribute("title", "Phân loại sản phẩm");
-
-		mn = mnDAO.findById(id).get();
-		model.addAttribute("mn", mn);
-		List<Manufacturer> mns = mnDAO.findAll();
-		model.addAttribute("mns", mns);
-		manufacturerReponsitory.deleteById(id);
+		UserCustom user = sessionService.get("userLogin");
+		mn.setUser(user);
+		mn.setDel(false);
+		mnreps.save(mn);
 		return "redirect:/admin/manufacturer";
 	}
+	
 }

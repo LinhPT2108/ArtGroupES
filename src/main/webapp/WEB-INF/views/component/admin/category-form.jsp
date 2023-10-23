@@ -21,8 +21,7 @@
 
 				<button formaction="/admin/category/create" class="btn btn-primary">Create</button>
 				<button formaction="/admin/category/update" class="btn btn-warning">Update</button>
-				<button formaction="/admin/category/delete/${categoryId}"
-					class="btn btn-danger">Delete</button>
+				<button formaction="/admin/category/delete" class="btn btn-danger">Delete</button>
 				<a href="/admin/category" class="btn btn-info">Reset</a>
 			</div>
 		</div>

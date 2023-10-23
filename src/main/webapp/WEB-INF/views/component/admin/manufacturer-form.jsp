@@ -17,14 +17,12 @@
 						path="manufacturerName" autocomplete="none"
 						placeholder="Vui lòng nhập tên thương hiệu"></form:input>
 				</div>
+
 			</div>
 			<div class="col-12">
-				<button formaction="/admin/manufacturer/create"
-					class="btn btn-primary">Create</button>
-				<button formaction="/admin/manufacturer/update"
-					class="btn btn-warning">Update</button>
-				<button formaction="/admin/manufacturer/delete/${id}"
-					class="btn btn-danger">Delete</button>
+				<button formaction="/admin/manufacturer/create" class="btn btn-primary">Create</button>
+				<button formaction="/admin/manufacturer/update" class="btn btn-warning">Update</button>
+				<button formaction="/admin/manufacturer/delete" class="btn btn-danger">Delete</button>
 				<a href="/admin/manufacturer" class="btn btn-info">Reset</a>
 			</div>
 		</div>
