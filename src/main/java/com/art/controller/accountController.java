@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-import org.eclipse.tags.shaded.org.apache.bcel.generic.I2F;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -180,15 +179,68 @@ public class accountController {
 			us.setDel(true);
 			us.setRoleName(roleDAO.getById("user"));
 			try {
+				String verify = PasswordEncryption.getRandomString(8);
 				us.setPassword(PasswordEncryption.toSHA1(us.getPassword()));
+				us.setVerifyCode(verify);
 				usDAO.save(us);
+				sessionService.set("userRegister", us);
+				mailer.sendVerify(new MailInfo(us.getEmail(), "Xác nhận tài khoản ArtGroupES",
+						"Chào mừng bạn đến với ART GROUP EST.2023. Đây là mã xác nhận của bạn: " + verify));
 			} catch (Exception e) {
-				// TODO: handle exception
 				return ResponseEntity.ok("fail");
 			}
 		}
 
 		return ResponseEntity.ok("success");
+	}
+
+	@GetMapping("/verify-code")
+	public String verify(Model model) {
+		model.addAttribute("title", "Xác thực tài khoản");
+		model.addAttribute("userRegister", sessionService.get("sessionService"));
+		return "verify";
+	}
+
+	@PostMapping("/verify-code/{id}")
+	public ResponseEntity<?> verifyCode(@Valid @PathVariable("id") String id, @ModelAttribute("verifyCode") String code,
+			BindingResult rs, Model model) {
+		Map<String, String> errors = new HashMap<>();
+		UserCustom user = usDAO.getOne(id);
+		System.out.println("user: " + user.getFullname());
+		System.out.println("code: " + code);
+		if (user != null) {
+			if (!user.getVerifyCode().equalsIgnoreCase(code)) {
+				errors.put("verifyCode", "Mã xác nhận không đúng !");
+			}
+
+			System.out.println("code 1: " + code);
+			if (rs.hasErrors()) {
+				for (FieldError error : rs.getFieldErrors()) {
+					errors.put(error.getField(), error.getDefaultMessage());
+				}
+
+				System.out.println("code e: " + code);
+				return ResponseEntity.ok(errors);
+			}
+			if (!errors.isEmpty()) {
+				System.out.println("code e: " + code);
+				return ResponseEntity.ok(errors);
+			} else {
+				if (user.getVerifyCode().equalsIgnoreCase(code)) {
+					user.setVerifyCode("");
+					user.setDel(false);
+					System.out.println("code: " + code);
+					try {
+						usDAO.save(user);
+					} catch (Exception e) {
+						return ResponseEntity.ok("fail");
+					}
+				}
+			}
+			return ResponseEntity.ok("success");
+		} else {
+			return ResponseEntity.ok("fail");
+		}
 	}
 
 	@GetMapping(value = "/profile")
@@ -422,7 +474,7 @@ public class accountController {
 
 		Sort sort = Sort.by(Direction.DESC, "wishlistDate");
 		Pageable pageable = PageRequest.of(p.orElse(0), 8, sort);
-		
+
 		model.addAttribute("listProduct", wishListDAO.findByUser(userCustom, pageable));
 
 		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
