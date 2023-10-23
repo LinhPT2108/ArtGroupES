@@ -2,142 +2,143 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <div class="content-profile">
 	<div
 		class="title  border border-right-0 border-top-0 border-left-0 py-2">
 		<span class="display-6">${title }</span>
 	</div>
-	<div class="filter-listProduct p-3 mt-3">
-		<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
-			<div class="filter-title mb-2">
-				<span class=" font-weight-bold display-6"><i class="bi bi-funnel"></i>Bộ lọc|
-					</span>
-			</div>
-			<div class="filter-brand mb-2">
-				<div class="dropdown">
-					<button
-						class="btn btn-default border fw-bold dropdown-toggle text-nowrap"
-						type="button" id="dropdownMenuButton1" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">Thương hiệu</button>
-					<ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton1">
-						<%-- <c:forEach var="mn" items="${listManufacturer}">
-							<li class=""><input
-								class="form-check-input filter-checkbox brand-checkbox"
-								type="checkbox" value="${mn.manufacturer_name }"
-								id="${mn.manufacturer_name }"> <label
-								class="form-check-label" for="${mn.manufacturer_name }">${mn.manufacturer_name}</label></li>
-						</c:forEach> --%>
-						<c:forEach begin="1" end="5" varStatus="i">
-							<li class="px-4"><input
-								class="form-check-input filter-checkbox brand-checkbox"
-								type="checkbox" value="${mn.manufacturer_name }" id="${i.index}">
-								<label class="form-check-label" for="${i.index}">${mn.manufacturer_name}vidu</label></li>
-						</c:forEach>
-					</ul>
-				</div>
-			</div>
-			<div class="filter-category mb-2">
-				<div class="dropdown">
-					<button
-						class="btn btn-default border fw-bold dropdown-toggle text-nowrap "
-						type="button" id="dropdownMenuButton2" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">Phân loại</button>
-					<ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton2">
-						<%-- <c:forEach var="ca" items="${listCategory}">
-							<li class=""><input
-								class="form-check-input filter-checkbox category-checkbox"
-								type="checkbox" value="${ca.category_name }"
-								id="${ca.category_name }"> <label
-								class="form-check-label" for="${ca.category_name}">${ca.category_name }</label></li>
-						</c:forEach> --%>
-						<c:forEach begin="1" end="5" varStatus="i">
-							<li class="px-4"><input
-								class="form-check-input filter-checkbox brand-checkbox"
-								type="checkbox" value="${mn.manufacturer_name }" id="${i.index+5}">
-								<label class="form-check-label" for="${i.index+5}">${mn.manufacturer_name}vidu2</label></li>
-						</c:forEach>
-					</ul>
-				</div>
-			</div>
-			<div class="filter-price mb-2">
-				<div class="dropdown">
-					<button
-						class="btn btn-default border fw-bold dropdown-toggle text-nowrap "
-						type="button" id="dropdownMenuButton3" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">Lọc giá</button>
-					<ul class="dropdown-menu p-2 menu-filter-price" aria-labelledby="dropdownMenuButton3">
-						<li class="px-4"><input
-							class="form-check-input filter-checkbox price-checkbox"
-							type="checkbox" value="200000" id="checkbox1"> <label
-							class="form-check-label" for="checkbox1">Dưới 200.000 đ</label></li>
-						<li class="mt-2 px-4"><input
-							class="form-check-input filter-checkbox price-checkbox"
-							type="checkbox" value="400000" id="checkbox2"> <label
-							class="form-check-label" for="checkbox2">Dưới 400.000 đ</label></li>
-						<li class="mt-2 px-4"><input
-							class="form-check-input filter-checkbox price-checkbox"
-							type="checkbox" value="600000" id="checkbox3"> <label
-							class="form-check-label" for="checkbox3">Dưới 600.000 đ</label></li>
-						<li class="mt-2 px-4"><input
-							class="form-check-input filter-checkbox price-checkbox"
-							type="checkbox" value="800000" id="checkbox4"> <label
-							class="form-check-label" for="checkbox4">Dưới 800.000 đ</label></li>
-					</ul>
-				</div>
-			</div>
-			<div class="filter-sort mb-2" >
-				<select class="form-select font-weight-bold pt-2 m-0" id="sort-select"
-					aria-label="Default select example">
-					<option selected value="">Sắp xếp</option>
-					<option value="0">Giá: tăng dần</option>
-					<option value="1">Giá: giảm dần</option>
-					<option value="2">Tên: A - Z</option>
-					<option value="3">Tên: Z - A</option>
-				</select>
-			</div>
-		</div>
-	</div>
-	<div class="row list-wish">
-		<c:forEach begin="1" end="7">
-			<div class="col-xl-3 col-lg-4 col-md-4 col-12">
-				<div class="single-product border">
-					<div class="product-img">
-						<a href="product-details.html"> <img class="default-img"
-							src="https://via.placeholder.com/550x750" alt="#"> <img
-							class="hover-img" src="https://via.placeholder.com/550x750"
-							alt="#">
-						</a>
-						<div class="button-head">
-							<div class="product-action">
-								<a data-toggle="modal" data-target="#exampleModal"
-									title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick
-										Shop</span></a> <a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add
-										to Wishlist</span></a> <a title="Compare" href="#"><i
-									class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
-							</div>
-							<div class="product-action-2">
-								<a title="Add to cart" href="#">Add to cart</a>
-							</div>
-						</div>
-					</div>
-					<div class="product-content p-2 pt-0 mt-0">
-						<h3 class="text-truncate">
-							<a href="product-details.html"
-								style="max-width: 177px; text-wrap: wrap">Polo Dress For
-								Wome13132311qweqeqwqwnme13132311qweqeqwqw</a>
-						</h3>
-						<div class="product-price">
-							<span>$29.00</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</c:forEach>
 
+	<div class="row list-wish">
+		<c:forEach items="${listProduct.content }" var="p" varStatus="ic">
+			<c:if test="${!p.product.del}">
+				<div class="col-xl-3 col-lg-4 col-md-4 col-12">
+					<div class="single-product h-100">
+						<div class="product-img">
+							<a href="/products/${p.product.productId}"> <img
+								class="default-img"
+								src="../images/products/${p.product.productImage[0].image }"
+								alt="${p.product.productName }" height="190" width="250">
+								<img class="hover-img"
+								src="../images/products/${p.product.productImage[1].image }"
+								alt="${p.product.productName }" height="190" width="250">
+								<c:set var="foundFlashSale" value="false" /> <c:set
+									var="priceDiscount" value="0" /> <c:forEach var="f"
+									items="${listPdFlashsale}">
+									<c:choose>
+										<c:when test="${f.product.productId == p.product.productId}">
+											<div>
+												<span class="out-of-stock">Giảm <fmt:formatNumber
+														type="number" pattern="###,###,###"
+														value="${(p.product.price - f.discountedPrice)/p.product.price *100}" />%
+												</span>
+											</div>
+
+											<c:set var="foundFlashSale" value="true" />
+											<c:set var="priceDiscount" value="${f.discountedPrice }" />
+										</c:when>
+									</c:choose>
+								</c:forEach> <c:if test="${p.product.quantityInStock==0 }">
+									<span class="out-of-stock">Tạm hết hàng</span>
+								</c:if>
+							</a>
+							<div class="button-head">
+								<div class="product-action">
+									<a data-toggle="modal" data-target="#quickProductModal"
+										title="Quick View" href="#" class="quickViews"
+										data-product-id="${p.product.productId}"><i
+										class=" ti-eye"></i><span>Xem nhanh</span></a>
+									<c:set var="checkLike" value="false"></c:set>
+									<c:forEach items="${likeList }" var="l" varStatus="i">
+										<c:if test="${l.product.productId == p.product.productId }">
+											<c:set var="checkLike" value="true"></c:set>
+										</c:if>
+									</c:forEach>
+									<c:choose>
+										<c:when test="${checkLike }">
+											<a title="Wishlist" href="#" class="siteLikeProduct"
+												data-product-id="${p.product.productId}"
+												data-user-id="${userLogin.userId}"><i
+												class="bi-heart-fill"></i><span class="title-like">Xóa
+													yêu thích</span></a>
+										</c:when>
+										<c:otherwise>
+											<a title="Wishlist" href="#" class="siteLikeProduct"
+												data-product-id="${p.product.productId}"
+												data-user-id="${userLogin.userId}"><i class="bi-heart"></i><span
+												class="title-like">Thêm vào yêu thích</span></a>
+										</c:otherwise>
+									</c:choose>
+
+								</div>
+								<div class="product-action-2">
+									<a title="Add to cart" href="#" class="addToCart"
+										data-product-id="${p.product.productId}"
+										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a>
+								</div>
+							</div>
+						</div>
+						<div class="product-content">
+							<h3 class="card-title" style="height: 48px">
+								<a class="card-title" href="/products/${p.product.productId }">${p.product.productName }</a>
+							</h3>
+							<div class="product-price">
+
+								<c:if test="${!foundFlashSale}">
+									<span class="text-danger fw-bold"> <fmt:formatNumber
+											type="number" pattern="###,###,###"
+											value="${p.product.price}" /> đ
+									</span>
+								</c:if>
+								<c:if test="${foundFlashSale }">
+									<span class="text-decoration-line-through"
+										style="text-decoration: line-through;"> <fmt:formatNumber
+											type="number" pattern="###,###,###"
+											value="${p.product.price}" /> đ
+									</span>
+									<span class="text-danger font-weight-bold"> <fmt:formatNumber
+											type="number" pattern="###,###,###" value="${priceDiscount}" />
+										đ
+									</span>
+								</c:if>
+							</div>
+						</div>
+					</div>
+				</div>
+			</c:if>
+		</c:forEach>
 	</div>
+	<c:if test="${listProduct.totalPages>1 }">
+		<div class="paganation-site">
+			<nav aria-label="..." class="">
+				<ul
+					class="pagination d-flex justify-content-center align-items-center">
+					<li class="page-item ${listProduct.number==0?'disabled':'' }"><a
+						class="page-link" href="?p=${listProduct.number-1}" tabindex="-1"><i
+							class="ti ti-arrow-left"></i></a></li>
+					<li class="page-item active"><a class="page-link"
+						href="?p=${listProduct.number }">${listProduct.number+1}</a></li>
+
+					<li
+						class="page-item ${listProduct.number+1==listProduct.totalPages?'disabled':'' }"><a
+						class="page-link " href="?p=${listProduct.number+1 }"><i
+							class="ti ti-arrow-right"></i></a></li>
+					<li class="ml-3 choose-page"><select name="selectedPage mb-0"
+						id="selectedPage">
+							<option value="">--Chọn trang--</option>
+							<c:forEach begin="1" end="${listProduct.totalPages }"
+								varStatus="i" var="page">
+								<option value="${i.index}" class="option-page">${i.index}</option>
+							</c:forEach>
+					</select></li>
+				</ul>
+			</nav>
+		</div>
+	</c:if>
 
 	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="quickProductModal" tabindex="-1"
+		role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -148,70 +149,41 @@
 				</div>
 				<div class="modal-body">
 					<div class="row no-gutters">
-						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
-							<!-- Product Slider -->
-							<div class="product-gallery">
-								<div class="quickview-slider-active">
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-									<div class="single-slider">
-										<img src="https://via.placeholder.com/569x528" alt="#">
-									</div>
-								</div>
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+							<div id="carouselExampleIndicators" class="carousel slide"
+								data-ride="carousel">
+								<div class="carousel-inner"></div>
+								<a class="carousel-control-prev"
+									href="#carouselExampleIndicators" role="button"
+									data-slide="prev"> <span class="carousel-control-prev-icon"
+									aria-hidden="true"></span> <span class="sr-only">Previous</span>
+								</a> <a class="carousel-control-next"
+									href="#carouselExampleIndicators" role="button"
+									data-slide="next"> <span class="carousel-control-next-icon"
+									aria-hidden="true"></span> <span class="sr-only">Next</span>
+								</a>
 							</div>
 							<!-- End Product slider -->
 						</div>
-						<div class="col-lg-6 col-md-12 col-sm-12 col-12">
+						<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
 							<div class="quickview-content">
-								<h2>Flared Shift Dress</h2>
+								<h2 class="" id="quick-title-product"></h2>
 								<div class="quickview-ratting-review">
-									<div class="quickview-ratting-wrap">
+									<!-- <div class="quickview-ratting-wrap">
 										<div class="quickview-ratting">
 											<i class="yellow fa fa-star"></i> <i
 												class="yellow fa fa-star"></i> <i class="yellow fa fa-star"></i>
 											<i class="yellow fa fa-star"></i> <i class="fa fa-star"></i>
 										</div>
 										<a href="#"> (1 customer review)</a>
-									</div>
+									</div> -->
 									<div class="quickview-stock">
-										<span><i class="fa fa-check-circle-o"></i> in stock</span>
+										<span id="qtyStock"></span>
 									</div>
 								</div>
-								<h3>$29.00</h3>
-								<div class="quickview-peragraph">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing
-										elit. Mollitia iste laborum ad impedit pariatur esse optio
-										tempora sint ullam autem deleniti nam in quos qui nemo ipsum
-										numquam.</p>
-								</div>
-								<div class="size">
-									<div class="row">
-										<div class="col-lg-6 col-12">
-											<h5 class="title">Size</h5>
-											<select>
-												<option selected="selected">s</option>
-												<option>m</option>
-												<option>l</option>
-												<option>xl</option>
-											</select>
-										</div>
-										<div class="col-lg-6 col-12">
-											<h5 class="title">Color</h5>
-											<select>
-												<option selected="selected">orange</option>
-												<option>purple</option>
-												<option>black</option>
-												<option>pink</option>
-											</select>
-										</div>
-									</div>
+								<div class="d-flex" id="review-product-price"></div>
+								<div class="quickview-peragraph mb-3" id="quickview-description">
+
 								</div>
 								<div class="quantity">
 									<!-- Input Order -->
@@ -222,7 +194,7 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input type="text" name="quant[1]" class="input-number"
+										<input type="text" name="quant[1]" class="input-number qty"
 											data-min="1" data-max="1000" value="1">
 										<div class="button plus">
 											<button type="button" class="btn btn-primary btn-number"
@@ -234,11 +206,14 @@
 									<!--/ End Input Order -->
 								</div>
 								<div class="add-to-cart">
-									<a href="#" class="btn">Add to cart</a> <a href="#"
-										class="btn min"><i class="ti-heart"></i></a> <a href="#"
-										class="btn min"><i class="fa fa-compress"></i></a>
+									<a href="#" class="btn addToCart" data-product-id=""
+										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a>
+									<!-- <a
+										href="#" class="btn min"><i class="ti-heart"></i></a> -->
+									<!--  <a href="#"
+										class="btn min"><i class="fa fa-compress"></i></a> -->
 								</div>
-								<div class="default-social">
+								<!-- <div class="default-social">
 									<h4 class="share-now">Share:</h4>
 									<ul>
 										<li><a class="facebook" href="#"><i
@@ -250,7 +225,7 @@
 										<li><a class="dribbble" href="#"><i
 												class="fa fa-google-plus"></i></a></li>
 									</ul>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</div>

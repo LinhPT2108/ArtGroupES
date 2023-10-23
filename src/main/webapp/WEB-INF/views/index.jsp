@@ -316,16 +316,16 @@
 																								class="siteLikeProduct"
 																								data-product-id="${p.productId}"
 																								data-user-id="${userLogin.userId}"><i
-																								class="bi-heart-fill"></i><span>Thêm vào
-																									yêu thích</span></a>
+																								class="bi-heart-fill"></i><span
+																								class="title-like">Xóa yêu thích</span></a>
 																						</c:when>
 																						<c:otherwise>
 																							<a title="Wishlist" href="#"
 																								class="siteLikeProduct"
 																								data-product-id="${p.productId}"
 																								data-user-id="${userLogin.userId}"><i
-																								class="bi-heart"></i><span>Thêm vào yêu
-																									thích</span></a>
+																								class="bi-heart"></i><span class="title-like">Thêm
+																									vào yêu thích</span></a>
 																						</c:otherwise>
 																					</c:choose>
 
@@ -747,7 +747,8 @@
 								</div>
 								<div class="add-to-cart">
 									<a href="#" class="btn addToCart" data-product-id=""
-										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a> <!-- <a
+										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a>
+									<!-- <a
 										href="#" class="btn min"><i class="ti-heart"></i></a> -->
 									<!--  <a href="#"
 										class="btn min"><i class="fa fa-compress"></i></a> -->

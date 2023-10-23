@@ -252,7 +252,7 @@ function removeCartItem(cartId, buttonElement) {
 			let method = 'POST';
 
 			$.ajax({
-				url: 'cart/remove/' + cartId,
+				url: '/cart/remove/' + cartId,
 				type: method,
 				success: function(response) {
 					console.log(method)

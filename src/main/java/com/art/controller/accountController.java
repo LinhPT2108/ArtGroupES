@@ -1,6 +1,7 @@
 package com.art.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,13 +29,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.art.DAO.Activity.CartDAO;
+import com.art.DAO.Activity.WishListDAO;
+import com.art.DAO.Product.ProductDAO;
+import com.art.DAO.Promotion.FlashSaleDAO;
 import com.art.DAO.Promotion.InvoiceDAO;
 import com.art.DAO.Promotion.InvoiceDetailDAO;
+import com.art.DAO.Promotion.PromotionalDetailsDAO;
 import com.art.DAO.User.InforAddressDAO;
 import com.art.DAO.User.RoleDAO;
 import com.art.DAO.User.UserCustomDAO;
 import com.art.Entities.Activity.Cart;
 import com.art.Entities.Activity.Comment;
+import com.art.Entities.Activity.WishList;
+import com.art.Entities.Promotion.FlashSale;
 import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.User.InforAddress;
 import com.art.Entities.User.UserCustom;
@@ -70,6 +77,23 @@ public class accountController {
 	RoleDAO roleDAO;
 	@Autowired
 	MailerServiceImpl mailer;
+	@Autowired
+	FlashSaleDAO lsDAO;
+	@Autowired
+	ProductDAO pdDAO;
+	@Autowired
+	PromotionalDetailsDAO pmtDAO;
+	@Autowired
+	InvoiceDetailDAO idDAO;
+	@Autowired
+	WishListDAO wishListDAO;
+
+	@ModelAttribute("likeList")
+	public List<WishList> getCategories() {
+		UserCustom userCustom = sessionService.get("userLogin");
+		List<WishList> listLike = wishListDAO.findByUser(userCustom);
+		return listLike;
+	}
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -365,6 +389,7 @@ public class accountController {
 		}
 		model.addAttribute("views", "purchasedOrder");
 		UserCustom userID = sessionService.get("userLogin");
+
 		Sort sort = Sort.by(Direction.DESC, "invoiceDate");
 		Pageable pageable = PageRequest.of(p.orElse(0), 4, sort);
 		Page<Invoice> listInvoice = ivDao.findByUserAndStatus(userID, type, pageable);
@@ -390,9 +415,38 @@ public class accountController {
 	}
 
 	@GetMapping("/wish-list")
-	public String wishList(Model model) {
+	public String wishList(Model model, @RequestParam("p") Optional<Integer> p) {
 		model.addAttribute("title", "Danh sách sản phẩm yêu thích");
 		model.addAttribute("views", "acount-product-list");
+		UserCustom userCustom = sessionService.get("userLogin");
+
+		Sort sort = Sort.by(Direction.DESC, "wishlistDate");
+		Pageable pageable = PageRequest.of(p.orElse(0), 8, sort);
+		
+		model.addAttribute("listProduct", wishListDAO.findByUser(userCustom, pageable));
+
+		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
+
+		FlashSale endDay = lsDAO.findByIsStatus(false).get(0);
+
+		model.addAttribute("now", new Date());
+		model.addAttribute("flashsale", lsDAO.findByIsStatus(false).get(0));
+		if (endDay != null) {
+			model.addAttribute("listPdFlashsale", pmtDAO.findByFlashSale_Id(endDay.getId()));
+			Date endDay1 = lsDAO.findByIsStatus(false).get(0).getEndDay();
+			System.out.println(endDay1);
+			Date now = new Date();
+			Boolean checkDayTime = endDay1.before(now) || endDay1.equals(now);
+			System.out.println(checkDayTime);
+			if (checkDayTime) {
+				model.addAttribute("checkDayTime", true);
+			} else {
+				model.addAttribute("checkDayTime", false);
+			}
+		} else {
+			model.addAttribute("checkDayTime", true);
+		}
+
 		return "account";
 	}
 
@@ -415,7 +469,7 @@ public class accountController {
 		String newPas = paramService.getString("newPass", "");
 		UserCustom userCustom = usDAO.findByEmail(email).get(0);
 		try {
-			
+
 			userCustom.setPassword(PasswordEncryption.toSHA1(newPas));
 			usDAO.save(userCustom);
 			return ResponseEntity.ok("success");

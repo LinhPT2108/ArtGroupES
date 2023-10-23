@@ -48,6 +48,7 @@
 <link rel="stylesheet" href="../../css/responsive.css">
 
 <link rel="stylesheet" href="../../css/custom-nav.css">
+<link rel="stylesheet" href="../../css/index.css">
 
 
 <script
@@ -234,10 +235,15 @@
 	<c:if test="${views =='wish-list'||views =='viewed-list'}">
 		<script src="../../js/isotope.pkgd.js"></script>
 		<script src="../../js/filter.js"></script>
+
 	</c:if>
 	<c:if test="${views =='purchasedOrder'}">
 		<script src="../../js/comment.js"></script>
 	</c:if>
+
+	<script src="../../js/choose-product.js"></script>
+	<script src="../../js/cart-script.js"></script>
+	<script src="../../js/likeProduct.js"></script>
 	<script>
 		var currentURL = window.location.pathname;
 		var allCollapses = document.querySelectorAll(".collapse");

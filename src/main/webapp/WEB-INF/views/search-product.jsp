@@ -245,7 +245,7 @@
 															<a title="Wishlist" href="#" class="siteLikeProduct"
 																data-product-id="${p.productId}"
 																data-user-id="${userLogin.userId}"><i
-																class="bi-heart-fill"></i><span>Thêm vào yêu
+																class="bi-heart-fill"></i><span>Xóa yêu
 																	thích</span></a>
 														</c:when>
 														<c:otherwise>
