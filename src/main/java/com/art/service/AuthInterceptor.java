@@ -44,11 +44,13 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	private boolean requiresAuthentication(String requestURI) {
 		return !requestURI.equals("/account/login") && !requestURI.equals("/account/register")
-				&& !requestURI.equals("/account/forgot-password") && !requestURI.equals("/account/send-code");
-	} 
+				&& !requestURI.equals("/account/forgot-password") && !requestURI.equals("/account/send-code")
+				&& !requestURI.contains("/account/verify-code");
+	}
 
 	private boolean hasAccess(UserCustom user, String requestURI) {
-		if (user.getRoleName().getRoleName().equals("admin") && !requestURI.startsWith("/checkout") && !requestURI.contains("cart")) {
+		if (user.getRoleName().getRoleName().equals("admin") && !requestURI.startsWith("/checkout")
+				&& !requestURI.contains("cart")) {
 			return true;
 		} else if (user.getRoleName().getRoleName().equals("user") && !requestURI.contains("/admin")) {
 			return true;
