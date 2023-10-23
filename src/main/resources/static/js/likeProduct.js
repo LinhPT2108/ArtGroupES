@@ -29,6 +29,7 @@ $(document).ready(function() {
 				success: function(response) {
 					if (response == 'fail') {
 						heartIcon.removeClass('bi-heart').addClass('bi-heart-fill');
+						$('.title-like').html('Xóa yêu thích');
 						console.log(response)
 						const Toast = Swal.mixin({
 							toast: true,
@@ -44,6 +45,7 @@ $(document).ready(function() {
 						})
 					} else if (response == 'success') {
 						heartIcon.removeClass('bi-heart-fill').addClass('bi-heart');
+						$('.title-like').html('Thêm vào yêu thích');
 						console.log(response)
 						const Toast = Swal.mixin({
 							toast: true,

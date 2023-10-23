@@ -229,12 +229,12 @@
 													<a title="Wishlist" href="#" class="siteLikeProduct"
 														data-product-id="${p.productId}"
 														data-user-id="${userLogin.userId}"><i
-														class="bi-heart-fill"></i><span>Thêm vào yêu thích</span></a>
+														class="bi-heart-fill"></i><span class="title-like">Xóa yêu thích</span></a>
 												</c:when>
 												<c:otherwise>
 													<a title="Wishlist" href="#" class="siteLikeProduct"
 														data-product-id="${p.productId}"
-														data-user-id="${userLogin.userId}"><i class="bi-heart"></i><span>Thêm
+														data-user-id="${userLogin.userId}"><i class="bi-heart"></i><span class="title-like">Thêm
 															vào yêu thích</span></a>
 												</c:otherwise>
 											</c:choose>

@@ -2,6 +2,8 @@ package com.art.DAO.Activity;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,8 @@ public interface WishListDAO extends JpaRepository<WishList, Integer> {
 //
 //	// Lấy tất cả các sản phẩm trong danh sách mong muốn của một người dùng
 	List<WishList> findByUser(UserCustom user);
+
+	Page<WishList> findByUser(UserCustom user,Pageable pageable);
 
 	List<WishList> findByUserAndProduct(UserCustom user, Product product);
 //
