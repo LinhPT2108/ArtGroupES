@@ -12,8 +12,10 @@
 					<!-- Top Left -->
 					<div class="top-left">
 						<ul class="list-main">
-							<li><i class="ti-headphone-alt"></i>  <a href="tel:0909123123">+84 909 123 123</a> </li>
-							<li><i class="ti-email"></i> <a href="mailto:artdevk18@gmail.com">artdevk18@gmail.com</a></li>
+							<li><i class="ti-headphone-alt"></i> <a
+								href="tel:0909123123">+84 909 123 123</a></li>
+							<li><i class="ti-email"></i> <a
+								href="mailto:artdevk18@gmail.com">artdevk18@gmail.com</a></li>
 						</ul>
 					</div>
 					<!--/ End Top Left -->
@@ -67,9 +69,10 @@
 						</div>
 						<!-- Search Form -->
 						<div class="search-top">
-							<form class="search-form">
-								<input type="text" placeholder="Search here..." name="search">
-								<button value="search" type="submit">
+							<form class="search-form" method="get" action="/product/search">
+							<input type="hidden" name="categoryId" value="-1">
+								<input type="text" placeholder="Nhập tên sản phẩm..." name="search">
+								<button type="submit">
 									<i class="ti-search"></i>
 								</button>
 							</form>
@@ -83,15 +86,16 @@
 					class="col-lg-8 col-md-7 col-12 d-md-flex justify-content-center align-items-center">
 					<div class="search-bar-top">
 						<div class="search-bar">
-							<select>
-								<option selected="selected">Danh mục</option>
-								<option>watch</option>
-								<option>mobile</option>
-								<option>kid’s item</option>
-							</select>
-							<form>
-								<input name="search" placeholder="Search Products Here....."
-									type="search">
+							<form method="get" action="/product/search">
+								<select name="categoryId">
+									<option selected="selected" value="-1">Danh mục</option>
+									<c:forEach items="${listCategories }" var="c">
+										<c:if test="${c.del }">
+											<option value="${c.categoryId }">${c.categoryName }</option>
+										</c:if>
+									</c:forEach>
+								</select> <input name="search" placeholder="Nhập tên sản phẩm cần tìm....."
+									type="search" autocomplete="off">
 								<button class="btnn">
 									<i class="ti-search"></i>
 								</button>

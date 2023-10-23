@@ -51,9 +51,7 @@ $(document).ready(function() {
 					if (priceDiscounted == '') {
 						$('#review-product-price').html('<h3 id="originalPrice" class="ml-3 text-danger" >'
 							+ originalPrice + ' đ</h3 > ')
-
 					} else {
-
 						$('#review-product-price').html('<h3 id="originalPrice" class=""><del>' + originalPrice + ' đ</del></h3>' +
 							'<h3 class="ml-3 text-danger" id="discountedPrice">' + priceDiscounted + 'đ</h3>')
 					}
@@ -82,11 +80,11 @@ $(document).ready(function() {
 				var itemClass = activeImg ? 'active' : '';
 				sliderDiv.append(
 					'<div class="carousel-item ' + itemClass + '">' +
-					'<img class="d-block w-100" src="images/products/' + image.image + '" alt="First slide">' +
+					'<img class="d-block w-100" src="../images/products/' + image.image + '" alt="First slide">' +
 					'</div>'
 				);
 				activeImg = false;
-				img.src = 'images/products/' + image.image;
+				img.src = '../images/products/' + image.image;
 			});
 
 		}

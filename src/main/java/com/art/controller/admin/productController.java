@@ -83,7 +83,7 @@ public class productController {
 
 		model.addAttribute("views", "product-form");
 		model.addAttribute("title", "Quản lí sản phẩm");
-		model.addAttribute("typeButton", "Thêm");
+		model.addAttribute("typeButton", false);
 		model.addAttribute("products", pdDAO.findByDel(false));
 
 		return "admin/index";
@@ -92,24 +92,12 @@ public class productController {
 	@PostMapping("/product")
 	public ResponseEntity<?> createProduct(@Valid @ModelAttribute("pd") Product product, BindingResult result,
 			@RequestParam("listImage") MultipartFile[] listImage, @RequestParam("descriptions") String descriptions) {
-		
+
 		Map<String, String> errors = new HashMap<>();
 		System.out.println(descriptions);
 		if (descriptions.length() == 32 || descriptions.length() == 2) {
 			errors.put("detailDecription", "Vui lòng nhập ít nhất 1 mô tả");
 		}
-//		Gson gson = new Gson();
-//		// Xử lý dữ liệu mô tả
-//		// Sử dụng TypeToken để chuyển đổi chuỗi JSON thành danh sách các đối tượng Map
-//		List<Map<String, String>> list = gson.fromJson(descriptions, new TypeToken<List<Map<String, String>>>() {
-//		}.getType());
-//
-//		// In ra danh sách
-//		for (Map<String, String> map : list) {
-//			System.out.println(123);
-//			System.out.println(map.get("tieuDe"));
-//			System.out.println(map.get("description"));
-//		}
 
 		for (MultipartFile image : listImage) {
 			if (!image.isEmpty()) {
@@ -180,4 +168,89 @@ public class productController {
 		}
 	}
 
+	@GetMapping("/product/edit/{id}")
+	public String editProduct(@ModelAttribute("pd") Product product, Model model,
+			@PathVariable("id") String productId) {
+		model.addAttribute("views", "product-form");
+		model.addAttribute("title", "Quản lí sản phẩm");
+		model.addAttribute("typeButton", true);
+		model.addAttribute("products", pdDAO.findByDel(false));
+		Product pd = pdDAO.getById(productId);
+		model.addAttribute("pd", pd);
+		System.out.println(productId);
+
+		return "admin/index";
+	}
+
+	@PostMapping("/product/update-product")
+	public ResponseEntity<?> updateProduct(@Valid @ModelAttribute("pd") Product product, BindingResult result,
+			@RequestParam("listImage") MultipartFile[] listImage, @RequestParam("descriptions") String descriptions) {
+
+		Map<String, String> errors = new HashMap<>();
+		System.out.println(descriptions);
+		if (descriptions.length() == 32 || descriptions.length() == 2) {
+			errors.put("detailDecription", "Vui lòng nhập ít nhất 1 mô tả");
+		}
+
+//		for (MultipartFile image : listImage) {
+//			if (!image.isEmpty()) {
+//				System.out.println(image.getOriginalFilename());
+//			} else {
+//				errors.put("image", "Vui lòng chọn ít nhất 1 ảnh");
+//			}
+//		}
+		if (result.hasErrors()) {
+			// Trả lỗi về Json
+			for (FieldError error : result.getFieldErrors()) {
+				errors.put(error.getField(), error.getDefaultMessage());
+			}
+			return ResponseEntity.ok(errors);
+		}
+
+		if (errors.isEmpty()) {
+			try {
+				product.setUser(sessionService.get("userLogin"));
+				pdDAO.save(product);
+				System.out.println(listImage.length);
+			} catch (Exception e) {
+				System.out.println(e);
+				// TODO: handle exception
+				return ResponseEntity.ok("fail");
+			}
+
+			if (listImage.length == 1) {
+				System.out.println("không làm gì hết");
+			} else {
+				imgDao.deleteByProduct(product);
+				for (MultipartFile img : listImage) {
+					System.out.println(img.getOriginalFilename());
+					Image image = new Image();
+					image.setImage(paramService.save(img, "images/products").getName());
+					image.setProduct(product);
+					imgDao.save(image);
+				}
+			}
+
+			detailDescriptionDAO.deleteByProduct(product);
+			Gson gson = new Gson();
+			List<Map<String, String>> list = gson.fromJson(descriptions, new TypeToken<List<Map<String, String>>>() {
+			}.getType());
+
+			for (Map<String, String> map : list) {
+				System.out.println(map.values());
+			}
+			for (Map<String, String> map : list) {
+				DetailDescription detailDescription = new DetailDescription();
+				detailDescription.setTile((map.get("tieuDe")));
+				detailDescription.setDescription(map.get("description"));
+				detailDescription.setProduct(product);
+
+				detailDescriptionDAO.save(detailDescription);
+			}
+
+		} else {
+			return ResponseEntity.ok(errors);
+		}
+		return ResponseEntity.ok("success");
+	}
 }

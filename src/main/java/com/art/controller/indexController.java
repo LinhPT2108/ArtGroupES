@@ -1,20 +1,27 @@
 package com.art.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.art.DAO.Activity.BannerDAO;
+import com.art.DAO.Activity.WishListDAO;
 import com.art.DAO.Product.ProductDAO;
 import com.art.DAO.Promotion.FlashSaleDAO;
+import com.art.DAO.Promotion.InvoiceDetailDAO;
 import com.art.DAO.Promotion.PromotionalDetailsDAO;
+import com.art.Entities.Activity.WishList;
 import com.art.Entities.Product.Product;
 import com.art.Entities.Promotion.FlashSale;
+import com.art.Entities.User.UserCustom;
+import com.art.service.SessionService;
 
 @Controller
 public class indexController {
@@ -26,12 +33,27 @@ public class indexController {
 	ProductDAO pdDAO;
 	@Autowired
 	PromotionalDetailsDAO pmtDAO;
-
+	@Autowired
+	InvoiceDetailDAO idDAO;
+	@Autowired
+	WishListDAO wishListDAO;
+	@Autowired
+	SessionService session;
+	
+	@ModelAttribute("likeList")
+	public List<WishList> getCategories() {
+		UserCustom userCustom = session.get("userLogin");
+		List<WishList> listLike = wishListDAO.findByUser(userCustom);
+		return listLike;
+	}
+	
+	
 	@GetMapping({ "/", "", "/index" })
 	public String home(Model model) {
 		model.addAttribute("listBanner", bnDao.findAll());
 
 		model.addAttribute("listProduct", pdDAO.findAll());
+		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
 
 		FlashSale endDay = lsDAO.findByIsStatus(false).get(0);
 

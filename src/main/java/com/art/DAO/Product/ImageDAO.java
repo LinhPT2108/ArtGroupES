@@ -3,6 +3,8 @@ package com.art.DAO.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Product.Image;
+import com.art.Entities.Product.Product;
+
 
 public interface ImageDAO extends JpaRepository<Image, Integer>{
 
@@ -19,6 +21,8 @@ public interface ImageDAO extends JpaRepository<Image, Integer>{
 //	
 //	// Tìm hình ảnh thông qua sản phẩm
 //	List<Image> findByProduct(Product product);
+	
+	void deleteByProduct(Product product);
 	
 	
 }

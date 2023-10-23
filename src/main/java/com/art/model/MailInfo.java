@@ -34,7 +34,7 @@ public class MailInfo {
 	MultipartFile[] attachments;
 
 	public MailInfo(String to, String subject, String body) {
-		this.from = "nguyentcpc04750@fpt.edu.vn";
+		this.from = "artdevk18@gmail.com";
 		this.to = to;
 		this.subject = subject;
 		this.body = body;

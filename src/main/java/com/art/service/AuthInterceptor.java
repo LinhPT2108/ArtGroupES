@@ -44,7 +44,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	private boolean requiresAuthentication(String requestURI) {
 		return !requestURI.equals("/account/login") && !requestURI.equals("/account/register")
-				&& !requestURI.equals("/account/forgot-password") &&  !requestURI.contains("/account/verify-code");
+				&& !requestURI.equals("/account/forgot-password") && !requestURI.equals("/account/send-code");
 	} 
 
 	private boolean hasAccess(UserCustom user, String requestURI) {
