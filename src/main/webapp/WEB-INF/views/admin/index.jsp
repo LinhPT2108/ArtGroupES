@@ -87,7 +87,7 @@
 							</span> <span class="hide-menu">Banner</span>
 						</a></li>
 						<li class="sidebar-item"><a class="sidebar-link"
-							href="./ui-typography.html" aria-expanded="false"> <span>
+							href="/admin/userCustom" aria-expanded="false"> <span>
 									<i class="ti ti-users"></i>
 							</span> <span class="hide-menu">Tài khoản</span>
 						</a></li>
