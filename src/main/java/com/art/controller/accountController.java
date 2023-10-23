@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 
 import org.eclipse.tags.shaded.org.apache.bcel.generic.I2F;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,9 @@ import com.art.Entities.Activity.Comment;
 import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.User.InforAddress;
 import com.art.Entities.User.UserCustom;
+import com.art.model.MailInfo;
 import com.art.service.CookieService;
+import com.art.service.MailerServiceImpl;
 import com.art.service.ParamService;
 import com.art.service.PasswordEncryption;
 import com.art.service.SessionService;
@@ -65,6 +68,8 @@ public class accountController {
 	InvoiceDetailDAO invoiceDetailDAO;
 	@Autowired
 	RoleDAO roleDAO;
+	@Autowired
+	MailerServiceImpl mailer;
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -80,10 +85,10 @@ public class accountController {
 		Boolean rm = paramService.getBoolean("chkRemember", false);
 		System.out.println(email + " - " + password + " - " + rm);
 		try {
-			
+
 			UserCustom user = usDAO.findByEmail(email).get(0);
 			if (user.isDel()) {
-				if ( PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
+				if (PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
 					sessionService.set("userLogin", user);
 					if (rm) {
 						cookieService.add("LGemail", email, 12);
@@ -339,7 +344,7 @@ public class accountController {
 		if (!currentPassword.equals(currentUser.getPassword())) {
 			return ResponseEntity.ok("404");
 		} else {
-			currentUser.setPassword(confirmPassword);
+			currentUser.setPassword(PasswordEncryption.toSHA1(confirmPassword));
 			usDAO.save(currentUser);
 
 		}
@@ -353,9 +358,9 @@ public class accountController {
 			model.addAttribute("title", "Đơn hàng đang đuọc xử lí");
 		} else if (type == 2) {
 			model.addAttribute("title", "Đơn hàng đang giao hàng");
-		} else if(type==3){
+		} else if (type == 3) {
 			model.addAttribute("title", "Đơn hàng đã hoàn thành");
-		}else {
+		} else {
 			model.addAttribute("title", "Đơn hàng hủy");
 		}
 		model.addAttribute("views", "purchasedOrder");
@@ -396,5 +401,56 @@ public class accountController {
 		model.addAttribute("title", "Danh sách sản phẩm đã xem");
 		model.addAttribute("views", "acount-product-list");
 		return "account";
+	}
+
+	@GetMapping("/forgot-password")
+	public String getForgotPassword(Model model) {
+		model.addAttribute("title", "Quên mật khẩu");
+		return "forgotPass";
+	}
+
+	@PostMapping("/forgot-password")
+	public ResponseEntity<?> postForgotPassword(Model model) {
+		String email = paramService.getString("email", "");
+		String newPas = paramService.getString("newPass", "");
+		UserCustom userCustom = usDAO.findByEmail(email).get(0);
+		try {
+			
+			userCustom.setPassword(PasswordEncryption.toSHA1(newPas));
+			usDAO.save(userCustom);
+			return ResponseEntity.ok("success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.ok("fail");
+		}
+	}
+
+	@PostMapping("/send-code")
+	public ResponseEntity<?> getCode(Model model) {
+		String email = paramService.getString("email", "");
+		System.out.println(email);
+		List<UserCustom> userCustoms = usDAO.findByEmail(email);
+		if (userCustoms.isEmpty()) {
+			return ResponseEntity.ok("404");
+		} else {
+			String veriCode = generateVerificationCode();
+			String subject = "[ARTGroup] - Mã xác nhận";
+			try {
+				MailInfo mailInfo = new MailInfo(email, subject, "Mã xác nhận của bạn là: " + veriCode);
+				mailer.send(mailInfo);
+				// mailer.send(email, subject, "Mã xác nhận của bạn là: " + veriCode);
+				return ResponseEntity.ok(veriCode);
+			} catch (Exception e) {
+				System.out.println(e);
+				// TODO: handle exception
+				return ResponseEntity.ok("fail");
+			}
+		}
+	}
+
+	private String generateVerificationCode() {
+		Random random = new Random();
+		int code = 100000 + random.nextInt(900000);
+		return String.valueOf(code);
 	}
 }

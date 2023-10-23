@@ -6,7 +6,7 @@ $(document).ready(function() {
 		getSortData: {
 			price: function(itemElem) {
 				var priceText = $(itemElem).find('.product-price').text();
-				var priceValue = parseFloat(priceText.replace("đ", "").replace(/\./g, ""));
+				var priceValue = parseFloat(priceText.replace("đ", "").replace(/\,/g, ""));
 				return priceValue;
 			},
 			name: '.product_name'
@@ -29,7 +29,7 @@ $(document).ready(function() {
 		$(".price-checkbox:checked").each(function() {
 			var filterValue = parseInt($(this).val());
 			priceFilters.push(function() {
-				var productPrice = parseFloat($(this).find(".product-price").text().replace("đ", "").replace(/\./g, ""));
+				var productPrice = parseFloat($(this).find(".product-price").text().replace("đ", "").replace(/\,/g, ""));
 				if (productPrice <= filterValue) {
 					return productPrice <= filterValue;
 				}

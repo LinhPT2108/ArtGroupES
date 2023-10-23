@@ -301,12 +301,34 @@
 																						data-target="#quickProductModal"
 																						title="Quick View" href="#" class="quickViews"
 																						data-product-id="${p.productId}"><i
-																						class=" ti-eye"></i><span>Xem nhanh</span></a> <a
-																						title="Wishlist" href="#"><i
-																						class=" ti-heart "
-																						data-product-id="${p.productId}"
-																						data-user-id="${user.userId}"></i><span>Thêm
-																							vào yêu thích</span></a> <a title="Compare" href="#">
+																						class=" ti-eye"></i><span>Xem nhanh</span></a>
+																					<c:set var="checkLike" value="false"></c:set>
+																					<c:forEach items="${likeList }" var="l"
+																						varStatus="i">
+																						<c:if
+																							test="${l.product.productId == p.productId }">
+																							<c:set var="checkLike" value="true"></c:set>
+																						</c:if>
+																					</c:forEach>
+																					<c:choose>
+																						<c:when test="${checkLike }">
+																							<a title="Wishlist" href="#"
+																								class="siteLikeProduct"
+																								data-product-id="${p.productId}"
+																								data-user-id="${userLogin.userId}"><i
+																								class="bi-heart-fill"></i><span>Thêm vào
+																									yêu thích</span></a>
+																						</c:when>
+																						<c:otherwise>
+																							<a title="Wishlist" href="#"
+																								class="siteLikeProduct"
+																								data-product-id="${p.productId}"
+																								data-user-id="${userLogin.userId}"><i
+																								class="bi-heart"></i><span>Thêm vào yêu
+																									thích</span></a>
+																						</c:otherwise>
+																					</c:choose>
+
 																				</div>
 																				<div class="product-action-2">
 																					<a title="Add to cart" href="#" class="addToCart"
@@ -456,7 +478,6 @@
 														<c:if test="${f.product.productId == p[0].productId}">
 															<c:set var="check" value="true"></c:set>
 															<c:set var="priceSale" value="${f.discountedPrice }"></c:set>
-
 														</c:if>
 													</c:forEach>
 													<c:choose>
@@ -726,8 +747,8 @@
 								</div>
 								<div class="add-to-cart">
 									<a href="#" class="btn addToCart" data-product-id=""
-										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a> <a
-										href="#" class="btn min"><i class="ti-heart"></i></a>
+										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a> <!-- <a
+										href="#" class="btn min"><i class="ti-heart"></i></a> -->
 									<!--  <a href="#"
 										class="btn min"><i class="fa fa-compress"></i></a> -->
 								</div>
@@ -797,6 +818,7 @@
 
 	<script src="js/choose-product.js"></script>
 	<script src="js/cart-script.js"></script>
+	<script src="js/likeProduct.js"></script>
 
 	<script type="text/javascript">
 		$('.single-item-slider').slick({

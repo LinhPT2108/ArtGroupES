@@ -7,7 +7,8 @@
 
 <div class="site-product">
 	<form:form cssClass="row g-3 needs-validation" action="/admin/product"
-		modelAttribute="pd" method="POST" id="formProduct"
+		modelAttribute="pd" method="POST"
+		id="${typeButton?'formProductEdit':'formProduct' }"
 		enctype="multipart/form-data">
 		<div class="col-xs-12 col-md-7">
 			<div class="row">
@@ -51,26 +52,60 @@
 				<div class="col-12 mb-3">
 					<form:label path="" cssClass="form-label mb-3">Thông tin chi tiết:</form:label>
 					<small class="text-danger fst-italic" id="detailDecriptionError"></small>
-					<div class="describe row description-container">
-						<div class="col-xs-12 col-md-6 mb-3 ">
-							<div class=" border border-1 p-3 position-relative">
-								<span class="position-absolute z-3 bg-white" style="top: -13px">Mô
-									tả 1:</span>
-								<div class="mb-3">
-									<div class="form-floating">
-										<input type="text" class="form-control" id="tieude1"
-											placeholder="124"></input> <label for="tieude1">Tiêu
-											đề:</label>
+					<div class="describe row ">
+						<c:choose>
+							<c:when test="${!typeButton }">
+								<div class="col-xs-12 col-md-6 mb-3 ">
+									<div class=" border border-1 p-3 position-relative">
+										<span class="position-absolute z-3 bg-white"
+											style="top: -13px">Mô tả 1:</span>
+										<div class="mb-3">
+											<div class="form-floating">
+												<input type="text" class="form-control" id="tieude1"
+													value="" placeholder="124"></input> <label for="tieude1">Tiêu
+													đề:</label>
+											</div>
+										</div>
+										<div class="form-floating">
+											<textarea class="form-control"
+												placeholder="Leave a comment here" style="height: 100px;"
+												id="noidung1"></textarea>
+											<label path="">Nội dung:</label>
+										</div>
 									</div>
 								</div>
-								<div class="form-floating">
-									<textarea class="form-control"
-										placeholder="Leave a comment here" style="height: 100px;"
-										id="noidung1"></textarea>
-									<label path="">Nội dung:</label>
-								</div>
-							</div>
-						</div>
+							</c:when>
+							<c:otherwise>
+								<c:forEach items="${pd.productDetailDescription }" var="p"
+									varStatus="i">
+									<div class="col-xs-12 col-md-6 mb-3 description-container">
+										<div class=" border border-1 p-3 position-relative">
+											<span class="position-absolute z-3 bg-white motaClass"
+												style="top: -13px" data-counter-number="${i.index+1 }">Mô tả ${i.index+1 }:</span>
+											<div class="mb-3">
+												<div class="form-floating">
+													<input type="text" class="form-control"
+														id="tieude${i.index+1 }" value="${p.tile }"
+														placeholder="124"></input> <label for="tieude1">Tiêu
+														đề:</label>
+												</div>
+											</div>
+											<div class="form-floating">
+												<textarea class="form-control"
+													placeholder="Leave a comment here" style="height: 100px;"
+													id="noidung${i.index+1 }">${p.description}</textarea>
+												<label path="">Nội dung:</label>
+											</div>
+											<c:if test="${i.index!=0 }">
+												<button class="btn btn-danger" onclick="xoaMoTa(this)"
+													style="position: absolute; top: -13px; right: -12px; padding: 2px 6px; border-radius: 50%;">X</button>
+											</c:if>
+										</div>
+									</div>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+
 						<button type="button" class="button ms-2  mb-3"
 							onclick="themMoTa()">
 							<span class="button__text">Thêm mô tả</span> <span
@@ -89,10 +124,19 @@
 				</div>
 			</div>
 			<div class="col-12">
-				<form:button class="btn btn-primary" type="submit"
-					id="btnAddProduct">${typeButton }</form:button>
-				<form:button formmethod="post" class="btn btn-info"
-					formaction="/admin/product/${productId }">Cập nhật</form:button>
+				<c:choose>
+					<c:when test="${typeButton }">
+						<form:button formmethod="post" class="btn btn-warning"
+							id="btnUpdateProduct" type="submit">Cập nhật</form:button>
+					</c:when>
+					<c:otherwise>
+						<form:button class="btn btn-primary" type="submit"
+							id="btnAddProduct">thêm</form:button>
+					</c:otherwise>
+				</c:choose>
+
+				<a role="button" href="/admin/product" class="btn btn-secondary">Làm
+					mới</a>
 			</div>
 
 		</div>
@@ -123,7 +167,16 @@
 							</div> <input type="file" name="listImage" id="listImage" multiple
 							accept=".jpg,.jpeg,.png" onchange="checkFileSize(this)">
 					</label></li>
-					<li class="" id="listImg"></li>
+					<li class="" id="listImg"><c:if test="${typeButton }">
+							<c:forEach var="p" items="${pd.productImage }" varStatus="i">
+								<div class="image-container"
+									style="display: inline-block; margin: 5px">
+									<img alt="${p.image }"
+										src="../../../images/products/${p.image }"
+										style="max-height: 100px; max-width: 100px">
+								</div>
+							</c:forEach>
+						</c:if></li>
 				</ul>
 			</div>
 		</div>
@@ -198,5 +251,6 @@
 
 	var randomString = generateRandomString();
 
-	document.getElementById('productId').value = randomString;
+	document.getElementById('productId').value == null ? document
+			.getElementById('productId').value = randomString : '';
 </script>

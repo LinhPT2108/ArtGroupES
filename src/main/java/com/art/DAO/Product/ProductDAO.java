@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import com.art.Entities.Product.Category;
+import com.art.Entities.Product.Manufacturer;
 import com.art.Entities.Product.Product;
 
 public interface ProductDAO extends JpaRepository<Product, String> {
@@ -31,13 +34,21 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 //    List<Product> findAll();
 //
 //    // Tìm Product theo tên
-//    List<Product> findByProductName(String productName);
+	List<Product> findByProductName(String productName);
+
+	@Query("SELECT p FROM Product p WHERE p.productName LIKE %:keyword%")
+	List<Product> searchProductByName(String keyword);
+
+	@Query("SELECT p FROM Product p WHERE p.productName LIKE %:keyword% AND p.categoryProduct = :category")
+	List<Product> searchProductByNameAndCategory(String keyword, Category category);
+
 //
 //    // Tìm Product theo số lượng trong kho
 //    List<Product> findByQuantityInStock(int quantityInStock);
 //
 //    // Tìm Product theo trạng thái is_del
 	List<Product> findByDel(boolean isDel);
+
 //
 //    // Tìm Product theo giá
 //    List<Product> findByPrice(BigDecimal price);
@@ -46,8 +57,10 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 //    List<Product> findByUser_UserId(int userId);
 //
 //    // Tìm Product theo ID của Category
-//    List<Product> findByCategory_CategoryId(int categoryId);
-//
+	List<Product> findByCategoryProduct(Category categoryProduct);
+
+	List<Product> findByCategoryProductAndManufacturerProduct(Category category, Manufacturer manufacturer);
+
 //    // Tìm Product theo ID của Manufacturer
-//    List<Product> findByManufacturer_ManufacturerId(int manufacturerId);
+	List<Product> findByManufacturerProduct(Manufacturer manufacturerProduct);
 }

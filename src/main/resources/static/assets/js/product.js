@@ -1,6 +1,6 @@
 
-let counter = 1;
-
+let counter = $('.description-container').length;
+console.log(counter)
 function themMoTa() {
 	counter++;
 
@@ -8,7 +8,7 @@ function themMoTa() {
 	newRow.className = "col-xs-12 col-md-6 mb-3 description-container";
 	newRow.innerHTML = `
         <div class=" border border-1 p-3 position-relative description-product">
-            <span class="position-absolute z-3 bg-white" style="top: -13px">Mô tả ${counter}:</span>
+            <span class="position-absolute z-3 bg-white motaClass" style="top: -13px" data-counter-number="${counter}">Mô tả ${counter}:</span>
             <div class="mb-3">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="tieude${counter}" placeholder="">
@@ -66,33 +66,45 @@ function checkFileSize(e) {
 
 
 function layDuLieuMoTa() {
-	const moTaContainers = document.querySelectorAll(".description-container");
-	const moTaObjects = [];
+    // Sử dụng jQuery để tìm thẻ có class "motaClass" cuối cùng và lấy giá trị "data-counter-number"
+    var lastMotaClassElement = $('.motaClass').last();
+    var counterNumber = lastMotaClassElement.data('counter-number');
 
-	moTaContainers.forEach((container, index) => {
-		const tieuDe = container.querySelector(`#tieude${index + 1}`).value == null ? '' : container.querySelector(`#tieude${index + 1}`).value;
-		const noiDung = container.querySelector(`#noidung${index + 1}`).value == null ? '' : container.querySelector(`#noidung${index + 1}`).value;
+    const moTaObjects = [];
 
-		// Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
-		if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
-			const moTa = {
-				tieuDe: tieuDe,
-				description: noiDung
-			};
+    for (let index = 0; index <= counterNumber; index++) {
+        const tieuDe = $(`#tieude${index}`).val() || '';
+        const noiDung = $(`#noidung${index}`).val() || '';
 
-			moTaObjects.push(moTa);
-		}
-	});
+        // Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
+        if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
+            const moTa = {
+                tieuDe: tieuDe,
+                description: noiDung
+            };
 
-	return moTaObjects;
+            moTaObjects.push(moTa);
+        }
+    }
+
+    return moTaObjects;
 }
+
 
 
 
 function xoaMoTa(button) {
-	counter = counter - 1;
 	button.parentElement.parentElement.remove();
+	// Sử dụng jQuery để tìm thẻ có class "motaClass" cuối cùng
+	var lastMotaClassElement = $('.motaClass').last();
+
+	// Lấy giá trị từ thuộc tính "data-counter-number"
+	var counterNumber = lastMotaClassElement.data('counter-number');
+	counter = counterNumber;
+	console.log(counter)
+
 }
+
 
 $(document).ready(function() {
 	const fileInput = $("#listImage");
@@ -212,6 +224,73 @@ $(document).ready(function() {
 		});
 	});
 
+	$('#formProductEdit').submit(function(event) {
+		event.preventDefault();
+		// Lấy dữ liệu từ form
+		var formData = new FormData(this);
+
+		var descriptions = layDuLieuMoTa();
+		formData.append("descriptions", JSON.stringify(descriptions));
+		console.log(formData);
+		for (var pair of formData.entries()) {
+			console.log(pair[0] + ': ' + pair[1]);
+		}
+		$.ajax({
+			type: 'POST',
+			enctype: 'multipart/form-data',
+			upload: true,
+			url: '/admin/product/update-product',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: formData,
+			success: function(data) {
+				if (data == 'success') {
+					Swal
+						.fire({
+							icon: 'success',
+							title: 'Cập  nhật thành công',
+							text: "Sản phẩm đã được thêm vào hệ thống !",
+							showConfirmButton: true,
+							timer: 1500
+						});
+
+					console.log(formData);
+
+				} else {
+
+					$("#productNameError").html('');
+					$("#categoryProductError").html('');
+					$("#manufacturerProductError").html('');
+					$("#quantityInStockError").html('');
+					$("#priceError").html('');
+					$('#imageError').html('');
+					$('#detailDecriptionError').html('');
+					$("#productNameError").html(data.productName);
+					$("#categoryProductError").html(data.categoryProduct);
+					$("#manufacturerProductError").html(data.manufacturerProduct);
+					$("#quantityInStockError").html(data.quantityInStock);
+					$("#priceError").html(data.price);
+					$('#imageError').html(data.image);
+					$('#detailDecriptionError').html(data.detailDecription);
+					Swal.fire({
+						icon: 'warning',
+						title: 'Cập nhật sản phẩm thất bại',
+						text: "Vui lòng kiểm tra lại thông tin !",
+						showConfirmButton: true,
+						timer: 1500
+					});
+					console.log(data)
+				}
+			},
+			error: function(xhr, status, error) {
+				console
+					.log('Ajax errors');
+			}
+		});
+	});
+
+
 	$('.btnDelProduct').click(function(e) {
 		e.preventDefault();
 		console.log('del')
@@ -231,12 +310,12 @@ $(document).ready(function() {
 						console.log(resp)
 						if (resp == 'success') {
 							Swal.fire({
-									icon: 'success',
-									title: 'Xóa thành công',
-									text: "Sản phẩm đã được xóa !",
-									showConfirmButton: true,
-									timer: 1500
-								});
+								icon: 'success',
+								title: 'Xóa thành công',
+								text: "Sản phẩm đã được xóa !",
+								showConfirmButton: true,
+								timer: 1500
+							});
 							location.reload();
 						} else if (resp == 'fail') {
 							Swal

@@ -38,29 +38,29 @@ public class MailerServiceImpl implements MailerService {
 		helper.setSubject(mail.getSubject());
 		helper.setText(mail.getBody(), true);
 		helper.setReplyTo(mail.getFrom());
-		String[] cc = mail.getCc();
-		if (cc != null && cc.length > 0) {
-			helper.setCc(cc);
-		}
-		String[] bcc = mail.getBcc();
-		if (bcc != null && bcc.length > 0) {
-			helper.setBcc(bcc);
-		}
-		MultipartFile[] attachments = mail.getAttachments();
-		System.out.println(attachments.length);
-		if (attachments != null && attachments.length > 0) {
-			for (int i = 0; i < attachments.length; i++) {
-				try {
-					helper.addAttachment(attachments[i].getOriginalFilename(),
-							new ByteArrayResource(attachments[i].getBytes()));
-				} catch (MessagingException | IOException e) {
-					System.out.println(e);
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-		}
+//		String[] cc = mail.getCc();
+//		if (cc != null && cc.length > 0) {
+//			helper.setCc(cc);
+//		}
+//		String[] bcc = mail.getBcc();
+//		if (bcc != null && bcc.length > 0) {
+//			helper.setBcc(bcc);
+//		}
+//		MultipartFile[] attachments = mail.getAttachments();
+//		System.out.println(attachments.length);
+//		if (attachments != null && attachments.length > 0) {
+//			for (int i = 0; i < attachments.length; i++) {
+//				try {
+//					helper.addAttachment(attachments[i].getOriginalFilename(),
+//							new ByteArrayResource(attachments[i].getBytes()));
+//				} catch (MessagingException | IOException e) {
+//					System.out.println(e);
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//
+//		}
 		// Gửi message đến SMTP server
 		sender.send(message);
 	}
