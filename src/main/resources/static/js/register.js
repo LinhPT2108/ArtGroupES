@@ -63,7 +63,7 @@ $(document).ready(function() {
 					});
 				} else {
 					console.log(response)
-
+					Swal.close();	
 					$('#fullnameError').html('');
 					$('#emailError').html('');
 					$('#passwordError').html('');

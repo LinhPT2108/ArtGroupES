@@ -112,7 +112,7 @@ public class checkoutController {
 	}
 
 	public BigDecimal getPriceProduct(String productID) {
-		FlashSale isFlashSale = flashSaleDAO.findByIsStatus(false).get(0);
+		FlashSale isFlashSale = flashSaleDAO.findByIsStatus(false);
 
 		BigDecimal price = null;
 

@@ -60,7 +60,7 @@ public class SessionService {
 
 	public void setCart(List<Cart> cart) {
 
-		FlashSale isFlashSale = fsDAO.findByIsStatus(false).get(0);
+		FlashSale isFlashSale = fsDAO.findByIsStatus(false);
 
 		if (isFlashSale != null) {
 			List<PromotionalDetails> pmt = pmtDAO.findByFlashSale_Id(isFlashSale.getId());
@@ -77,7 +77,7 @@ public class SessionService {
 	
 	public double totalPriceCartByUserId(UserCustom userId) {
 		
-		FlashSale isFlashSale = fsDAO.findByIsStatus(false).get(0);
+		FlashSale isFlashSale = fsDAO.findByIsStatus(false);
 
 		List<Cart> cartList = cartDAO.findByUser(userId);
 

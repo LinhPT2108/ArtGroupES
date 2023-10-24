@@ -91,26 +91,33 @@ public class productsiteController {
 		}
 
 		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
-		FlashSale endDay = lsDAO.findByIsStatus(false).get(0);
+		
+		try {
+			FlashSale endDay = lsDAO.findByIsStatus(false);
 
-		model.addAttribute("now", new Date());
-		model.addAttribute("flashsale", lsDAO.findByIsStatus(false).get(0));
-		if (endDay != null) {
-			model.addAttribute("listPdFlashsale", pmtDAO.findByFlashSale_Id(endDay.getId()));
-			Date endDay1 = lsDAO.findByIsStatus(false).get(0).getEndDay();
-			System.out.println(endDay1);
-			Date now = new Date();
-			Boolean checkDayTime = endDay1.before(now) || endDay1.equals(now);
-			System.out.println(checkDayTime);
-			if (checkDayTime) {
-				model.addAttribute("checkDayTime", true);
+			model.addAttribute("now", new Date());
+			model.addAttribute("flashsale", lsDAO.findByIsStatus(false));
+			if (endDay != null) {
+				model.addAttribute("listPdFlashsale", pmtDAO.findByFlashSale_Id(endDay.getId()));
+				Date endDay1 = lsDAO.findByIsStatus(false).getEndDay();
+				System.out.println(endDay1);
+				Date now = new Date();
+				Boolean checkDayTime = endDay1.before(now) || endDay1.equals(now);
+				System.out.println(checkDayTime);
+				if (checkDayTime) {
+					model.addAttribute("checkDayTime", true);
+				} else {
+					model.addAttribute("checkDayTime", false);
+				}
 			} else {
-				model.addAttribute("checkDayTime", false);
+				model.addAttribute("checkDayTime", true);
 			}
-		} else {
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
 			model.addAttribute("checkDayTime", true);
 		}
-
+		
 		return "shop-grid";
 	}
 
@@ -131,13 +138,13 @@ public class productsiteController {
 		}
 
 		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
-		FlashSale endDay = lsDAO.findByIsStatus(false).get(0);
+		FlashSale endDay = lsDAO.findByIsStatus(false);
 
 		model.addAttribute("now", new Date());
-		model.addAttribute("flashsale", lsDAO.findByIsStatus(false).get(0));
+		model.addAttribute("flashsale", lsDAO.findByIsStatus(false));
 		if (endDay != null) {
 			model.addAttribute("listPdFlashsale", pmtDAO.findByFlashSale_Id(endDay.getId()));
-			Date endDay1 = lsDAO.findByIsStatus(false).get(0).getEndDay();
+			Date endDay1 = lsDAO.findByIsStatus(false).getEndDay();
 			System.out.println(endDay1);
 			Date now = new Date();
 			Boolean checkDayTime = endDay1.before(now) || endDay1.equals(now);

@@ -389,57 +389,59 @@
 	<section class="shop-home-list section">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-4 col-md-6 col-12">
-					<div class="row">
-						<div class="col-12">
-							<div class="shop-section-title">
-								<h1>Khuyến mãi</h1>
+			<c:if test="${!checkDayTime }">
+					<div class="col-md-6 col-12">
+						<div class="row">
+							<div class="col-12">
+								<div class="shop-section-title">
+									<h1>Khuyến mãi</h1>
+								</div>
 							</div>
 						</div>
-					</div>
-					<!-- Start Single List  -->
-					<c:forEach var="p" items="${listProduct}">
-						<c:forEach var="f" items="${listPdFlashsale}" varStatus="i">
-							<c:if test="${f.product.productId == p.productId}">
-								<c:if test="${!p.del}">
-									<c:if test="${i.index<4 }">
-										<div class="single-list">
-											<div class="row">
-												<div
-													class="col-lg-6 col-md-6 col-12 d-flex align-items-center justify-content-center list-image overlay">
-													<div class="">
-														<img src="images/products/${p.productImage[0].image }"
-															alt="${p.productName }"
-															style="height: 115px !important; width: 100% !important">
-														<a href="/add-to-cart/${p.productId }"
-															data-product-id="${p.productId}"
-															data-user-id="${userLogin.userId}" class="buy addToCart"><i
-															class="fa fa-shopping-bag"></i></a>
+						<!-- Start Single List  -->
+						<c:forEach var="p" items="${listProduct}">
+							<c:forEach var="f" items="${listPdFlashsale}" varStatus="i">
+								<c:if test="${f.product.productId == p.productId}">
+									<c:if test="${!p.del}">
+										<c:if test="${i.index<4 }">
+											<div class="single-list">
+												<div class="row">
+													<div
+														class="col-lg-6 col-md-6 col-12 d-flex align-items-center justify-content-center list-image overlay">
+														<div class="">
+															<img src="images/products/${p.productImage[0].image }"
+																alt="${p.productName }"
+																style="height: 115px !important; width: 100% !important">
+															<a href="/add-to-cart/${p.productId }"
+																data-product-id="${p.productId}"
+																data-user-id="${userLogin.userId}" class="buy addToCart"><i
+																class="fa fa-shopping-bag"></i></a>
+														</div>
 													</div>
-												</div>
-												<div class="col-lg-6 col-md-6 col-12 no-padding">
-													<div class="content">
-														<h4 class="title card-title">
-															<a href="/product/${p.productId }">${p.productName }</a>
-														</h4>
-														<p class="price with-discount">
-															<fmt:formatNumber type="number" pattern="###,###,###"
-																value="${f.discountedPrice }" />
-															đ
-														</p>
+													<div class="col-lg-6 col-md-6 col-12 no-padding">
+														<div class="content">
+															<h4 class="title card-title">
+																<a href="/product/${p.productId }">${p.productName }</a>
+															</h4>
+															<p class="price with-discount">
+																<fmt:formatNumber type="number" pattern="###,###,###"
+																	value="${f.discountedPrice }" />
+																đ
+															</p>
+														</div>
 													</div>
 												</div>
 											</div>
-										</div>
+										</c:if>
 									</c:if>
 								</c:if>
-							</c:if>
+							</c:forEach>
 						</c:forEach>
-					</c:forEach>
-					<!-- End Single List  -->
+						<!-- End Single List  -->
 
-				</div>
-				<div class="col-lg-4 col-md-6 col-12">
+					</div>
+				</c:if>
+				<div class="${ checkDayTime?'' :'col-md-6' } col-12">
 					<div class="row">
 						<div class="col-12">
 							<div class="shop-section-title">
@@ -448,61 +450,66 @@
 						</div>
 					</div>
 					<!-- Start Single List  -->
-					<c:forEach var="p" items="${bestSellers}" varStatus="i">
-						<c:if test="${!p[0].del}">
-							<c:if test="${i.index<4 }">
-								<div class="single-list">
-									<div class="row">
-										<div
-											class="col-lg-6 col-md-6 col-12 d-flex align-items-center justify-content-center list-image overlay">
-											<div class="">
-												<img src="images/products/${p[0].productImage[0].image }"
-													alt="${p[0].productName }"
-													style="height: 115px !important; width: 100% !important">
-												<a href="/add-to-cart/${p[0].productId }"
-													data-product-id="${p[0].productId}"
-													data-user-id="${userLogin.userId}" class="buy addToCart"><i
-													class="fa fa-shopping-bag"></i></a>
-											</div>
-										</div>
-										<div class="col-lg-6 col-md-6 col-12 no-padding">
-											<div class="content">
-												<h4 class="title card-title">
-													<a href="/product/${p[0].productId }">${p[0].productName }</a>
-												</h4>
-												<p class="price with-discount">
-													<c:set var="check" value="false"></c:set>
-													<c:set var="priceSale" value="0"></c:set>
+					<div class="row">
 
-													<c:forEach var="f" items="${listPdFlashsale}" varStatus="i">
-														<c:if test="${f.product.productId == p[0].productId}">
-															<c:set var="check" value="true"></c:set>
-															<c:set var="priceSale" value="${f.discountedPrice }"></c:set>
-														</c:if>
-													</c:forEach>
-													<c:choose>
-														<c:when test="${check }">
-															<fmt:formatNumber type="number" pattern="###,###,###"
-																value="${priceSale }" />
+						<c:forEach var="p" items="${bestSellers}" varStatus="i">
+							<c:if test="${!p[0].del}">
+								<c:if test="${ checkDayTime?i.index<8 :i.index<4 }">
+									<div
+										class="single-list ${ checkDayTime?'col-md-6 col-12' :'' }">
+										<div class="row">
+											<div
+												class="col-lg-6 col-md-6 col-12 d-flex align-items-center justify-content-center list-image overlay">
+												<div class="">
+													<img src="images/products/${p[0].productImage[0].image }"
+														alt="${p[0].productName }"
+														style="height: 115px !important; width: 100% !important">
+													<a href="/add-to-cart/${p[0].productId }"
+														data-product-id="${p[0].productId}"
+														data-user-id="${userLogin.userId}" class="buy addToCart"><i
+														class="fa fa-shopping-bag"></i></a>
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-6 col-12 no-padding">
+												<div class="content">
+													<h4 class="title card-title">
+														<a href="/product/${p[0].productId }">${p[0].productName }</a>
+													</h4>
+													<p class="price with-discount">
+														<c:set var="check" value="false"></c:set>
+														<c:set var="priceSale" value="0"></c:set>
+
+														<c:forEach var="f" items="${listPdFlashsale}"
+															varStatus="i">
+															<c:if test="${f.product.productId == p[0].productId}">
+																<c:set var="check" value="true"></c:set>
+																<c:set var="priceSale" value="${f.discountedPrice }"></c:set>
+															</c:if>
+														</c:forEach>
+														<c:choose>
+															<c:when test="${check }">
+																<fmt:formatNumber type="number" pattern="###,###,###"
+																	value="${priceSale }" />
 													đ																											
 														</c:when>
-														<c:otherwise>
-															<fmt:formatNumber type="number" pattern="###,###,###"
-																value="${p[0].price	 }" />
+															<c:otherwise>
+																<fmt:formatNumber type="number" pattern="###,###,###"
+																	value="${p[0].price	 }" />
 													đ			
 														</c:otherwise>
-													</c:choose>
-												</p>
+														</c:choose>
+													</p>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
+								</c:if>
 							</c:if>
-						</c:if>
-					</c:forEach>
+						</c:forEach>
+					</div>
 					<!-- End Single List  -->
 				</div>
-				<div class="col-lg-4 col-md-6 col-12">
+				<!-- <div class="col-lg-4 col-md-6 col-12">
 					<div class="row">
 						<div class="col-12">
 							<div class="shop-section-title">
@@ -510,7 +517,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- Start Single List  -->
+					Start Single List 
 					<div class="single-list">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
@@ -529,8 +536,8 @@
 							</div>
 						</div>
 					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
+					End Single List 
+					Start Single List 
 					<div class="single-list">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
@@ -549,8 +556,8 @@
 							</div>
 						</div>
 					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
+					End Single List 
+					Start Single List 
 					<div class="single-list">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
@@ -569,8 +576,8 @@
 							</div>
 						</div>
 					</div>
-					<!-- End Single List  -->
-				</div>
+					End Single List 
+				</div> -->
 			</div>
 		</div>
 	</section>
@@ -594,42 +601,45 @@
 			</c:if>
 		</c:forEach>
 	</c:forEach>
-	<section class="cown-down">
-		<div class="section-inner ">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-6 col-12 padding-right">
-						<div class="image">
-							<img
-								src="images/products/${maxDiscountProduct.productImage[0].image }"
-								alt="${maxDiscountProduct.productImage[0].image }">
-						</div>
-					</div>
-					<div class="col-lg-6 col-12 padding-left">
-						<div class="content">
-
-							<div class="heading-block">
-								<p class="small-title">GIẢM GIÁ CỦA NGÀY</p>
-								<h3 class="title">${maxDiscountProduct.productName}</h3>
-								<p class="text">${maxDiscountProduct.productDetailDescription[0].description }</p>
-								<h1 class="price">
-									<fmt:formatNumber type="number" pattern="###,###,###"
-										value="${priceDiscountDeal}" />
-									đ<s><fmt:formatNumber type="number" pattern="###,###,###"
-											value="${maxDiscountProduct.price}" /> đ</s>
-								</h1>
-								<div class="coming-time">
-									<div class="clearfix"
-										data-countdown="<c:out value="${flashsale.endDay}" />"></div>
-								</div>
+	<c:if test="${!checkDayTime}">
+		<section class="cown-down">
+			<div class="section-inner ">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-6 col-12 padding-right">
+							<div class="image">
+								<img
+									src="images/products/${maxDiscountProduct.productImage[0].image }"
+									alt="${maxDiscountProduct.productImage[0].image }">
 							</div>
+						</div>
+						<div class="col-lg-6 col-12 padding-left">
+							<div class="content">
 
+								<div class="heading-block">
+									<p class="small-title">GIẢM GIÁ CỦA NGÀY</p>
+									<h3 class="title">${maxDiscountProduct.productName}</h3>
+									<p class="text">${maxDiscountProduct.productDetailDescription[0].description }</p>
+									<h1 class="price">
+										<fmt:formatNumber type="number" pattern="###,###,###"
+											value="${priceDiscountDeal}" />
+										đ<s><fmt:formatNumber type="number" pattern="###,###,###"
+												value="${maxDiscountProduct.price}" /> đ</s>
+									</h1>
+									<div class="coming-time">
+										<div class="clearfix"
+											data-countdown="<c:out value="${flashsale.endDay}" />"></div>
+									</div>
+								</div>
+
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	</c:if>
+
 	<!-- /End Cowndown Area -->
 
 	<!-- Start Shop Services Area -->

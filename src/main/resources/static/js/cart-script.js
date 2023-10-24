@@ -132,7 +132,7 @@ $(document).ready(function() {
 				if (!check) {
 					// Tạo chuỗi HTML đại diện cho khối sản phẩm
 					var productHtml = '<li><div class="mb-2 productInCart" id="' + cartId + '">';
-					productHtml += '<a class="cart-img" href="/products/' + productId + '"><img src="images/products/' + image + '" alt="' + image + '"></a>';
+					productHtml += '<a class="cart-img" href="/products/' + productId + '"><img src="../../images/products/' + image + '" alt="' + image + '"></a>';
 					productHtml += '<h4><a href="#">' + productName + '</a></h4>';
 					productHtml += '<p class="quantity">Số lượng: <span class="qtyInStock">' + quantity + '</span>';
 					productHtml += '<span class="amount d-flex flex-column">';

@@ -25,7 +25,8 @@ public interface FlashSaleDAO extends JpaRepository<FlashSale, Integer> {
 //    List<FlashSale> findByEndDayLessThanEqual(Date endDate);
 //
     // Tìm kiếm các Flash Sale dựa trên trạng thái (đã kích hoạt hoặc chưa kích hoạt)
-    List<FlashSale> findByIsStatus(boolean status);
+    FlashSale findByIsStatus(boolean status);
+    
 //
 //    // Tìm kiếm các Flash Sale dựa trên người tạo
 //    List<FlashSale> findByUser(UserCustom user);
