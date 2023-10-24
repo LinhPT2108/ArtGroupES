@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <header class="header shop">
 	<!-- Topbar -->
 	<div class="topbar">
@@ -10,8 +12,8 @@
 					<!-- Top Left -->
 					<div class="top-left">
 						<ul class="list-main">
-							<li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
-							<li><i class="ti-email"></i> artdevk18@gmail.com</li>
+							<li><i class="ti-headphone-alt"></i>  <a href="tel:0909123123">+84 909 123 123</a> </li>
+							<li><i class="ti-email"></i> <a href="mailto:artdevk18@gmail.com">artdevk18@gmail.com</a></li>
 						</ul>
 					</div>
 					<!--/ End Top Left -->
@@ -35,6 +37,8 @@
 								<c:otherwise>
 									<li><i class="ti-user"></i> <a href="/account/profile">Tài
 											khoản </a></li>
+									<li><i class="bi bi-box-arrow-right"></i> <a
+										href="/account/logout">Đăng xuất</a></li>
 								</c:otherwise>
 							</c:choose>
 						</ul>
@@ -110,15 +114,15 @@
 							<a href="/account/profile" class="single-icon"><i
 								class="fa fa-user-circle-o" aria-hidden="true"></i></a>
 							<!-- Shopping Item -->
-							<div class="shopping-item p-0" style="right: 40px">
+							<div class="shopping-item p-0"
+								style="right: 40px; max-width: 250px; overflow-y: auto">
 								<ul class="list-group list-group-flush">
-
 									<c:choose>
 										<c:when test="${userLogin!=null }">
 											<li class="list-group-item"><a href="/account/profile">Thông
 													tin tài khoản</a></li>
-											<li class="list-group-item"><a href="/account/">Đơn
-													mua</a></li>
+											<li class="list-group-item"><a
+												href="/account/purchased-order/3">Đơn mua</a></li>
 											<li class="list-group-item"><a href="#">Đổi mật khẩu</a></li>
 											<li class="list-group-item"><a href="/account/logout">Đăng
 													xuất</a></li>
@@ -137,54 +141,117 @@
 							<!--/ End Shopping Item -->
 						</div>
 						<div class="sinlge-bar shopping">
-							<a href="#" class="single-icon"><i class="ti-bag"></i> <span
-								class="total-count">2</span></a>
+							<a href="/cart" class="single-icon"><i class="ti-bag"></i> <c:if
+									test="${userLogin != null }">
+									<span class="total-count">${carts.size() }</span>
+								</c:if></a>
 
 							<!-- Shopping Item -->
-							<div class="shopping-item">
-								<c:choose>
-									<c:when test="${userLogin!=null }">
-										<div class="dropdown-cart-header">
-											<span>2 Items</span> <a href="#">View Cart</a>
-										</div>
-										<ul class="shopping-list">
-											<li><a href="#" class="remove" title="Remove this item"><i
-													class="fa fa-remove"></i></a> <a class="cart-img" href="#"><img
-													src="https://via.placeholder.com/70x70" alt="#"></a>
-												<h4>
-													<a href="#">Woman Ring</a>
-												</h4>
-												<p class="quantity">
-													1x - <span class="amount">$99.00</span>
-												</p></li>
-											<li><a href="#" class="remove" title="Remove this item"><i
-													class="fa fa-remove"></i></a> <a class="cart-img" href="#"><img
-													src="https://via.placeholder.com/70x70" alt="#"></a>
-												<h4>
-													<a href="#">Woman Necklace</a>
-												</h4>
-												<p class="quantity">
-													1x - <span class="amount">$35.00</span>
-												</p></li>
-										</ul>
-										<div class="bottom">
-											<div class="total">
-												<span>Total</span> <span class="total-amount">$134.00</span>
+							<c:set var="isCartPage" value="false" />
+							<c:if
+								test="${fn:contains(pageContext.request.requestURI, 'cart')}">
+								<c:set var="isCartPage" value="true" />
+							</c:if>
+							<c:if test="${!isCartPage}">
+								<div class="shopping-item">
+									<c:choose>
+										<c:when test="${userLogin!=null }">
+											<div class="dropdown-cart-header">
+												<span class="total-count">${carts.size() }</span> Sản phẩm <a
+													href="/cart">Xem giỏ hàng</a>
 											</div>
-											<a href="checkout.html" class="btn animate">Checkout</a>
-										</div>
-									</c:when>
-									<c:otherwise>
-										<div class="d-flex">
-											<span class="text-danger mx-auto">Vui lòng <a
-												href="/account/login"><u>đăng nhập</u></a>
-											</span>
+											<ul class="shopping-list" id="listProductCart">
+												<c:choose>
+													<c:when test="${sizeInCart==0 }">
+														<div
+															class="nothing d-flex flex-column align-items-center justify-content-center">
+															<i class="bi bi-cart-x display-1"></i> <span>Chưa
+																có sản phẩm</span>
+														</div>
+													</c:when>
+													<c:otherwise>
+														<c:forEach var="cart" items="${carts}">
+															<li>
+																<div class="mb-2 productInCart" id="${cart.cartId}">
+																	<a class="cart-img"
+																		href="/products/${cart.product.productId }"><img
+																		src="../../images/products/${cart.product.productImage[0].image }"
+																		alt="${cart.product.productImage[0].image }"></a>
+																	<h4>
+																		<a href="#">${cart.product.productName}</a>
+																	</h4>
+																	<p class="quantity">
+																		Số lượng: <span class="qtyInStock">${cart.quantity}
+																		</span> <span class="amount d-flex flex-column"> <c:choose>
+																				<c:when test="${isFlashSale}">
+																					<c:choose>
+																						<c:when
+																							test="${cart.product.productPromotionalDetails[0] != null}">
+																							<del>
+																								<span
+																									class="text-muted text-decoration-line-through me-2"><fmt:formatNumber
+																										type="number" pattern="###,###,###"
+																										value="${cart.product.price}" /> ₫</span>
+																							</del>
+																							<span class="fw-bold float-end text-danger">
+																								<fmt:formatNumber type="number"
+																									pattern="###,###,###"
+																									value="${cart.product.productPromotionalDetails[0].discountedPrice}" />
+																								₫
+																							</span>
+																						</c:when>
+																						<c:otherwise>
+																							<span class="fw-bold float-end text-danger"><fmt:formatNumber
+																									type="number" pattern="###,###,###"
+																									value="${cart.product.price}" /> ₫</span>
+																						</c:otherwise>
+																					</c:choose>
+																				</c:when>
+																				<c:otherwise>
+																					<span class="fw-bold float-end text-danger"><fmt:formatNumber
+																							type="number" pattern="###,###,###"
+																							value="${cart.product.price}" /> ₫</span>
+																				</c:otherwise>
+																			</c:choose>
+																		</span>
+																		<button onclick="removeCartItem(${cart.cartId}, this)"
+																			class="remove remove-product-cart"
+																			title="Xóa khỏi giỏ hàng">
+																			<i class="fa fa-remove"></i>
+																		</button>
+																	</p>
 
-										</div>
-									</c:otherwise>
-								</c:choose>
-							</div>
+																</div>
+															</li>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+											</ul>
+											<div class="bottom cartBottom">
+												<c:if test="${sizeInCart>0 }">
+													<div class=" bottomCart">
+														<div class="total">
+															<span>Tổng tiền</span> <span class="total-amount">
+																<fmt:formatNumber type="number" pattern="###,###,###"
+																	value="${totalPriceInCart}" /> ₫
+															</span>
+														</div>
+														<a href="/checkout" class="btn animate">Thanh toán</a>
+													</div>
+												</c:if>
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="d-flex">
+												<span class="text-danger mx-auto">Vui lòng <a
+													href="/account/login"><u>đăng nhập</u></a>
+												</span>
 
+											</div>
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</c:if>
 
 							<!--/ End Shopping Item -->
 						</div>

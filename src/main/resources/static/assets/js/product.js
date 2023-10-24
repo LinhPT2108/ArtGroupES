@@ -1,76 +1,267 @@
-// Lấy phần tử input và ul (danh sách hình ảnh)
-const fileInput = document.getElementById("file");
-const imageList = document.getElementById("imageList");
-const selectedImages = []; // Danh sách các tệp đã chọn
 
-// Thêm sự kiện khi người dùng chọn tệp hình ảnh
-fileInput.addEventListener("change", function () {
-  const selectedFiles = fileInput.files;
-
-  for (let i = 0; i < selectedFiles.length; i++) {
-    const selectedFile = selectedFiles[i];
-
-    // Kiểm tra xem tệp đã được chọn có tồn tại trong danh sách không
-    if (selectedImages.some((img) => img.name === selectedFile.name)) {
-      alert(`Hình ảnh "${selectedFile.name}" đã tồn tại.`);
-      continue; // Bỏ qua tệp đã tồn tại
-    }
-
-    const objectURL = URL.createObjectURL(selectedFile);
-
-    // Tạo phần tử li chứa hình ảnh
-    const listItem = document.createElement("li");
-    listItem.style.position = "relative";
-
-    // Tạo nút X để xóa hình ảnh
-    const deleteButton = document.createElement("button");
-    deleteButton.classList.add("ti");
-    deleteButton.classList.add("ti-x");
-    deleteButton.classList.add("delete-button");
-    deleteButton.addEventListener("click", function () {
-      // Xóa hình ảnh và cập nhật danh sách
-      listItem.remove();
-      selectedImages.splice(selectedImages.indexOf(selectedFile), 1);
-    });
-
-    // Tạo phần tử hình ảnh và thêm vào danh sách
-    const image = document.createElement("img");
-    image.src = objectURL;
-
-    // Thêm nút X vào phần tử li
-    listItem.appendChild(deleteButton);
-    listItem.appendChild(image);
-
-    // Thêm phần tử li vào danh sách
-    imageList.appendChild(listItem);
-
-    // Thêm tệp đã chọn vào danh sách
-    selectedImages.push(selectedFile);
-  }
-});
 let counter = 1;
 
 function themMoTa() {
-  counter++;
+	counter++;
 
-  const newRow = document.createElement("div");
-  newRow.className = "col-xs-12 col-md-6 mb-3";
-  newRow.innerHTML = `
-                <div class=" border border-1 p-3 position-relative">
-                    <span class="position-absolute z-3 bg-white" style="top: -13px">Mô tả ${counter}:</span>
-                    <div class="mb-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="tieude${counter}" placeholder="">
-                            <label for="tieude${counter}">Tiêu đề:</label>
-                        </div>
-                    </div>
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="noidung${counter}" style="height: 100px;"></textarea>
-                        <label for="noidung${counter}">Nội dung:</label>
-                    </div>
+	const newRow = document.createElement("div");
+	newRow.className = "col-xs-12 col-md-6 mb-3 description-container";
+	newRow.innerHTML = `
+        <div class=" border border-1 p-3 position-relative description-product">
+            <span class="position-absolute z-3 bg-white" style="top: -13px">Mô tả ${counter}:</span>
+            <div class="mb-3">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="tieude${counter}" placeholder="">
+                    <label for="tieude${counter}">Tiêu đề:</label>
                 </div>
-            `;
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="noidung${counter}" style="height: 100px;"></textarea>
+                <label for="noidung${counter}">Nội dung:</label>
+            </div>
+            <button class="btn btn-danger" onclick="xoaMoTa(this)" style="
+				    position: absolute;
+				    top: -13px;
+				    right: -12px;
+				    padding: 2px 6px;
+				    border-radius: 50%;
+				">X</button>
+				        </div>`;
 
-  const addButton = document.querySelector(".button");
-  addButton.parentElement.insertBefore(newRow, addButton);
+	const addButton = document.querySelector(".button");
+	addButton.parentElement.insertBefore(newRow, addButton);
 }
+function checkFileSize(e) {
+	var file_list = e.files;
+	var totalSize = 0; // Tổng kích thước của tất cả các tệp
+
+	for (var i = 0; i < file_list.length; i++) {
+		var file = file_list[i];
+		var fileExtension = file.name.split('.')[file.name.split('.').length - 1].toLowerCase();
+		var iConvert;
+
+		if (file.size > (1024 * 1024)) {
+			iConvert = (file.size / (1024 * 1024)).toFixed(2); // Chuyển đổi thành MB
+		} else {
+			iConvert = (file.size / 1024).toFixed(2); // Chuyển đổi thành KB
+		}
+
+		totalSize += file.size;
+
+		txt = "File type: " + fileExtension + "\n";
+		txt += "Size: " + iConvert + (file.size > (1024 * 1024) ? " MB" : " KB") + "\n";
+	}
+
+	if (totalSize > 10 * 1024 * 1024) {
+		console.log('Vượt quá kích thước');
+		Swal.fire({
+			icon: 'warning',
+			title: 'Vượt quá kích thước',
+			text: "Vui lòng chọn ảnh kích thước lớn nhỏ hơn 10MB !",
+			showConfirmButton: true
+		});
+		e.value = null;
+	}
+}
+
+
+function layDuLieuMoTa() {
+	const moTaContainers = document.querySelectorAll(".description-container");
+	const moTaObjects = [];
+
+	moTaContainers.forEach((container, index) => {
+		const tieuDe = container.querySelector(`#tieude${index + 1}`).value == null ? '' : container.querySelector(`#tieude${index + 1}`).value;
+		const noiDung = container.querySelector(`#noidung${index + 1}`).value == null ? '' : container.querySelector(`#noidung${index + 1}`).value;
+
+		// Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
+		if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
+			const moTa = {
+				tieuDe: tieuDe,
+				description: noiDung
+			};
+
+			moTaObjects.push(moTa);
+		}
+	});
+
+	return moTaObjects;
+}
+
+
+
+function xoaMoTa(button) {
+	counter = counter - 1;
+	button.parentElement.parentElement.remove();
+}
+
+$(document).ready(function() {
+	const fileInput = $("#listImage");
+	const previewImages = $("#listImg");
+
+	fileInput.on("change", function() {
+		// Xóa tất cả các thẻ con
+		previewImages.empty();
+
+		for (let i = 0; i < fileInput[0].files.length; i++) {
+			const file = fileInput[0].files[i];
+			const imageContainer = $("<div>").addClass("image-container").css({
+				display: "inline-block",
+				margin: "5px"
+			});
+			const image = $("<img>").css({
+				maxWidth: "100px",
+				maxHeight: "100px"
+			}).attr("src", URL.createObjectURL(file));
+
+			imageContainer.append(image);
+			previewImages.append(imageContainer);
+		}
+		console.log(fileInput[0].files)
+	});
+});
+
+
+$(document).ready(function() {
+	$('#formProduct').submit(function(event) {
+		event.preventDefault();
+		// Lấy dữ liệu từ form
+		var formData = new FormData(this);
+
+		var descriptions = layDuLieuMoTa();
+		formData.append("descriptions", JSON.stringify(descriptions));
+
+		console.log(formData);
+		for (var pair of formData.entries()) {
+			console.log(pair[0] + ': ' + pair[1]);
+		}
+		$.ajax({
+			type: 'POST',
+			enctype: 'multipart/form-data',
+			upload: true,
+			url: '/admin/product',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: formData,
+			success: function(data) {
+				if (data == 'success') {
+					Swal
+						.fire({
+							icon: 'success',
+							title: 'Thêm thành công',
+							text: "Sản phẩm đã được thêm vào hệ thống !",
+							showConfirmButton: true,
+							timer: 1500
+						});
+
+					console.log(formData);
+					let timerInterval
+					Swal.fire({
+						title: 'Dữ liệu đang được thêm vào hệ thông!',
+						html: 'sẽ làm mới trang trong <b></b> mili giây.',
+						timer: 1500,
+						allowOutsideClick: false,
+						timerProgressBar: true,
+						didOpen: () => {
+							Swal.showLoading()
+							const b = Swal.getHtmlContainer().querySelector('b')
+							timerInterval = setInterval(() => {
+								b.textContent = Swal.getTimerLeft()
+							}, 100)
+						},
+						willClose: () => {
+							clearInterval(timerInterval)
+						}
+					}).then((result) => {
+						/* Read more about handling dismissals below */
+						if (result.dismiss === Swal.DismissReason.timer) {
+							console.log('I was closed by the timer')
+							location.reload();
+						}
+					})
+				} else {
+
+					$("#productNameError").html('');
+					$("#categoryProductError").html('');
+					$("#manufacturerProductError").html('');
+					$("#quantityInStockError").html('');
+					$("#priceError").html('');
+					$('#imageError').html('');
+					$('#detailDecriptionError').html('');
+					$("#productNameError").html(data.productName);
+					$("#categoryProductError").html(data.categoryProduct);
+					$("#manufacturerProductError").html(data.manufacturerProduct);
+					$("#quantityInStockError").html(data.quantityInStock);
+					$("#priceError").html(data.price);
+					$('#imageError').html(data.image);
+					$('#detailDecriptionError').html(data.detailDecription);
+					Swal.fire({
+						icon: 'error',
+						title: 'Thêm sản phẩm thất bại',
+						text: "Vui lòng kiểm tra lại thông tin !",
+						showConfirmButton: true,
+						timer: 1500
+					});
+					console.log(data)
+				}
+			},
+			error: function(xhr, status, error) {
+				console
+					.log('Ajax errors');
+			}
+		});
+	});
+
+	$('.btnDelProduct').click(function(e) {
+		e.preventDefault();
+		console.log('del')
+		Swal.fire({
+			icon: 'info',
+			title: 'Bạn muốn xóa sản phẩm đã chọn ?',
+			text: 'Ấn OK để xóa !',
+			confirmButtonText: 'OK',
+			showCancelButton: true,
+		}).then((result) => {
+			if (result.isConfirmed) {
+				var hrefValue = $(this).attr("href");
+				$.ajax({
+					type: 'POST',
+					url: hrefValue,
+					success: function(resp) {
+						console.log(resp)
+						if (resp == 'success') {
+							Swal.fire({
+									icon: 'success',
+									title: 'Xóa thành công',
+									text: "Sản phẩm đã được xóa !",
+									showConfirmButton: true,
+									timer: 1500
+								});
+							location.reload();
+						} else if (resp == 'fail') {
+							Swal
+								.fire({
+									icon: 'error',
+									title: 'Xóa thất bại',
+									text: "Có lỗi xảy ra, vui lòng thử lại !",
+									showConfirmButton: false,
+									timer: 1500
+								});
+						}
+					},
+					error: function(xhr,
+						status, error) {
+						Swal
+							.fire({
+								icon: 'error',
+								title: 'Xoa thất bại',
+								text: "Có lỗi xảy ra, vui lòng thử lại !",
+								showConfirmButton: false,
+								timer: 1500
+							});
+					}
+				});
+			}
+		})
+	})
+});

@@ -15,15 +15,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor	
 @AllArgsConstructor
 @Entity
 public class Category {
@@ -34,6 +34,7 @@ public class Category {
 
 	@Column
 	@Nationalized
+	@NotNull(message = "Tên loại sản phẩm không được để trống")
 	private String categoryName;
 
 	@Column
@@ -62,6 +63,6 @@ public class Category {
 	public int hashCode() {
 		return Objects.hash(categoryId);
 	}
-
+	
 	
 }

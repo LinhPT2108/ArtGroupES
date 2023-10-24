@@ -32,10 +32,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Data
 public class UserCustom {
 
 	@Id
@@ -63,6 +64,9 @@ public class UserCustom {
 	@Column
 	@Email(message = "Email không hợp lệ")
 	private String email;
+	
+	@Column
+	private String verifyCode;
 	
 	@Column
 	private boolean del;
@@ -103,4 +107,11 @@ public class UserCustom {
 	@OneToMany(mappedBy = "user")
 	private List<Voucher> userVoucher;
 
+	@Override
+	public String toString() {
+		return "UserCustom [userId=" + userId + ", fullname=" + fullname + ", password=" + password + ", email=" + email
+				+ ", del=" + del + "]";
+	}
+
+	
 }

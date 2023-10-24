@@ -1,13 +1,8 @@
 package com.art.DAO.Activity;
 
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Activity.RecentlyViewed;
-import com.art.Entities.Product.Product;
-import com.art.Entities.User.UserCustom;
 
 public interface RecentlyViewedDAO extends JpaRepository<RecentlyViewed, Integer> {
 

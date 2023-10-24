@@ -98,44 +98,44 @@
 					<div class="col-lg-8 col-12">
 						<div class="form-main">
 							<div class="title">
-								<h4>Get in touch</h4>
-								<h3>Write us a message</h3>
+								<h2 class="text-primary">Thông tin liên hệ</h2>
+								<h4>Điền thông tin</h4>
 							</div>
 							<form class="form" method="post" action="mail/mail.php">
 								<div class="row">
 									<div class="col-lg-6 col-12">
 										<div class="form-group">
-											<label>Your Name<span>*</span></label> <input name="name"
+											<label>Họ và tên<span>*</span></label> <input name="name"
 												type="text" placeholder="">
 										</div>
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="form-group">
-											<label>Your Subjects<span>*</span></label> <input
-												name="subject" type="text" placeholder="">
+											<label>Tiêu đề<span>*</span></label> <input name="subject"
+												type="text" placeholder="">
 										</div>
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="form-group">
-											<label>Your Email<span>*</span></label> <input name="email"
+											<label>Email<span>*</span></label> <input name="email"
 												type="email" placeholder="">
 										</div>
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="form-group">
-											<label>Your Phone<span>*</span></label> <input
+											<label>Số điện thoại<span>*</span></label> <input
 												name="company_name" type="text" placeholder="">
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="form-group message">
-											<label>your message<span>*</span></label>
+											<label>Nội dung<span>*</span></label>
 											<textarea name="message" placeholder=""></textarea>
 										</div>
 									</div>
 									<div class="col-12">
 										<div class="form-group button">
-											<button type="submit" class="btn ">Send Message</button>
+											<button type="submit" class="btn ">Gửi</button>
 										</div>
 									</div>
 								</div>
@@ -146,26 +146,25 @@
 						<div class="single-head">
 							<div class="single-info">
 								<i class="fa fa-phone"></i>
-								<h4 class="title">Call us Now:</h4>
+								<h4 class="title">Gọi ngay cho chúng tôi:</h4>
 								<ul>
-									<li>+123 456-789-1120</li>
-									<li>+522 672-452-1120</li>
+									<li><a class="text-primary fw-bold"  href="tel:0948922927">0948-922-927</a></li>
+									<li><a class="text-primary fw-bold" href="tel:0909123456">0909-123-456</a></li>
 								</ul>
 							</div>
 							<div class="single-info">
 								<i class="fa fa-envelope-open"></i>
 								<h4 class="title">Email:</h4>
 								<ul>
-									<li><a href="mailto:info@yourwebsite.com">info@yourwebsite.com</a></li>
-									<li><a href="mailto:info@yourwebsite.com">support@yourwebsite.com</a></li>
+									<li><a href="mailto:nguyentcpc04750@fpt.edu.vn">nguyentcpc04750@fpt.edu.vn</a></li>
+									<li><a href="mailto:linhptpc04737@fpt.edu.vn">linhptpc04737@fpt.edu.vn</a></li>
 								</ul>
 							</div>
 							<div class="single-info">
 								<i class="fa fa-location-arrow"></i>
-								<h4 class="title">Our Address:</h4>
+								<h4 class="title">Địa chỉ:</h4>
 								<ul>
-									<li>KA-62/1, Travel Agency, 45 Grand Central Terminal, New
-										York.</li>
+									<li>Toà nhà FPT Polytechnic, Đ. Số 22, Thường Thạnh, Cái Răng, Cần Thơ.</li>
 								</ul>
 							</div>
 						</div>
@@ -259,6 +258,6 @@
 	<script src="js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="js/active.js"></script>
-
+	<script src="js/cart-script.js"></script>
 </body>
 </html>

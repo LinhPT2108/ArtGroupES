@@ -68,7 +68,8 @@
 	<link rel="stylesheet" href="../../css/purchased-order.css">
 </c:if>
 <link rel="stylesheet" href="../../css/profile.css">
-
+<link rel="stylesheet"
+	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">
 </head>
 <body class="js">
 
@@ -95,7 +96,7 @@
 					class="d-flex  border border-right-0 border-top-0 border-left-0 pb-2">
 					<div class="avatar">
 						<img alt=""
-							src="../images/avatar/${userLogin.image!=null?userLogin.image:'default-avatar.jpg'}"
+							src="../../images/avatar/${userLogin.image!=null?userLogin.image:'default-avatar.jpg'}"
 							class="rounded-circle" width="60px" height="60px"
 							id="avatar-right">
 					</div>
@@ -146,13 +147,15 @@
 								aria-labelledby="headingTwo" data-parent="#accordion">
 								<div class="px-4">
 									<div class="list-group list-group-flush">
-										<a href="/account/purchased-order"
+										<a href="/account/purchased-order/3"
 											class="list-group-item list-group-item-action item-custom  item-custom-option">Hoàn
-											thành</a> <a href="#"
+											thành</a> <a href="/account/purchased-order/2"
 											class="list-group-item list-group-item-action item-custom item-custom-option">Đang
-											giao hàng</a> <a href="#"
+											giao hàng</a> <a href="/account/purchased-order/1"
 											class="list-group-item list-group-item-action item-custom item-custom-option">Đang
-											xử lí</a>
+											xử lí</a><a href="/account/purchased-order/-1"
+											class="list-group-item list-group-item-action item-custom item-custom-option">Đơn
+											đã hủy</a>
 									</div>
 								</div>
 							</div>
@@ -222,6 +225,7 @@
 	<!-- Active JS -->
 	<script src="../../js/active.js"></script>
 	<script src="../../js/hover-nav.js"></script>
+	<script src="../../js/cart-script.js"></script>
 	<c:if test="${views =='address'}">
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -231,7 +235,9 @@
 		<script src="../../js/isotope.pkgd.js"></script>
 		<script src="../../js/filter.js"></script>
 	</c:if>
-
+	<c:if test="${views =='purchasedOrder'}">
+		<script src="../../js/comment.js"></script>
+	</c:if>
 	<script>
 		var currentURL = window.location.pathname;
 		var allCollapses = document.querySelectorAll(".collapse");

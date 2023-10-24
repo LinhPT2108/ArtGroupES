@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.Nationalized;
+
 import com.art.Entities.User.UserCustom;
 
 import jakarta.persistence.CascadeType;
@@ -15,6 +17,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,16 +33,21 @@ public class Invoice {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name="userInvoice")
+	@JoinColumn(name = "userInvoice")
 	private UserCustom user;
 
-	@Column
+	@Temporal(TemporalType.DATE)
+	@Column 
 	private Date invoiceDate;
 
 	@Column
 	private BigDecimal totalAmount;
-
+	
 	@Column
+	private int status;
+	
+	@Column
+	@Nationalized
 	private String note;
 
 	@OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)

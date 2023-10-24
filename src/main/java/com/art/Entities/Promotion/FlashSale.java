@@ -14,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,9 +29,11 @@ public class FlashSale {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	private Date startDay;
 	
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	private Date endDay;
 

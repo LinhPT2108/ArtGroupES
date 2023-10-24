@@ -1,6 +1,7 @@
 package com.art.DAO.Product;
 
-import java.math.BigDecimal;
+import java.util.List;
+
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.art.Entities.Product.Product;
 
 public interface ProductDAO extends JpaRepository<Product, String> {
-	
+
 //	// Thêm Product
 //    @SuppressWarnings("unchecked")
 //	Product save(Product product);
@@ -36,7 +37,7 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 //    List<Product> findByQuantityInStock(int quantityInStock);
 //
 //    // Tìm Product theo trạng thái is_del
-//    List<Product> findByDel(boolean isDel);
+	List<Product> findByDel(boolean isDel);
 //
 //    // Tìm Product theo giá
 //    List<Product> findByPrice(BigDecimal price);

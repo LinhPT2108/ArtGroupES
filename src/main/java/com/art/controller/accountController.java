@@ -6,10 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.eclipse.tags.shaded.org.apache.bcel.generic.I2F;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,12 +26,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.art.DAO.Activity.CartDAO;
+import com.art.DAO.Promotion.InvoiceDAO;
+import com.art.DAO.Promotion.InvoiceDetailDAO;
 import com.art.DAO.User.InforAddressDAO;
+import com.art.DAO.User.RoleDAO;
 import com.art.DAO.User.UserCustomDAO;
+import com.art.Entities.Activity.Cart;
+import com.art.Entities.Activity.Comment;
+import com.art.Entities.Promotion.Invoice;
 import com.art.Entities.User.InforAddress;
 import com.art.Entities.User.UserCustom;
+import com.art.model.MailInfo;
 import com.art.service.CookieService;
+import com.art.service.MailerServiceImpl;
 import com.art.service.ParamService;
+import com.art.service.PasswordEncryption;
 import com.art.service.SessionService;
 
 import jakarta.validation.Valid;
@@ -42,12 +55,20 @@ public class accountController {
 	InforAddressDAO infDAO;
 	@Autowired
 	CookieService cookieService;
-
 	@Autowired
 	SessionService sessionService;
-
 	@Autowired
 	ParamService paramService;
+	@Autowired
+	CartDAO cartDAO;
+	@Autowired
+	InvoiceDAO ivDao;
+	@Autowired
+	InvoiceDetailDAO invoiceDetailDAO;
+	@Autowired
+	RoleDAO roleDAO;
+	@Autowired
+	MailerServiceImpl mailService;
 
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -64,8 +85,11 @@ public class accountController {
 		System.out.println(email + " - " + password + " - " + rm);
 		try {
 			UserCustom user = usDAO.findByEmail(email).get(0);
-			if (user.isDel()) {
-				if (password.equals(user.getPassword())) {
+			System.out.println("opass: " + user.getPassword());
+			System.out.println("opass: " + PasswordEncryption.toSHA1(password));
+			System.out.println(user.isDel());
+			if (!user.isDel()) {
+				if (PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
 					sessionService.set("userLogin", user);
 					if (rm) {
 						cookieService.add("LGemail", email, 12);
@@ -73,6 +97,12 @@ public class accountController {
 						cookieService.remove("LGemail");
 					}
 					System.out.println("đăng nhập thành công");
+					for (Cart c : cartDAO.findByUser(user)) {
+						System.out.println(c.getProduct().getProductId());
+
+					}
+					sessionService.set("sizeInCart", cartDAO.findByUser(user).size());
+					sessionService.setCart(cartDAO.findByUser(user));
 					if (user.getRoleName().getRoleName().equals("admin")) {
 						return "redirect:/admin/dashboard";
 					} else {
@@ -95,8 +125,98 @@ public class accountController {
 	}
 
 	@GetMapping("/register")
-	public String regis() {
+	public String regis(@ModelAttribute("us") UserCustom us, Model model) {
+		model.addAttribute("title", "Đăng ký");
 		return "register";
+	}
+
+	@PostMapping("/register")
+	public ResponseEntity<?> register(@Valid @ModelAttribute("us") UserCustom us, BindingResult rs, Model model) {
+		System.out.println(us.toString());
+		String confirmPass = paramService.getString("confirmPassword", "");
+		Map<String, String> errors = new HashMap<>();
+		System.out.println(confirmPass);
+		if (!confirmPass.equals(us.getPassword())) {
+			errors.put("confirmPassword", "Xác nhận mật khẩu không chính xác");
+		}
+
+		if (!usDAO.findByEmail(us.getEmail()).isEmpty()) {
+			errors.put("email", "Email đã tồn tại");
+		}
+
+		if (rs.hasErrors()) {
+			for (FieldError error : rs.getFieldErrors()) {
+				errors.put(error.getField(), error.getDefaultMessage());
+			}
+			return ResponseEntity.ok(errors);
+		}
+
+		if (!errors.isEmpty()) {
+			return ResponseEntity.ok(errors);
+		} else {
+			us.setDel(true);
+			us.setRoleName(roleDAO.getById("user"));
+			try {
+				String verify = PasswordEncryption.getRandomString(8);
+				us.setPassword(PasswordEncryption.toSHA1(us.getPassword()));
+				us.setVerifyCode(verify);
+				usDAO.save(us);
+				sessionService.set("userRegister", us);
+				mailService.sendVerify(new MailInfo(us.getEmail(), "Xác nhận tài khoản ArtGroupES", "Chào mừng bạn đến với ART GROUP EST.2023. Đây là mã xác nhận của bạn: "+verify));
+			} catch (Exception e) {
+				return ResponseEntity.ok("fail");
+			}
+		}
+		return ResponseEntity.ok("success");
+	}
+
+	@GetMapping("/verify-code")
+	public String verify(Model model) {
+		model.addAttribute("title", "Xác thực tài khoản");
+		model.addAttribute("userRegister", sessionService.get("sessionService"));
+		return "verify";
+	}
+
+	@PostMapping("/verify-code/{id}")
+	public ResponseEntity<?> verifyCode(@Valid @PathVariable("id") String id, @ModelAttribute("verifyCode") String code,
+			BindingResult rs, Model model) {
+		Map<String, String> errors = new HashMap<>();
+		UserCustom user = usDAO.getOne(id);
+		System.out.println("user: " + user.getFullname());
+		System.out.println("code: " + code);
+		if (user != null) {
+			if (!user.getVerifyCode().equalsIgnoreCase(code)) {
+				errors.put("verifyCode", "Mã xác nhận không đúng !");
+			}
+
+			System.out.println("code 1: " + code);
+			if (rs.hasErrors()) {
+				for (FieldError error : rs.getFieldErrors()) {
+					errors.put(error.getField(), error.getDefaultMessage());
+				}
+
+				System.out.println("code e: " + code);
+				return ResponseEntity.ok(errors);
+			}
+			if (!errors.isEmpty()) {
+				System.out.println("code e: " + code);
+				return ResponseEntity.ok(errors);
+			} else {
+				if (user.getVerifyCode().equalsIgnoreCase(code)) {
+					user.setVerifyCode("");
+					user.setDel(false);
+					System.out.println("code: " + code);
+					try {
+						usDAO.save(user);
+					} catch (Exception e) {
+						return ResponseEntity.ok("fail");
+					}
+				}
+			}
+			return ResponseEntity.ok("success");
+		} else {
+			return ResponseEntity.ok("fail");
+		}
 	}
 
 	@GetMapping(value = "/profile")
@@ -283,11 +403,42 @@ public class accountController {
 		return ResponseEntity.ok("success");
 	}
 
-	@GetMapping("/purchased-order")
-	public String purchasedOrder(Model model) {
-		model.addAttribute("title", "Đơn hàng đã hoàn thành");
+	@GetMapping("/purchased-order/{type}")
+	public String purchasedOrder(@ModelAttribute("cmt") Comment cmt, Model model, @PathVariable("type") int type,
+			@RequestParam("p") Optional<Integer> p) {
+		if (type == 1) {
+			model.addAttribute("title", "Đơn hàng đang đuọc xử lí");
+		} else if (type == 2) {
+			model.addAttribute("title", "Đơn hàng đang giao hàng");
+		} else if (type == 3) {
+			model.addAttribute("title", "Đơn hàng đã hoàn thành");
+		} else {
+			model.addAttribute("title", "Đơn hàng hủy");
+		}
 		model.addAttribute("views", "purchasedOrder");
+		UserCustom userID = sessionService.get("userLogin");
+		Sort sort = Sort.by(Direction.DESC, "invoiceDate");
+		Pageable pageable = PageRequest.of(p.orElse(0), 4, sort);
+		Page<Invoice> listInvoice = ivDao.findByUserAndStatus(userID, type, pageable);
+		System.out.println(listInvoice.getTotalElements());
+
+		model.addAttribute("sizeInvoice", listInvoice.getTotalElements());
+		model.addAttribute("listInvoice", listInvoice);
+		model.addAttribute("typeInvoice", type);
 		return "account";
+	}
+
+	@PostMapping("/purchased-order/remove/{id}")
+	public ResponseEntity<?> removeInvoice(@PathVariable("id") int invoiceId) {
+		try {
+			Invoice Invoice = ivDao.getById(invoiceId);
+			Invoice.setStatus(-1);
+			ivDao.save(Invoice);
+			return ResponseEntity.ok("success");
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.ok("fail");
+		}
 	}
 
 	@GetMapping("/wish-list")

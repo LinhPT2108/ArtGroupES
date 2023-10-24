@@ -1,13 +1,14 @@
 package com.art.DAO.Activity;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Activity.Comment;
 import com.art.Entities.Product.Product;
-import com.art.Entities.User.UserCustom;
+import java.util.List;
+import com.art.Entities.Promotion.InvoiceDetail;
+
 
 public interface CommentDAO extends JpaRepository<Comment, Integer> {
 	
@@ -18,8 +19,10 @@ public interface CommentDAO extends JpaRepository<Comment, Integer> {
 //	// Xóa một bình luận theo ID
 //	void deleteById(int commentId);
 //	
-//	// Tìm bình luận theo ID
-//	Optional<Comment> findById(int commentId);
+	// Tìm bình luận theo ID
+	Optional<Comment> findById(int commentId);
+	
+	Optional<Comment> findByInvoiceDetailAndProduct(InvoiceDetail invoiceDetail, Product product);
 //	
 //	// Lấy tất cả các bình luận của một người dùng
 //	List<Comment> findByUser(UserCustom user);

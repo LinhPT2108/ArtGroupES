@@ -6,119 +6,148 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <div class="content-profile">
 	<div
-		class="title  border border-right-0 border-top-0 border-left-0 py-2">
-		<span class="display-6">Đơn hàng đã hoàn thành</span>
+		class="title  border border-right-0 border-top-0 border-left-0 py-2 d-flex justify-content-between">
+		<span class="display-6">${title }</span> <span
+			class="display-7 font-weight-bold">Số lượng: ${sizeInvoice }</span>
 	</div>
 	<div class="main-content p-3">
-		<c:forEach begin="1" end="3" varStatus="i">
-			<div class="invoice-item mb-3 p-3 bg-white border">
-				<div class="site-inf d-flex">
-					<div class="start mr-auto">
-						<i class="bi bi-calendar2-check"></i> <span
-							class="font-weight-bold">Ngày đặt hàng: <fmt:formatDate
-								value="" pattern="dd-MM-yyyy HH:mm:ss" /> 24/09/2023 10:22:28
-						</span>
-
-					</div>
-					<div class="delivery ml-auto">
-						<span class="text-success mr-3"><i class="ti ti-truck"></i>
-							Giao hàng thành công</span> |
-						<c:choose>
-							<c:when test="true">
-								<a type="button" class="text-warning ml-3" href=""
-									data-toggle="modal" data-target="#modalReviews">Chưa đánh
-									giá</a>
-							</c:when>
-							<c:otherwise>
-								<a type="button" class="text-success" href="">Đã đánh giá</a>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-				<hr>
-
-				<c:set var="totalPrice" scope="page" value="0"></c:set>
-				<div class="list-product-invoice">
-					<div class="row mb-3">
-						<div class="col-2 col-md-2 me-0">
-							<div class="img-product d-inline position-relative">
-								<img alt="Hình ảnh sản phẩm"
-									src="../../images/products/gan2x2-anh1.png" width="150px"
-									class="img-thumbnail mx-auto align-middle">
-							</div>
-						</div>
-						<div class="title-product col-7  col-md-7 ps-0 ms-0">
-							<div class="d-flex flex-column mb-3">
-								<span class="product-description-name fs-4 fw-bold">${p.product.product_name}Oppo
-									A91 Siêu mới</span> <span class="text-muted fs-6">Phân loại
-									hàng: Điện thoại ${p.product.category.category_name}</span> <span
-									class="text-muted ">Hãng: Oppo
-									${p.product.manufacturer.manufacturer_name}</span> <span>x3</span>
-							</div>
-
-						</div>
-						<div class="price-product col-3 col-md-3 my-auto">
-							<span class="fw-bold float-right text-danger"><fmt:formatNumber
-									type="number" pattern="###,###,###" value="${p.price}" />512.000.000
-								₫</span>
-							<c:set var="totalPrice" value="${totalPrice + p.price}"
-								scope="page"></c:set>
-
-						</div>
-
-					</div>
-				</div>
-				<hr>
-				<%-- <c:forEach var="p" items="${iv.invoiceDetails}">
-					<div class="list-product-invoice">
-						<div class="row mb-3">
-							<div class="col-1 me-0">
-								<div class="img-product d-inline position-relative">
-									<img alt="${p.product.image}"
-										src="${pageContext.request.contextPath}/assets/img/product/${p.product.image}"
-										width="90px" class="img-thumbnail mx-auto">
-								</div>
-							</div>
-							<div class="title-product col-8 ps-0 ms-0">
-								<div class="d-flex flex-column mb-3">
-									<span class="product-description-name fs-4 fw-bold">${p.product.product_name}</span>
-									<span class="text-muted fs-6">Phân loại hàng:
-										${p.product.category.category_name}</span> <span class="text-muted ">Hãng:
-										${p.product.manufacturer.manufacturer_name}</span> <span>x3</span>
-								</div>
-
-							</div>
-							<div class="price-product col-3 my-auto">
-								<span class="fw-bold float-end text-danger"><fmt:formatNumber
-										type="number" pattern="###,###,###" value="${p.price}" /> ₫</span>
-								<c:set var="totalPrice" value="${totalPrice + p.price}"
-									scope="page"></c:set>
-
-							</div>
-							<hr>
-						</div>
-					</div>
-				</c:forEach> --%>
-
-				<div
-					class="site-button d-flex justify-content-beetween align-items-center">
-					<div class="col-6">
-						<a class="btn-success p-2 rounded text-white" href="#"
-							role="button">Mua lại</a>
-					</div>
-					<div class="price col-6">
-						<div class="float-end">
-							<span class="text-muted float-right">Phí vận chuyển:
-								20.000 ₫</span> <br> <span class="float-right">Tổng tiền: <span
-								class="text-danger fw-bold fs-4 "><fmt:formatNumber
-										type="number" pattern="###,###,###"
-										value="${totalPrice+20000}" /> ₫</span>
+		<c:forEach items="${listInvoice.content }" var="iv" varStatus="i">
+			<c:if test="${iv.status==typeInvoice }">
+				<div class="invoice-item mb-3 p-3 bg-white border">
+					<div class="site-inf d-flex">
+						<div class="start mr-auto">
+							<i class="bi bi-calendar2-check"></i> <span
+								class="font-weight-bold">Ngày đặt hàng: <fmt:formatDate
+									value="${iv.invoiceDate}" pattern="dd-MM-yyyy" />
 							</span>
+
+						</div>
+						<div class="delivery ml-auto">
+							<c:choose>
+								<c:when test="${typeInvoice==1 }">
+									<span class="text-danger mr-3"><i class="ti ti-package"></i>
+										Đơn hàng đang được xử lí</span>
+								</c:when>
+								<c:when test="${typeInvoice==2 }">
+									<span class="text-warning mr-3"><i class="ti ti-truck"></i>
+										Đang giao hàng</span>
+								</c:when>
+								<c:when test="${typeInvoice==-1}">
+									<span class="text-danger mr-3"><i class="ti ti-truck"></i>
+										Đã hủy</span>
+								</c:when>
+								<c:otherwise>
+									<span class="text-success mr-3"><i class="ti ti-check"></i>
+										Giao hàng thành công</span>
+								</c:otherwise>
+							</c:choose>
+
+
+						</div>
+					</div>
+					<hr>
+
+					<c:set var="totalPrice" scope="page" value="0"></c:set>
+					<c:forEach var="p" items="${iv.invoiceDetails}">
+						<div class="list-product-invoice">
+							<div class="row mb-3">
+								<div
+									class="col-12 col-md-2 me-0 d-flex align-items-center justify-content-center">
+									<div class="img-product d-inline position-relative">
+										<img alt="Hình ảnh sản phẩm"
+											src="../../images/products/${p.product.productImage[0].image}"
+											width="150px" height="100%"
+											class="img-thumbnail mx-auto align-middle">
+									</div>
+								</div>
+								<div class="title-product col-12  col-md-7 ps-0 ms-0">
+									<div class="d-flex flex-column mb-3">
+										<span
+											class="product-description-name display-6 font-weight-bold">${p.product.productName}</span>
+										<span class="text-muted fs-6">Loại hàng:
+											${p.product.categoryProduct.categoryName}</span> <span
+											class="text-muted ">Hãng:
+											${p.product.manufacturerProduct.manufacturerName}</span> <span>${p.quantity }</span>
+									</div>
+
+								</div>
+								<div class="price-product col-12 col-md-3 d-flex flex-column">
+									<c:if test="${typeInvoice==3 }">
+										<c:choose>
+											<c:when test="${p.comment==null }">
+												<a type="button"
+													class="btn-warning p-2  text-white align-self-end mb-3 showComment"
+													href="" data-toggle="modal" data-target="#modalReviews">Chưa
+													đánh giá</a>
+											</c:when>
+											<c:otherwise>
+												<a type="button"
+													class="btn-success p-2 align-self-end mb-3 showComment rounded text-white"
+													href="" data-toggle="modal" data-target="#modalReviews"
+													data-invoice-detail-id="${p.id}"
+													data-product-id="${p.product.productId}">Đã đánh giá</a>
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+									<span
+										class="font-weight-bold float-right text-danger align-self-end mt-3"><fmt:formatNumber
+											type="number" pattern="###,###,###" value="${p.price}" /> ₫</span>
+									<c:set var="totalPrice"
+										value="${(totalPrice + p.price*p.quantity)}" scope="page"></c:set>
+								</div>
+							</div>
+						</div>
+						<hr>
+					</c:forEach>
+					<div
+						class="site-button d-flex justify-content-beetween align-items-center">
+						<div class="col-4">
+							<c:if test="${typeInvoice==1 }">
+								<a class="btn-danger p-2 rounded text-white" href="#"
+									id="cancel-order" data-invoice-id="${iv.id }" role="button">Hủy
+									đơn hàng</a>
+							</c:if>
+						</div>
+						<div class="price col-8">
+							<div class="float-end">
+								<span class="float-right">Tổng tiền: <span
+									class="text-danger font-weight-bold display-6 "><fmt:formatNumber
+											type="number" pattern="###,###,###" value="${totalPrice}" />
+										₫</span>
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</c:if>
 		</c:forEach>
+		<c:if test="${listInvoice.totalPages>1 }">
+			<div class="paganation-site">
+				<nav aria-label="..." class="">
+					<ul
+						class="pagination d-flex justify-content-center align-items-center">
+						<li class="page-item ${listInvoice.number==0?'disabled':'' }"><a
+							class="page-link" href="?p=${listInvoice.number-1}" tabindex="-1"><i
+								class="ti ti-arrow-left"></i></a></li>
+						<li class="page-item active"><a class="page-link"
+							href="?p=${listInvoice.number }">${listInvoice.number+1}</a></li>
+
+						<li
+							class="page-item ${listInvoice.number+1==listInvoice.totalPages?'disabled':'' }"><a
+							class="page-link " href="?p=${listInvoice.number+1 }"><i
+								class="ti ti-arrow-right"></i></a></li>
+						<li class="ml-3 choose-page"><select name="selectedPage mb-0"
+							id="selectedPage">
+								<option value="">--Chọn trang--</option>
+								<c:forEach begin="1" end="${listInvoice.totalPages }"
+									varStatus="i" var="page">
+									<option value="${i.index}" class="option-page">${i.index}</option>
+								</c:forEach>
+						</select></li>
+					</ul>
+				</nav>
+			</div>
+		</c:if>
 	</div>
 </div>
 <div class="modal fade bd-example-modal-sm" id="modalReviews"
@@ -135,10 +164,12 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form action="" class="form-reviews" method="post">
+				<form:form action="" class="form-reviews" method="post"
+					modelAttribute="cmt">
 					<div class="form-group row  justify-content-start">
 						<label for="" class="col-12 col-sm-4 col-form-label">Chất
 							lượng sản phẩm:</label>
+						<form:input path="star" type="hidden" />
 						<div class="col-12 col-sm-8 d-flex align-items-center">
 							<div class="rating float-left">
 								<!-- Tuyệt vời, Hài lòng, Bình thường, Không hài lòng, tệ -->
@@ -158,24 +189,32 @@
 								vời</span>
 						</div>
 					</div>
+					<div class="form-group text-muted">
+						<form:input path="date" type="hidden" />
+						<span>Ngày đánh giá: </span><span class="dateComment"></span>
+					</div>
 					<div class="form-group">
-						<label class="form-label" for="city">Hình ảnh</label>
+						<label class="form-label" for="">Hình ảnh</label>
+						<form:input type="hidden" path="image"></form:input>
 						<ul id="imageList">
 							<li class="" style="list-style: none; max-width: 100px"><label
 								class="custum-file-upload" for="file">
 									<div class="icon2">
 										<i class="ti ti-image"></i>
 									</div> <input type="file" id="file" multiple
-									accept=".jpg, .jpeg, .png">
+									accept=".jpg, .jpeg, .png" onchange="choosePic()">
+
 							</label></li>
 						</ul>
 					</div>
 					<div class="form-group">
-						<label for="exampleFormControlTextarea1">Chi tiết đánh giá:</label>
-						<textarea class="form-control" id="exampleFormControlTextarea1"
-							rows="5" placeholder=""></textarea>
+						<form:label path="content">Chi tiết đánh
+							giá:</form:label>
+						<form:textarea cssClass="form-control" path="content" rows="5"
+							placeholder=""></form:textarea>
+						<small class="contentError"></small>
 					</div>
-				</form>
+				</form:form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Trở
@@ -187,12 +226,11 @@
 	</div>
 </div>
 <script type="text/javascript">
-	//Lấy tất cả các input radio trong .rating
+	/* //Lấy tất cả các input radio trong .rating
 	var ratingInputs = document.querySelectorAll(".rating input");
 
 	// Lấy thẻ <span> có class "status-ratting"
 	var statusSpan = document.querySelector(".status-ratting");
-
 	// Sự kiện khi một sao được chọn
 	ratingInputs.forEach(function(input) {
 		input.addEventListener("change", function() {
@@ -205,11 +243,12 @@
 
 			// Hiển thị văn bản tương ứng trong thẻ <span>
 			statusSpan.textContent = statusTexts[selectedValue - 1];
+			$('#star').val(selectedValue);
 		});
-	});
-	
+	}); */
+
 	// Lấy phần tử input và ul (danh sách hình ảnh)
-	const fileInput = document.getElementById("file");
+	/* const fileInput = document.getElementById("file");
 	const imageList = document.getElementById("imageList");
 	const selectedImages = []; // Danh sách các tệp đã chọn
 
@@ -257,5 +296,64 @@
 	    // Thêm tệp đã chọn vào danh sách
 	    selectedImages.push(selectedFile);
 	  }
+	}); */
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		// Lặp qua tất cả các phần tử <li> bên trong thẻ có class "choose-page"
+		$(".choose-page .option").click(function() {
+			var selectedPageValue = $(this).data("value");
+			if (selectedPageValue !== "") {
+				selectedPageValue = parseInt(selectedPageValue, 10) - 1; // Giảm giá trị đi 1
+				window.location.href = "?p=" + selectedPageValue;
+			}
+		});
+		$('#cancel-order').click(function(e){
+			e.preventDefault();
+			let invoiceId = $(this).data('invoice-id');
+			console.log(invoiceId);
+			Swal.fire({
+				text: "Bạn có muốn hủy đơn hàng đã chọn không ?",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'Trở lại',
+				confirmButtonText: 'Có'
+			}).then((result) => {
+				if (result.isConfirmed) {
+						$.ajax({
+							url: '/account/purchased-order/remove/' + invoiceId,
+							type: "POST",
+							success: function(response) {
+								if (response == 'fail') {
+									Swal.fire({
+										icon: 'warning',
+										title: 'Có lỗi xảy ra, vui lòng thử lại !',
+										showConfirmButton: true
+									});
+								} else {
+									Swal.fire({
+										icon: 'success',
+										title: 'Hủy đơn hàng thành công!',
+										showConfirmButton: true
+									});
+									window.location.href = '/account/purchased-order/-1';
+								}
+							},
+							error: function(xhr, status, error) {
+								Swal.fire({
+									icon: 'error',
+									title: 'Hủy đơn hàng thất bại',
+									text: "Có lỗi xảy ra, vui lòng thử lại !",
+									showConfirmButton: false,
+									timer: 1500
+								});
+							}
+						});
+					}
+				})
+		});
 	});
 </script>

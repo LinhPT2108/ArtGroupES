@@ -80,7 +80,7 @@
 				</div>
 
 				<div class="inputBox">
-					<input type="password" required="required" name="lGpassword" value="123123a"> 
+					<input type="password" required="required" name="lGpassword" value=""> 
 					<span>Mật khẩu</span>
 				</div>
 				<div class="form-check m-0">
@@ -91,10 +91,10 @@
 					<small class="text-danger">${mess  }</small>
 				</div>
 				<button class="enter" type="submit">ĐĂNG NHẬP</button>
-				<a href="/forgot-pass"
+				<a href="/account/forgot-pass"
 					class="text-muted text-decoration forgot-pass">Bạn quên mật
 					khẩu ?</a> <span>BẠN CHƯA CÓ TÀI KHOẢN? HÃY ĐĂNG KÝ <a
-					href="/register" class="register"><u>TẠI ĐÂY.</u></a></span>
+					href="/account/register" class="register"><u>TẠI ĐÂY.</u></a></span>
 			</div>
 		</form>
 	</div>

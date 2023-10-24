@@ -17,7 +17,6 @@ public interface CartDAO extends JpaRepository<Cart, Integer> {
 	
 	// Xóa một giỏ hàng theo ID
 	void deleteById(int cartId);
-	
 	// Tìm giỏ hàng theo ID
 	Optional<Cart> findById(int cartId);
 	
@@ -26,7 +25,9 @@ public interface CartDAO extends JpaRepository<Cart, Integer> {
 	
 	// Lấy tất cả các giỏ hàng chứa một sản phẩm
 	List<Cart> findByProduct(Product product);
+	
+	Cart findByProductAndUser(Product product, UserCustom user);
+	
+	void deleteByUser(UserCustom user);
 
-	// Lấy tất cả các giỏ hàng chứa một sản phẩm
-	List<Cart> findByPrice(double price);
 }

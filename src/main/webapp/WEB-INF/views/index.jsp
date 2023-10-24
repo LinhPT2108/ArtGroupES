@@ -56,6 +56,9 @@
 	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick.css"/>">
 <link rel="stylesheet"
 	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick-theme.css"/>">
+
+<link rel="stylesheet"
+	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">
 </head>
 <body class="js">
 
@@ -73,7 +76,6 @@
 	<!-- Header -->
 	<jsp:include page="component/_header.jsp"></jsp:include>
 	<!--/ End Header -->
-
 	<!-- Slider Area -->
 	<section class="hero-slider mt-3 container-fluid">
 		<!-- Single Slider -->
@@ -132,7 +134,7 @@
 									<div class="mb-3 ">
 										<div class="card h-100 mx-3">
 											<input type="hidden" name="productId" value="${p.productId}">
-											<a href="/products/${p.productId}"><img
+											<a href="<%-- /products/${p.productId} --%>#"><img
 												src="images/products/${p.productImage[0].image }"
 												class="card-img-top" alt="${p.productName }"
 												style="height: 318px !important;"></a>
@@ -163,8 +165,8 @@
 																				value="${(p.price - f.discountedPrice)/p.price *100}" />%
 																		</span>
 																		<c:if test="${p.quantityInStock==0 }">
-																			<span class="p-1 text-bg-dark ms-3">Tạm hết
-																				hàng</span>
+																			<span class="p-1  bg-dark text-white ms-3">Tạm
+																				hết hàng</span>
 																		</c:if>
 																	</div>
 																</div>
@@ -183,19 +185,19 @@
 													<c:choose>
 														<c:when test="${p.quantityInStock==0  }">
 															<button type="button" disabled
-																class="btn btn-outline-primary  float-xl-start">Thêm
+																class="btn-outline-primary p-2  float-xl-start">Thêm
 																vào giỏ</button>
-															<button class="btn btn-outline-primary  float-xl-end"
+															<button class="btn-outline-primary  p-2  float-xl-end"
 																role="button" disabled>Mua ngay</button>
 														</c:when>
 														<c:otherwise>
 															<button type="button"
 																class="btn-outline-primary p-2 addToCart"
 																data-product-id="${p.productId}"
-																data-user-id="${user.userId}">Thêm vào giỏ</button>
+																data-user-id="${userLogin.userId}">Thêm vào giỏ</button>
 															<button class="btn-outline-primary  p-2 btnBuyNow"
 																data-product-id="${p.productId}"
-																data-user-id="${user.userId}">Mua ngay</button>
+																data-user-id="${userLogin.userId}">Mua ngay</button>
 														</c:otherwise>
 													</c:choose>
 												</div>
@@ -234,8 +236,9 @@
 									<c:if test="${c.del }">
 										<c:if test="${i.index<=5 }">
 											<li class="nav-item"><a
-												class="nav-link link-product-highlight" data-toggle="tab"
-												href="#${c.categoryId }" role="tab">${c.categoryName }</a></li>
+												class="nav-link link-product-highlight ${i.index== 0?'active':'' }"
+												data-toggle="tab" href="#category${c.categoryId }"
+												role="tab">${c.categoryName }</a></li>
 										</c:if>
 
 									</c:if>
@@ -245,28 +248,31 @@
 						</div>
 						<div class="tab-content" id="myTabContent">
 							<!-- Start Single Tab -->
+
 							<c:forEach items="${listCategories }" var="c" varStatus="i">
+								<c:set var="countProduct" value="0"></c:set>
 								<c:if test="${i.index<=5 }">
 									<div
-										class="tab-pane fade tab-product-highlight ${i.index==0?'active show':'' }"
-										id="${c.categoryId }" role="tabpanel">
+										class="tab-pane fade tab-product-highlight ${i.index== 0?'active show':'' }"
+										id="category${c.categoryId }" role="tabpanel">
 										<div class="tab-single">
 											<div class="row">
-												<c:forEach items="${listProduct }" var="p" varStatus="i">
-													<c:if test="${i.index<=7 }">
-														<c:if test="${!p.del}">
-															<c:if
-																test="${c.categoryId == p.categoryProduct.categoryId }">
+												<c:forEach items="${listProduct }" var="p" varStatus="ic">
+													<c:if test="${!p.del}">
+														<c:if
+															test="${c.categoryId == p.categoryProduct.categoryId }">
+															<c:set var="countProduct" value="${countProduct+1 }"></c:set>
+															<c:if test="${countProduct<=8 }">
 																<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 																	<div class="single-product h-100">
 																		<div class="product-img">
-																			<a href="/products/${p.productId}"> <img
+																			<a href="<%-- /products/${p.productId} --%>#"> <img
 																				class="default-img"
 																				src="images/products/${p.productImage[0].image }"
-																				alt="${p.productName }" height="350" width="250">
+																				alt="${p.productName }" height="190" width="250">
 																				<img class="hover-img"
 																				src="images/products/${p.productImage[1].image }"
-																				alt="${p.productName }" height="350" width="250">
+																				alt="${p.productName }" height="190" width="250">
 																				<c:set var="foundFlashSale" value="false" /> <c:set
 																					var="priceDiscount" value="0" /> <c:forEach
 																					var="f" items="${listPdFlashsale}">
@@ -278,9 +284,6 @@
 																										type="number" pattern="###,###,###"
 																										value="${(p.price - f.discountedPrice)/p.price *100}" />%
 																								</span>
-																								<c:if test="${p.quantityInStock==0 }">
-																									<span class="out-of-stock">Tạm hết hàng</span>
-																								</c:if>
 																							</div>
 
 																							<c:set var="foundFlashSale" value="true" />
@@ -288,7 +291,9 @@
 																								value="${f.discountedPrice }" />
 																						</c:when>
 																					</c:choose>
-																				</c:forEach>
+																				</c:forEach> <c:if test="${p.quantityInStock==0 }">
+																					<span class="out-of-stock">Tạm hết hàng</span>
+																				</c:if>
 																			</a>
 																			<div class="button-head">
 																				<div class="product-action">
@@ -304,10 +309,10 @@
 																							vào yêu thích</span></a> <a title="Compare" href="#">
 																				</div>
 																				<div class="product-action-2">
-																					<a title="Add to cart" href="#"
+																					<a title="Add to cart" href="#" class="addToCart"
 																						data-product-id="${p.productId}"
-																						data-user-id="${user.userId}">Thêm vào giỏ
-																						hàng</a>
+																						data-user-id="${userLogin.userId}">Thêm vào
+																						giỏ hàng</a>
 																				</div>
 																			</div>
 																		</div>
@@ -340,6 +345,7 @@
 																	</div>
 																</div>
 															</c:if>
+
 														</c:if>
 													</c:if>
 												</c:forEach>
@@ -383,7 +389,9 @@
 														<img src="images/products/${p.productImage[0].image }"
 															alt="${p.productName }"
 															style="height: 115px !important; width: 100% !important">
-														<a href="/add-to-cart/${p.productId }" class="buy"><i
+														<a href="/add-to-cart/${p.productId }"
+															data-product-id="${p.productId}"
+															data-user-id="${userLogin.userId}" class="buy addToCart"><i
 															class="fa fa-shopping-bag"></i></a>
 													</div>
 												</div>
@@ -697,10 +705,7 @@
 										<span id="qtyStock"></span>
 									</div>
 								</div>
-								<div class="d-flex" id="review-product-price">
-								
-														
-								</div>
+								<div class="d-flex" id="review-product-price"></div>
 								<div class="quickview-peragraph mb-3" id="quickview-description">
 
 								</div>
@@ -713,7 +718,7 @@
 												<i class="ti-minus"></i>
 											</button>
 										</div>
-										<input type="text" name="quant[1]" class="input-number"
+										<input type="text" name="quant[1]" class="input-number qty"
 											data-min="1" data-max="1000" value="1">
 										<div class="button plus">
 											<button type="button" class="btn btn-primary btn-number"
@@ -725,8 +730,9 @@
 									<!--/ End Input Order -->
 								</div>
 								<div class="add-to-cart">
-									<a href="#" class="btn">Thêm vào giỏ hàng</a> <a href="#"
-										class="btn min"><i class="ti-heart"></i></a>
+									<a href="#" class="btn addToCart" data-product-id=""
+										data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a> <a
+										href="#" class="btn min"><i class="ti-heart"></i></a>
 									<!--  <a href="#"
 										class="btn min"><i class="fa fa-compress"></i></a> -->
 								</div>
@@ -795,7 +801,7 @@
 
 
 	<script src="js/choose-product.js"></script>
-
+	<script src="js/cart-script.js"></script>
 
 	<script type="text/javascript">
 		$('.single-item-slider').slick({

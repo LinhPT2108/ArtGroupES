@@ -117,7 +117,8 @@ public class userCustomController {
 	}
 
 	@RequestMapping("/userCustom/delete/{userId}")
-	public String deleteUserCustom(@PathVariable("userId") String userId, Model model,@ModelAttribute("userCustom") UserCustom userCustom) {
+	public String deleteUserCustom(@PathVariable("userId") String userId, Model model,@ModelAttribute("userCustom") UserCustom userCustom,
+			@RequestParam("avatar") MultipartFile avatar) {
 		List<Role> listRole = roleDAO.findAll();
 		model.addAttribute("views", "userCustom-form");
 		model.addAttribute("title", "Quản lí tài khoản");
@@ -125,7 +126,12 @@ public class userCustomController {
 		model.addAttribute("updateButton", "Cập nhật");
 		model.addAttribute("deleteButton", "Xóa");
 		model.addAttribute("roles", listRole);
-		userCustom.setDel(false);
+		if (!avatar.isEmpty()) {
+			userCustom.setImage(paramService.save(avatar, "images/avatar").getName());
+		}else {
+			userCustom.setImage(userCustomDAO.getById(userId).getImage());
+		}
+		userCustom.setDel(true);
 		userCustomDAO.save(userCustom);
 		return "redirect:/admin/userCustom";
 	}

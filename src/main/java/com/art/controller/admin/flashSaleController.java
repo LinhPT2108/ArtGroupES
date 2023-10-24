@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.art.DAO.Promotion.FlashSaleDAO;
 import com.art.DAO.User.RoleDAO;
+import com.art.DAO.User.UserCustomDAO;
 import com.art.Entities.Promotion.FlashSale;
 import com.art.Entities.User.Role;
+import com.art.Entities.User.UserCustom;
 import com.art.service.ParamService;
 import com.art.service.SessionService;
 
@@ -40,6 +42,7 @@ public class flashSaleController {
 	HttpServletResponse response;
 	@Autowired
 	ParamService paramService;
+	@Autowired
 	SessionService sessionService;
 	@GetMapping("/flashSale")
 	public String FlashSale(@ModelAttribute("flashSale") FlashSale flashSale,Model model) {	
@@ -113,11 +116,15 @@ public class flashSaleController {
 				try {
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
-					List<FlashSale> createFS=flashSaleDAO.findByIsStatus(false);
+					List<FlashSale> createFS=flashSaleDAO.findAll();
+					UserCustom userCus=sessionService.get("userLogin");
 					for (FlashSale f: createFS) {
+						if(!f.isStatus()) {
 						f.setStatus(true);
 						flashSaleDAO.save(f);
+						}
 					}
+					flashSale.setUser(userCus);
 					flashSaleDAO.save(flashSale);
 					return "redirect:/admin/flashSale";
 				} catch (ParseException e) {
@@ -211,11 +218,15 @@ public class flashSaleController {
 				try {
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
-					List<FlashSale> createFS=flashSaleDAO.findByIsStatus(false);
+					List<FlashSale> createFS=flashSaleDAO.findAll();
+					UserCustom userCus=sessionService.get("userLogin");
 					for (FlashSale f: createFS) {
+						if(!f.isStatus()) {
 						f.setStatus(true);
 						flashSaleDAO.save(f);
+						}
 					}
+					flashSale.setUser(userCus);
 					flashSaleDAO.save(flashSale);
 					return "redirect:/admin/flashSale";
 				} catch (ParseException e) {
@@ -283,8 +294,10 @@ public class flashSaleController {
 				return "admin/index";
 			}else {				
 				try {
+					UserCustom userCus=sessionService.get("userLogin");
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
+					flashSale.setUser(userCus);
 					flashSale.setStatus(true);
 					flashSaleDAO.save(flashSale);
 					return "redirect:/admin/flashSale";

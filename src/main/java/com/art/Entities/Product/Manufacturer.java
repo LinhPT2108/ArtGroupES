@@ -15,14 +15,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
+@Setter 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -34,6 +34,7 @@ public class Manufacturer {
 
 	@Column
 	@Nationalized
+	@NotNull(message = "Tên thương hiệu không được để trống")
 	private String manufacturerName;
 
 	@Column
