@@ -157,14 +157,14 @@ $(document).ready(function() {
 			data: formData,
 			success: function(data) {
 				if (data == 'success') {
-					Swal
+					/*Swal
 						.fire({
 							icon: 'success',
 							title: 'Thêm thành công',
 							text: "Sản phẩm đã được thêm vào hệ thống !",
 							showConfirmButton: true,
 							timer: 1500
-						});
+						});*/
 
 					console.log(formData);
 					let timerInterval

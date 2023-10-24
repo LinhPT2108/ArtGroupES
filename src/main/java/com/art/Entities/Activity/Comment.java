@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.hibernate.annotations.Nationalized;
 
+import com.art.Entities.Product.Image;
 import com.art.Entities.Product.Product;
 import com.art.Entities.Promotion.InvoiceDetail;
 import com.art.Entities.User.UserCustom;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,7 +40,7 @@ public class Comment {
 
 	@Column
 	private int star;
-
+	
 	@Column
 	@Nationalized
 	private String content;
@@ -62,7 +64,7 @@ public class Comment {
 	@JoinColumn(name = "invoiceDetail")
 	private InvoiceDetail invoiceDetail;
 
-	@JsonBackReference
-	@OneToMany(mappedBy = "comment", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "comment", fetch =  FetchType.EAGER)
+	@JsonManagedReference 
 	private List<ImageComment> ImageComment;
 }

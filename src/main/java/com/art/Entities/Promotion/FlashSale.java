@@ -29,11 +29,11 @@ public class FlashSale {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	private Date startDay;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column
 	private Date endDay;
 

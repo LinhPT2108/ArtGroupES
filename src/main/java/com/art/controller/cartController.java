@@ -112,10 +112,8 @@ public class cartController {
 				Cart cartPlus = cart;
 				cartPlus.setCartId(cart.getCartId());
 				cartPlus.setQuantity(cart.getQuantity() + quantityInCart);
-				System.out.println(cartPlus.getCartId());
 				caDAO.save(cartPlus);
 				List<Cart> listC = caDAO.findByUser(uLogin);
-				System.out.println(listC.size());
 				session.setCart(listC);
 				checkPD = true;
 				duplicateCart = cart.getCartId();
@@ -134,8 +132,6 @@ public class cartController {
 				List<Cart> listC = caDAO.findByUser(uLogin);
 				session.setCart(listC);
 				session.set("sizeInCart", listC.size());
-				System.out.println(listC.size());
-
 				return ResponseEntity.ok("success");
 			} catch (Exception e) {
 				// TODO: handle exception

@@ -1,115 +1,162 @@
-var listImages = [];
 
 $(document).ready(function() {
 	console.log('this is comment js');
-	
-	$('#btnCheck').click(function(){
-		console.log(listImages)
-	})
-	
-	$('.showComment').click(function() {
-		$('#file').on("change", function() {
 
-			console.log(123)
-		});
+	$('#btnCheck').click(function() {
+		var form2 = $('.form-reviews')[0];
+		var data2 = new FormData(form2);
+		console.log(data2)
 		let productId = $(this).data('product-id');
 		let invoiceDetailId = $(this).data('invoice-detail-id');
+		let commentId = $(this).data('comment-id');
+		data2.append("productId", JSON.stringify(productId));
+		data2.append("invoiceDetailId", JSON.stringify(invoiceDetailId));
+		if (commentId === undefined) {
+			commentId = -1;
+		}
+		console.log(commentId)
+		data2.append("commentId", JSON.stringify(commentId));
+		for (var pair of data2.entries()) {
+			console.log(pair[0] + ': ' + pair[1]);
+		}
+
+		$.ajax({
+			type: 'POST',
+			enctype: 'multipart/form-data',
+			upload: true,
+			url: '/comment/add-comment',
+			processData: false,
+			contentType: false,
+			cache: false,
+			data: data2,
+			success: function(data) {
+				if (data == 'success') {
+					console.log(data2);
+					let timerInterval
+					Swal.fire({
+						title: 'Đánh giá thành công!',
+						html: 'sẽ làm mới trang trong <b></b> mili giây.',
+						timer: 1500,
+						allowOutsideClick: false,
+						timerProgressBar: true,
+						didOpen: () => {
+							Swal.showLoading()
+							const b = Swal.getHtmlContainer().querySelector('b')
+							timerInterval = setInterval(() => {
+								b.textContent = Swal.getTimerLeft()
+							}, 100)
+						},
+						willClose: () => {
+							clearInterval(timerInterval)
+						}
+					}).then((result) => {
+						if (result.dismiss === Swal.DismissReason.timer) {
+							console.log('I was closed by the timer')
+							location.reload();
+						}
+					})
+				} else {
+					Swal.fire({
+						icon: 'error',
+						title: 'Thêm đánh giá thất bại',
+						text: "Vui lòng kiểm tra lại thông tin !",
+						showConfirmButton: true,
+						timer: 1500
+					});
+					console.log(data)
+				}
+			},
+			error: function(xhr, status, error) {
+				console.log('Ajax errors');
+			}
+		});
+
+	})
+
+	$('.showComment').click(function() {
+		let productId = $(this).data('product-id');
+		let commentId = $(this).data('comment-id');
+		console.log(commentId)
+
+		let invoiceDetailId = $(this).data('invoice-detail-id');
+		// Chọn thẻ có ID "btnCheck" và đặt giá trị thuộc tính "data-product-id"
+		$("#btnCheck").attr("data-product-id", productId);
+		$("#btnCheck").attr("data-invoice-detail-id", invoiceDetailId);
+		if (commentId !== undefined) {
+			console.log(123123)
+			$("#btnCheck").attr("data-comment-id", commentId);
+		} else {
+			$("#btnCheck").attr("data-comment-id", null);
+		}
+
 		$.ajax({
 			type: 'post',
 			url: '/comment/get-comment',
 			data: {
 				productId: productId,
-				invoiceDetailId: invoiceDetailId
+				invoiceDetailId: invoiceDetailId,
+				commentId: commentId
 			},
 			success: function(data) {
 				console.log(data);
-				$('#content').text(data.content);
-				$('.dateComment').text(formatDateToDDMMYYYY(data.date));
-				$('#date').val(data.date);
-				// Cập nhật đánh giá sao
-				if (data.star) {
-					// Chọn input đánh giá sao dựa trên giá trị star
-					$('input[name="rate"]').prop('checked', false);
-					var statusTexts = ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"];
-					$('input[name="rate"][value="' + data.star + '"]').prop('checked', true);
-					console.log(statusTexts[data.star - 1])
-					var statusText = statusTexts[data.star - 1];
-					$('.status-ratting').text(statusText);
-					$('#star').val(data.star);
-				} else {
-					// Nếu không có giá trị star, thì bỏ chọn tất cả các input
-					$('input[name="rate"]').prop('checked', false);
-					$('.status-ratting').text("");
-				}
-
-				$('#image').val(data.image);
-				var imageArray = data.image.split(';');
-				imageArray.forEach(function(item, index) {
-					listImages.push(item);
-				});
-
-				var imageList = $("#imageList"); // Chọn phần tử danh sách hình ảnh
-				if (imageArray.length > 0) {
-					imageList.html('');
-					var newInput = $('<li class="" style="list-style: none; max-width: 100px"><label' +
-						' class="custum-file-upload" for="file">' +
-						' <div class="icon2">' +
-						' <i class="ti ti-image"></i>' +
-						' </div> <input type="file" id="file" multiple' +
-						' accept=".jpg, .jpeg, .png">' +
-						' </label></li>');
-					imageList.append(newInput);
-
-					// Gắn sự kiện onchange vào input sau khi nó được thêm vào trang
-					newInput.find("input").on("change", function() {
-						choosePic();
+				if (data != '404') {
+					$('#content').text(data.content);
+					$('.dateComment').text(formatDateToDDMMYYYY(data.date));
+					$('#date').val(data.date);
+					// Cập nhật đánh giá sao
+					if (data.star) {
+						// Chọn input đánh giá sao dựa trên giá trị star
+						$('input[name="rate"]').prop('checked', false);
+						var statusTexts = ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"];
+						$('input[name="rate"][value="' + data.star + '"]').prop('checked', true);
+						console.log(statusTexts[data.star - 1])
+						var statusText = statusTexts[data.star - 1];
+						$('.status-ratting').text(statusText);
+						$('#star').val(data.star);
+					} else {
+						// Nếu không có giá trị star, thì bỏ chọn tất cả các input
+						$('input[name="rate"]').prop('checked', false);
+						$('.status-ratting').text("");
+					}
+					let listImages = [];
+					data.ImageComment.forEach(function(item, index) {
+						listImages.push(item);
 					});
 
-					// Sử dụng một biến để duyệt qua các phần tử mảng
-					for (var i = 0; i < imageArray.length; i++) {
-						(function(index) {
-							// Tạo phần tử li chứa hình ảnh
-							var listItem = $("<li>").css({ position: "relative", maxWidth: "100px" });
-							// Tạo nút X để xóa hình ảnh
-							var deleteButton = $("<button>")
-								.addClass("ti ti-close delete-button")
-								.on("click", function(e) {
-									e.preventDefault();
-									// Lấy tên hình ảnh cần xóa
-									var removedImage = listImages[index];
+					var imageList = $("#listImg"); // Chọn phần tử danh sách hình ảnh
+					imageList.html('');
+					let imageArray = data.ImageComment;
+					if (imageArray.length > 0) {
+						imageList.html('');
 
-									// Xóa hình ảnh khỏi mảng ban đầu
-									listImages.splice(index, 1);
+						// Sử dụng một biến để duyệt qua các phần tử mảng
+						for (var i = 0; i < imageArray.length; i++) {
+							(function(index) {
+								// Tạo phần tử li chứa hình ảnh
+								var listItem = $("<li>").css({ maxWidth: "100px", display: "inline-block", margin: "5px" });
 
-									// Xóa phần tử li chứa hình ảnh
-									$(this).parent("li").remove();
+								// Tạo phần tử hình ảnh và thêm vào phần tử li
+								var image = $("<img>").attr("src", "/images/comments/" + imageArray[index].image);
+								listItem.append(image)
+								// Thêm phần tử li vào danh sách
+								imageList.append(listItem);
 
-									// Thực hiện các tác vụ khác sau khi xóa hình ảnh
-									console.log("Xóa hình ảnh: " + removedImage);
-									console.log(listImages)
-								});
+							})(i);
 
-							// Tạo phần tử hình ảnh và thêm vào phần tử li
-							var image = $("<img>").attr("src", "/images/comments/" + imageArray[index]);
-
-							// Thêm nút X và hình ảnh vào phần tử li
-							listItem.append(deleteButton, image);
-
-							// Thêm phần tử li vào danh sách
-							imageList.append(listItem);
-
-						})(i);
-
+						}
 					}
-
-
-
+				} else {
+					$('.date-comment').html('');
+					$('#listImg').html('');
+					$('#star4').attr("checked", true);
+					$('#content').val('');
+					console.log('new')
 				}
 			},
 			error: function(xhr, status, error) {
 				Swal.fire({
 					icon: 'error',
-					title: 'Thêm vào giỏ hàng thất bại',
+					title: 'thất bại',
 					text: "Có lỗi xảy ra, vui lòng thử lại !",
 					showConfirmButton: false,
 					timer: 1500
@@ -127,79 +174,80 @@ $(document).ready(function() {
 		$('#star').val(selectedValue);
 	});
 
+	const fileInput = $("#listImage");
+	const previewImages = $("#listImg");
+
+	fileInput.on("change", function() {
+		// Xóa tất cả các thẻ con
+		previewImages.empty();
+
+		for (let i = 0; i < fileInput[0].files.length; i++) {
+			const file = fileInput[0].files[i];
+			const imageContainer = $("<div>").addClass("image-container").css({
+				display: "inline-block",
+				margin: "5px"
+			});
+			const image = $("<img>").css({
+				maxWidth: "127px",
+				maxHeight: "100px"
+			}).attr("src", URL.createObjectURL(file));
+
+			imageContainer.append(image);
+			previewImages.append(imageContainer);
+		}
+		console.log(fileInput[0].files)
+	});
 
 
 });
 function generateRandomString() {
-    var randomString = '';
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for (var i = 0; i < 8; i++) {
-        randomString += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
+	var randomString = '';
+	var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var charactersLength = characters.length;
+	for (var i = 0; i < 8; i++) {
+		randomString += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
 
-    var currentTimeMillis = new Date().getTime();
+	var currentTimeMillis = new Date().getTime();
 
-    var finalString = randomString + currentTimeMillis.toString();
+	var finalString = randomString + currentTimeMillis.toString();
 
-    return finalString;
+	return finalString;
 }
 
-function choosePic() {
-	console.log(123)
-	const fileInput = document.getElementById("file");
-	const imageList = document.getElementById("imageList");
-	const selectedImages = []; // Danh sách các tệp đã chọn
+function checkFileSize(e) {
+	var file_list = e.files;
+	var totalSize = 0; // Tổng kích thước của tất cả các tệp
 
-	const selectedFiles = fileInput.files;
+	for (var i = 0; i < file_list.length; i++) {
+		var file = file_list[i];
+		var fileExtension = file.name.split('.')[file.name.split('.').length - 1].toLowerCase();
+		var iConvert;
 
-	for (let i = 0; i < selectedFiles.length; i++) {
-		const selectedFile = selectedFiles[i];
-
-		// Kiểm tra xem tệp đã được chọn có tồn tại trong danh sách không
-		if (selectedImages.some((img) => img.name === selectedFile.name)) {
-			alert(`Hình ảnh "${selectedFile.name}" đã tồn tại.`);
-			continue; // Bỏ qua tệp đã tồn tại
+		if (file.size > (1024 * 1024)) {
+			iConvert = (file.size / (1024 * 1024)).toFixed(2); // Chuyển đổi thành MB
+		} else {
+			iConvert = (file.size / 1024).toFixed(2); // Chuyển đổi thành KB
 		}
 
-		const objectURL = URL.createObjectURL(selectedFile);
+		totalSize += file.size;
 
-		// Tạo phần tử li chứa hình ảnh
-		const listItem = document.createElement("li");
-		listItem.style.position = "relative";
-		listItem.style.maxWidth = "100px";
-		// Tạo nút X để xóa hình ảnh
-		const deleteButton = document.createElement("button");
-		deleteButton.classList.add("ti");
-		deleteButton.classList.add("ti-close");
-		deleteButton.classList.add("delete-button");
-		deleteButton.addEventListener("click", function() {
-			// Xóa hình ảnh và cập nhật danh sách
-			listItem.remove();
-			selectedImages.splice(selectedImages.indexOf(selectedFile), 1);
-			console.log(selectedImages)
-		});
-
-		// Tạo phần tử hình ảnh và thêm vào danh sách
-		const image = document.createElement("img");
-		image.src = objectURL;
-
-		// Thêm nút X vào phần tử li
-		listItem.appendChild(deleteButton);
-		listItem.appendChild(image);
-
-		// Thêm phần tử li vào danh sách
-		imageList.appendChild(listItem);
-
-		// Thêm tệp đã chọn vào danh sách
-		console.log(selectedFile.name)
-		selectedImages.push(selectedFile);
-		console.log(selectedImages)
-		// Gộp mảng selectedImages vào listImages
+		txt = "File type: " + fileExtension + "\n";
+		txt += "Size: " + iConvert + (file.size > (1024 * 1024) ? " MB" : " KB") + "\n";
 	}
-	//listImages = listImages.concat(selectedImages);
-	console.log(listImages)
-};
+
+	if (totalSize > 10 * 1024 * 1024) {
+		console.log('Vượt quá kích thước');
+		Swal.fire({
+			icon: 'warning',
+			title: 'Vượt quá kích thước',
+			text: "Vui lòng chọn ảnh kích thước lớn nhỏ hơn 10MB !",
+			showConfirmButton: true
+		});
+		e.value = null;
+	}
+}
+
 
 // Hàm định dạng ngày
 function formatDateToDDMMYYYY(inputDate) {

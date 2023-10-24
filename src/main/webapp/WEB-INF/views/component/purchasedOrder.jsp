@@ -77,15 +77,17 @@
 											<c:when test="${p.comment==null }">
 												<a type="button"
 													class="btn-warning p-2  text-white align-self-end mb-3 showComment"
-													href="" data-toggle="modal" data-target="#modalReviews">Chưa
-													đánh giá</a>
+													href="" data-toggle="modal" data-target="#modalReviews"
+													data-invoice-detail-id="${p.id}"
+													data-product-id="${p.product.productId}">Chưa đánh giá</a>
 											</c:when>
 											<c:otherwise>
 												<a type="button"
 													class="btn-success p-2 align-self-end mb-3 showComment rounded text-white"
 													href="" data-toggle="modal" data-target="#modalReviews"
 													data-invoice-detail-id="${p.id}"
-													data-product-id="${p.product.productId}">Đã đánh giá</a>
+													data-product-id="${p.product.productId}"
+													data-comment-id="${p.comment.id }">Đã đánh giá</a>
 											</c:otherwise>
 										</c:choose>
 									</c:if>
@@ -169,7 +171,6 @@
 					<div class="form-group row  justify-content-start">
 						<label for="" class="col-12 col-sm-4 col-form-label">Chất
 							lượng sản phẩm:</label>
-						<form:input path="star" type="hidden" />
 						<div class="col-12 col-sm-8 d-flex align-items-center">
 							<div class="rating float-left">
 								<!-- Tuyệt vời, Hài lòng, Bình thường, Không hài lòng, tệ -->
@@ -191,20 +192,24 @@
 					</div>
 					<div class="form-group text-muted">
 						<form:input path="date" type="hidden" />
-						<span>Ngày đánh giá: </span><span class="dateComment"></span>
+						<div class="date-comment">
+							<span>Ngày đánh giá: </span><span class="dateComment"></span>
+						</div>
 					</div>
 					<div class="form-group">
 						<label class="form-label" for="">Hình ảnh</label>
-						<form:input type="hidden" path="image"></form:input>
 						<ul id="imageList">
-							<li class="" style="list-style: none; max-width: 100px"><label
-								class="custum-file-upload" for="file">
-									<div class="icon2">
-										<i class="ti ti-image"></i>
-									</div> <input type="file" id="file" multiple
-									accept=".jpg, .jpeg, .png" onchange="choosePic()">
-
+							<li class="" style="list-style: none;"><label
+								class="custum-file-upload">
+									<div class="ico2n">
+										<i class="bi bi-card-image"></i>
+									</div>
+									<div class="text">
+										<span>Tải ảnh lên</span>
+									</div> <input type="file" name="listImage" id="listImage" multiple
+									accept=".jpg,.jpeg,.png" onchange="checkFileSize(this)">
 							</label></li>
+							<li class="" id="listImg"></li>
 						</ul>
 					</div>
 					<div class="form-group">
