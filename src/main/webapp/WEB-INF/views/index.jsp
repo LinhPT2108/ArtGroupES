@@ -134,7 +134,7 @@
 									<div class="mb-3 ">
 										<div class="card h-100 mx-3">
 											<input type="hidden" name="productId" value="${p.productId}">
-											<a href="<%-- /products/${p.productId} --%>#"><img
+											<a href="/products/${p.productId}"><img
 												src="images/products/${p.productImage[0].image }"
 												class="card-img-top" alt="${p.productName }"
 												style="height: 318px !important;"></a>
@@ -142,8 +142,7 @@
 												<span class="text-muted">${p.manufacturerProduct.manufacturerName }</span>
 												<a
 													class="card-title fs-6 font-weight-bold text-black text-decoration-none"
-													href="/nguyentcpc04750_ASM/products/${p.productId }"
-													style="min-height: 48px">${p.productName }</a>
+													href="/products/${p.productId }" style="min-height: 48px">${p.productName }</a>
 												<div class="price-product mb-3">
 													<c:set var="foundFlashSale" value="false" />
 													<c:forEach var="f" items="${listPdFlashsale}">
@@ -266,7 +265,7 @@
 																<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 																	<div class="single-product h-100">
 																		<div class="product-img">
-																			<a href="<%-- /products/${p.productId} --%>#"> <img
+																			<a href="/products/${p.productId}"> <img
 																				class="default-img"
 																				src="images/products/${p.productImage[0].image }"
 																				alt="${p.productName }" height="190" width="250">
@@ -420,7 +419,7 @@
 												<div class="col-lg-6 col-md-6 col-12 no-padding">
 													<div class="content">
 														<h4 class="title card-title">
-															<a href="/product/${p.productId }">${p.productName }</a>
+															<a href="/products/${p.productId }">${p.productName }</a>
 														</h4>
 														<p class="price with-discount">
 															<fmt:formatNumber type="number" pattern="###,###,###"

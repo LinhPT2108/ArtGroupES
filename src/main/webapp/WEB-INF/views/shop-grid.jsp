@@ -137,7 +137,7 @@
 								class="btn btn-default border fw-bold dropdown-toggle  p-4"
 								type="button" id="dropdownMenuButton2" data-toggle="dropdown"
 								aria-expanded="false">Lọc giá</button>
-							<ul class="dropdown-menu px-4"
+							<ul class="dropdown-menu px-3"
 								aria-labelledby="dropdownMenuButton2" style="min-width: 180px">
 								<li class=""><input
 									class="form-check-input filter-checkbox price-checkbox"

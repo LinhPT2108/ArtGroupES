@@ -1221,150 +1221,142 @@ INSERT INTO dbo.comment
         ( date ,
           star ,
           content ,
-          image ,
           product_id ,
           user_comment
         )
 VALUES  ( '2023-10-02' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          '32V35KP_1' , -- image - varchar(255)
           '32V35KP' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-06' , -- date - date
           4 , -- star - int
           N'Giao hàng nhanh, nhân viên thân thiện !' , -- content - nvarchar(255)
-          '43NANO76SQA_1' , -- image - varchar(255)
           '43NANO76SQA' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-06' , -- date - date
           4 , -- star - int
           N'Giao hàng nhanh, nhân viên thân thiện !' , -- content - nvarchar(255)
-          '43UQ7550PSF_1' , -- image - varchar(255)
           '43UQ7550PSF' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-06' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, nhân viên thân thiện, nhiệt tình !' , -- content - nvarchar(255)
-          '43UQ8000PSC_1' , -- image - varchar(255)
           '43UQ8000PSC' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-06' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, nhân viên thân thiện, nhiệt tình !' , -- content - nvarchar(255)
-          '50UQ7550PSF_1' , -- image - varchar(255)
           '50UQ7550PSF' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-06' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, nhân viên thân thiện, nhiệt tình !' , -- content - nvarchar(255)
-          '50UQ8000PSC_1' , -- image - varchar(255)
           '50UQ8000PSC' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          '55NANO76SQA_1' , -- image - varchar(255)
           '55NANO76SQA' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          '55UQ7550PSF_1' , -- image - varchar(255)
           '55UQ7550PSF' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          '55UQ8000PSC_1' , -- image - varchar(255)
           '55UQ8000PSC' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          '65NANO76SQA_1' , -- image - varchar(255)
           '65NANO76SQA' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          '65UQ8000PSC_1' , -- image - varchar(255)
           '65UQ8000PSC' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'AR13CYFAAWKNSV_1' , -- image - varchar(255)
           'AR13CYFAAWKNSV' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'AW-L805AV_1' , -- image - varchar(255)
           'AW-L805AV' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'GR-B256JDS_1' , -- image - varchar(255)
           'GR-B256JDS' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'GR-RF610WE-PGV(22)-XK_1' , -- image - varchar(255)
           'GR-RF610WE-PGV(22)-XK' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'MSAGA-10CRDN8_1' , -- image - varchar(255)
           'MSAGA-10CRDN8' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-11' , -- date - date
           3 , -- star - int
           N'Giao hàng nhanh, tuy nhiên sản phẩm bị cấn móp !' , -- content - nvarchar(255)
-          'QA43Q65A_1' , -- image - varchar(255)
           'QA43Q65A' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-16' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'QA50Q65A_1' , -- image - varchar(255)
           'QA50Q65A' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-16' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'QA55Q65A_1' , -- image - varchar(255)
           'QA55Q65A' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         ),
 		( '2023-10-16' , -- date - date
           5 , -- star - int
           N'Giao hàng nhanh, đóng gói cẩn thận !' , -- content - nvarchar(255)
-          'QA65Q60B_1' , -- image - varchar(255)
           'QA65Q60B' , -- product_id - varchar(255)
           'linhptpc04737'  -- user_comment - varchar(255)
         );
+GO 
+
+INSERT INTO dbo.image_comment
+        ( comment_id, image )
+VALUES  ( 10, -- comment_id - int
+          '65NANO76SQA_1.png'  -- image - varchar(255)
+          ),
+		  ( 10, -- comment_id - int
+          '65NANO76SQA_2.png'  -- image - varchar(255)
+          ),
+		  ( 10, -- comment_id - int
+          '65NANO76SQA_3.png'  -- image - varchar(255)
+          );
 GO 
 
 INSERT INTO dbo.promotional_details

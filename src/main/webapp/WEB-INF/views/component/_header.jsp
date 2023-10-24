@@ -86,8 +86,8 @@
 					class="col-lg-8 col-md-7 col-12 d-md-flex justify-content-center align-items-center">
 					<div class="search-bar-top">
 						<div class="search-bar">
-							<form method="get" action="/product/search">
-								<select name="categoryId">
+							<form method="get" action="/product/search" id="categoryIdSort">
+								<select name="categoryId" style="width:160px;" >
 									<option selected="selected" value="-1">Danh mục</option>
 									<c:forEach items="${listCategories }" var="c">
 										<c:if test="${c.del }">

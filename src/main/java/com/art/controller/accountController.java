@@ -110,7 +110,7 @@ public class accountController {
 		try {
 
 			UserCustom user = usDAO.findByEmail(email).get(0);
-			if (user.isDel()) {
+			if (!user.isDel()) {
 				if (PasswordEncryption.toSHA1(password).equals(user.getPassword())) {
 					sessionService.set("userLogin", user);
 					if (rm) {
@@ -479,13 +479,13 @@ public class accountController {
 
 		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
 
-		FlashSale endDay = lsDAO.findByIsStatus(false).get(0);
+		FlashSale endDay = lsDAO.findByIsStatus(false);
 
 		model.addAttribute("now", new Date());
-		model.addAttribute("flashsale", lsDAO.findByIsStatus(false).get(0));
+		model.addAttribute("flashsale", lsDAO.findByIsStatus(false));
 		if (endDay != null) {
 			model.addAttribute("listPdFlashsale", pmtDAO.findByFlashSale_Id(endDay.getId()));
-			Date endDay1 = lsDAO.findByIsStatus(false).get(0).getEndDay();
+			Date endDay1 = lsDAO.findByIsStatus(false).getEndDay();
 			System.out.println(endDay1);
 			Date now = new Date();
 			Boolean checkDayTime = endDay1.before(now) || endDay1.equals(now);

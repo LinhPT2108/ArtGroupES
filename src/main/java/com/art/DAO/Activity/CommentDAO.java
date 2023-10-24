@@ -3,11 +3,13 @@ package com.art.DAO.Activity;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.art.Entities.Activity.Comment;
 import com.art.Entities.Product.Product;
 import java.util.List;
 import com.art.Entities.Promotion.InvoiceDetail;
+import com.art.Entities.Promotion.PromotionalDetails;
 
 
 public interface CommentDAO extends JpaRepository<Comment, Integer> {
@@ -29,6 +31,8 @@ public interface CommentDAO extends JpaRepository<Comment, Integer> {
 //	
 //	// Lấy tất cả các bình luận của một sản phẩm
 //	List<Comment> findByProduct(Product product);
+	@Query("SELECT c FROM Comment c WHERE c.product.id = :productId")
+	List<Comment> findByProductId(String productId);
 	
 	
 	

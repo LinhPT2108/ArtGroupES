@@ -1,7 +1,6 @@
 package com.art.DAO.Activity;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,7 +15,7 @@ public interface BannerDAO extends JpaRepository<Banner, Integer> {
 	List<Banner> findByBannerName(String bannerName);
 	
 	//Tìm banner theo ID
-	Optional<Banner> findById(int id);
+	Banner findById(int id);
 	
 	@SuppressWarnings("unchecked")
 	//Thêm hoặc cập nhật một banner

@@ -28,7 +28,8 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 //    boolean existsById(String productId);
 //
 //    // Tìm Product theo ID
-//    Product findByProduct_id(String product_id);
+	Product findByProductId(String product_id);
+
 //
 //    // Tìm tất cả Product
 //    List<Product> findAll();
@@ -42,12 +43,23 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 	@Query("SELECT p FROM Product p WHERE p.productName LIKE %:keyword% AND p.categoryProduct = :category")
 	List<Product> searchProductByNameAndCategory(String keyword, Category category);
 
+	@Query("SELECT AVG(c.star) FROM Comment c WHERE c.product.id = :productId")
+	Double calculateAverageRating(String productId);
+
+	@Query("SELECT p FROM Product p WHERE p.categoryProduct.categoryId = :categoryId")
+	List<Product> findProductByCategoryId(int categoryId);
 //
 //    // Tìm Product theo số lượng trong kho
 //    List<Product> findByQuantityInStock(int quantityInStock);
 //
 //    // Tìm Product theo trạng thái is_del
 	List<Product> findByDel(boolean isDel);
+
+	@Query("SELECT COUNT(c) FROM Comment c WHERE c.product.id = :productId")
+	Long countCommentsByProduct(String productId);
+
+	@Query("SELECT COUNT(i) FROM InvoiceDetail i WHERE i.product.id = :productId")
+	Long countTotalProducts(String productId);
 
 //
 //    // Tìm Product theo giá

@@ -1,19 +1,15 @@
 package com.art.controller.admin;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,15 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.art.DAO.Promotion.FlashSaleDAO;
-import com.art.DAO.User.RoleDAO;
 import com.art.Entities.Promotion.FlashSale;
-import com.art.Entities.User.Role;
 import com.art.service.ParamService;
 import com.art.service.SessionService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -113,7 +105,7 @@ public class flashSaleController {
 				try {
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
-					List<FlashSale> createFS=flashSaleDAO.findByIsStatus(false);
+					List<FlashSale> createFS=flashSaleDAO.findAll();
 					for (FlashSale f: createFS) {
 						f.setStatus(true);
 						flashSaleDAO.save(f);
@@ -211,7 +203,7 @@ public class flashSaleController {
 				try {
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
-					List<FlashSale> createFS=flashSaleDAO.findByIsStatus(false);
+					List<FlashSale> createFS=flashSaleDAO.findAll();
 					for (FlashSale f: createFS) {
 						f.setStatus(true);
 						flashSaleDAO.save(f);

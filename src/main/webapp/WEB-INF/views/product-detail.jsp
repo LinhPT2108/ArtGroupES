@@ -1,16 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Chi tiết sản phẩm</title>
+<script
+	src="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.js"/>"></script>
 <link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-
+	href="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.css"/>">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <!-- Favicon -->
@@ -42,6 +42,10 @@
 <link rel="stylesheet" href="../css/owl-carousel.css">
 <!-- Slicknav -->
 <link rel="stylesheet" href="../css/slicknav.min.css">
+<link rel="stylesheet"
+	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick.css"/>">
+<link rel="stylesheet"
+	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick-theme.css"/>">
 
 <!-- Eshop StyleSheet -->
 <link rel="stylesheet" href="../css/reset.css">
@@ -78,21 +82,25 @@
 				<div id="carouselExampleControls" class="carousel slide"
 					data-ride="carousel">
 					<div class="carousel-inner">
-						<div class="carousel-item active">
-							<img class="d-block w-100"
-								src="https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-ll1wvj78hn7v6d"
-								alt="First slide">
-						</div>
-						<div class="carousel-item">
-							<img class="d-block w-100"
-								src="https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-ll1wvj78hn7v6d"
-								alt="Second slide">
-						</div>
-						<div class="carousel-item">
-							<img class="d-block w-100"
-								src="https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-ll1wvj78hn7v6d"
-								alt="Third slide">
-						</div>
+
+						<c:forEach items="${product.productImage }" var="imageProduct"
+							varStatus="loop">
+							<c:if test="${loop.index==0 }">
+								<div class="carousel-item active">
+									<img class="d-block w-100"
+										src="../../images/products/${imageProduct.image }"
+										alt="First slide">
+								</div>
+							</c:if>
+							<c:if test="${loop.index!=0 }">
+								<div class="carousel-item">
+									<img class="d-block w-100"
+										src="../../images/products/${imageProduct.image }"
+										alt="First slide">
+								</div>
+							</c:if>
+
+						</c:forEach>
 					</div>
 					<a class="carousel-control-prev" href="#carouselExampleControls"
 						role="button" data-slide="prev"> <span
@@ -108,63 +116,187 @@
 			<div class="col-lg-7 col-md-7 col-12">
 				<div class="thongtintensanpham">
 					<div class="tensanpham">
-						<span>Sữa Chống Nắng Dưỡng Da Anessa Perfect UV
-							SPF50+/PA++++ 60ml</span>
+						<span>${product.productName }</span>
 					</div>
 				</div>
 				<!--số lượng bán, sao-->
 				<div class="thongtinchitietsanpham d-flex flex-row">
 					<button class="thongtindau d-flex flex-row">
 						<div class="sosao"
-							style="color: #ee4d2d; border-bottom-color: #ee4d2d; margin-right: 5px;">4.9</div>
+							style="color: #ee4d2d; border-bottom-color: #ee4d2d; margin-right: 5px;">${star}</div>
 						<div class="5sao">
-							<i class="bi bi-star-fill mausao"> </i> <i
-								class="bi bi-star-fill mausao"> </i> <i
-								class="bi bi-star-fill mausao"> </i> <i
-								class="bi bi-star-fill mausao"> </i> <i
-								class="bi bi-star-fill mausao"> </i>
+							<c:choose>
+								<c:when test="${star <= 0.5}">
+									<i class="bi bi-star-half mausao"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 1}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 1.5}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-half mausao"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 2}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 2.5}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-half mausao"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 3}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 3.5}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-half mausao"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 4}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star"></i>
+								</c:when>
+								<c:when test="${star <= 4.5}">
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-half mausao"></i>
+								</c:when>
+								<c:otherwise>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+									<i class="bi bi-star-fill mausao"></i>
+								</c:otherwise>
+							</c:choose>
+
 						</div>
 					</button>
 					<button class="thongtingiua d-flex flex-row">
-						<div class="sodanhgia" style="margin: 5px;">11,3k</div>
+						<div class="sodanhgia" style="margin: 5px;">
+							<c:choose>
+								<c:when test="${sumRate >0}">
+									${sumRate }
+								</c:when>
+								<c:otherwise>
+									0
+								</c:otherwise>
+							</c:choose>
+						</div>
 						<div class="tendanhgia">Đánh giá</div>
 					</button>
 					<button class="thongtincuoi d-flex flex-row">
-						<div class="sodaban">45,7</div>
+						<div class="sodaban">
+							<c:choose>
+								<c:when test="${sumSell >0}">
+									${sumSell }
+								</c:when>
+								<c:otherwise>
+									0
+								</c:otherwise>
+							</c:choose>
+
+						</div>
 						<div class="tendaban">Đã bán</div>
 					</button>
 				</div>
 				<!--FlashSale, Giá-->
 				<div style="margin-top: 10px;">
-					<div class="flashsale">
-						<h4>FLASH SALE</h4>
-						<div class="khoangcachflashsalevaketthuc"></div>
-						<div class="ketthuctrong">Kết thúc trong</div>
-						<div class="dinhdangkhungdem">
-							<div class="giaodiendem">
-								<div style="color: white;">00</div>
+					<c:if test="${isFlashSale}">
+						<div
+							class="section-heading text-center d-flex align-items-center mb-3 p-3">
+							<div class="title-flashsale mr-3">
+								<h2 class="hTitle">
+									<a href="#"> <img src="../images/flash-sale.png"
+										alt="Sale Off">
+									</a>
+								</h2>
 							</div>
-							<div class="khoangcachgiaodiendem"></div>
-							<div class="giaodiendem">
-								<div style="color: white;">00</div>
-							</div>
-							<div class="khoangcachgiaodiendem"></div>
-							<div class="giaodiendem">
-								<div style="color: white;">00</div>
-							</div>
+							<c:if test="${!checkDayTime}">
+								<div class="styleCountdown d-flex align-items-center mr-3 mt-0">
+									<span
+										class="lof-clock-detail bg-warning text-dark rounded-3 p-2 fw-bold"
+										id="your-countdown"
+										data-end-day="<c:out value="${flashsale.endDay}" />"> </span>
+
+								</div>
+							</c:if>
 						</div>
-					</div>
+					</c:if>
 					<div class="thongtingia">
-						<div class="d-flex flex-row"
-							style="flex-wrap: wrap; width: 625px; flex-basis: 625px; min-height: 1.875rem;">
-							<!-- giá cũ -->
-							<div class="giacu">đ715.000</div>
-							<!-- giá mới -->
-							<div class="d-flex flex-row " style="align-items: center;">
-								<div class="giamoi">đ429.000</div>
-								<!-- 40% giảm -->
-								<div class="giamgia">40% giảm</div>
+						<div class="d-flex ">
+							<%-- <div class="giacu">
+								<fmt:setLocale value="vi_VN" />
+								<fmt:formatNumber value="${product.price}" type="currency"
+									currencyCode="VND" maxFractionDigits="0" minFractionDigits="0" />
 							</div>
+							 <div class="d-flex mx-3" style="align-items: center;">
+								<div class="giamoi">
+									<fmt:setLocale value="vi_VN" />
+									<fmt:formatNumber value="${disCountProduct.discountedPrice }"
+										type="currency" currencyCode="VND" maxFractionDigits="0"
+										minFractionDigits="0" />
+								</div>
+								<div class="giamgia">
+									giảm <span style="font-size: 1.5rem;"> <fmt:setLocale
+											value="vi_VN" /> <fmt:formatNumber
+											value="${((product.price-disCountProduct.discountedPrice)/product.price)*100}"
+											maxFractionDigits="0" minFractionDigits="0" />%
+									</span>
+								</div>
+							</div>  --%>
+							<c:if test="${!isFlashSale }">
+								<span
+									class="price product-price text-danger display-6 font-weight-bold ml-2"><fmt:formatNumber
+										type="number" pattern="###,###,###" value="${product.price}" />
+									₫</span>
+							</c:if>
+							<c:if test="${isFlashSale}">
+								<span class="display-6 text-muted mr-2"
+									style="align-self: center; text-decoration: line-through;">
+									<fmt:formatNumber type="number" pattern="###,###,###"
+										value="${product.price}" /> ₫
+								</span>
+								<span
+									class="price product-price text-danger display-6 font-weight-bold mr-4">
+									<fmt:formatNumber type="number" pattern="###,###,###"
+										value="${product.productPromotionalDetails[0].discountedPrice }" />
+
+									₫ <span class="badge bg-danger text-white rounded display-6 ml-4">giảm <fmt:formatNumber
+											type="number" pattern="###,###"
+											value="${(product.price - product.productPromotionalDetails[0].discountedPrice)/product.price*100}" />
+										%
+								</span>
+								</span>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -172,26 +304,19 @@
 				<div class="dinhdangkhungsoluong">
 					<div style="flex-direction: column;">
 						<!--số lượng-->
-						<section class="d-flex flex-row" style="color: #757575;">
+						<section class="d-flex align-items-center" style="color: #757575;">
 							<h3
-								style="color: #757575; width: 110px; text-transform: capitalize; flex-shrink: 0; align-items: center; font-size: inherit; font-weight: 400; margin: 0;">Số
-								lượng</h3>
-							<div
-								style="flex-basis: 32.1875rem; max-width: 32.1875rem; flex-wrap: wrap;">
-								<div style="margin-right: 15px;">
-									<div class="dinhdangnutsoluong">
-										<button class="nut">
-											<i class="bi bi-dash-lg nutgiam"></i>
-										</button>
-										<input class="nut soluong" aria-live="assertive"
-											aria-valuenow="1" value="1" type="text" role="spinbutton"
-											name id>
-										<button class="nut">
-											<i class="bi bi-plus-lg nuttang"></i>
-										</button>
-									</div>
-								</div>
-								<div>199 Sản phẩm có sẵn</div>
+								style="color: #757575; width: 110px; text-transform: capitalize; flex-shrink: 0; align-items: center; font-size: inherit; font-weight: 400; margin: 0;">Trạng
+								thái:</h3>
+							<div>
+								<c:choose>
+									<c:when test="${product.quantityInStock>0}">
+										<b>Còn hàng</b>
+									</c:when>
+									<c:otherwise>
+										<b>Hết hàng</b>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</section>
 					</div>
@@ -199,14 +324,37 @@
 				<!-- Nút giỏ hàng và mua ngay -->
 				<div style="margin-top: 15px;">
 					<div style="padding-left: 1.25rem;">
-						<div style="display: flex;">
-							<button type="button" class="nutgiohang maunutmua">Thêm
-								vào giỏ hàng</button>
-							<button type="button" class="nutgiohang maunutmua">Mua
-								ngay</button>
-							<a href class="nutgiohang maunutthich"> <span
-								style="color: red;"><i class="bi bi-heart"></i></span>
-							</a>
+						<div style="display: flex; justify-content: between;">
+
+							<a title="Add to cart" href="#"
+								class="addToCart nutgiohang maunutmua text-white"
+								data-product-id="${product.productId}"
+								data-user-id="${userLogin.userId}">Thêm vào giỏ hàng</a>
+
+							<c:set var="checkLike" value="false"></c:set>
+							<c:forEach items="${likeList }" var="l" varStatus="i">
+								<c:if test="${l.product.productId == product.productId }">
+									<c:set var="checkLike" value="true"></c:set>
+								</c:if>
+							</c:forEach>
+							<c:choose>
+								<c:when test="${checkLike }">
+									<a title="Xóa yêu thích" href="#" class="siteLikeProduct"
+										data-product-id="${product.productId}"
+										data-user-id="${userLogin.userId}" style="margin-left: 40px;"><i
+										class="bi-heart-fill text-danger display-5 float-right"></i></a>
+								</c:when>
+								<c:otherwise>
+									<a title="Yêu thích" href="#" class="siteLikeProduct"
+										data-product-id="${product.productId}"
+										data-user-id="${userLogin.userId}" style="margin-left: 40px;"><i
+										class="bi-heart text-danger display-5 float-right"></i></a>
+								</c:otherwise>
+							</c:choose>
+							<!-- <a role="button" href=""
+								class="d-flex text-light align-items-center justify-content-center px-4 btn btn-primary bg-success">
+								<i class="bi bi-heart mx-2"></i> Yêu thích
+							</a> -->
 						</div>
 					</div>
 				</div>
@@ -218,41 +366,28 @@
 					<h2 class="titlechitietsanpham">CHI TIẾT SẢN PHẨM</h2>
 					<div style="margin: 1.875rem .9375rem .9375rem;">
 						<div class="dongchitietsp">
-							<label class="labelchitietsanpham" for>Danh Mục</label>
-							<div>Bình Dương</div>
+							<label class="labelchitietsanpham" for>Loại Sản Phẩm: </label>
+							<div>${product.categoryProduct.categoryName }</div>
 						</div>
 						<div class="dongchitietsp">
-							<label class="labelchitietsanpham" for>Danh Mục</label>
-							<div>Bình Dương</div>
+							<label class="labelchitietsanpham" for>Thương Hiệu: </label>
+							<div>${product.manufacturerProduct.manufacturerName }</div>
 						</div>
 						<div class="dongchitietsp">
-							<label class="labelchitietsanpham" for>Danh Mục</label>
-							<div>Bình Dương</div>
-						</div>
-						<div class="dongchitietsp">
-							<label class="labelchitietsanpham" for>Danh Mục</label>
-							<div>Bình Dương</div>
-						</div>
-						<div class="dongchitietsp">
-							<label class="labelchitietsanpham" for>Danh Mục</label>
-							<div>Bình Dương</div>
+							<label class="labelchitietsanpham" for>Năm sản xuất:</label>
+							<div>-</div>
 						</div>
 					</div>
 				</section>
-				<!-- Mô tả sản phẩm -->
+
 				<section class="motasanpham">
-					<h2 class="titlemotasanpham">CHI TIẾT SẢN PHẨM</h2>
-					<div style="margin: 1.875rem .9375rem .9375rem;">
-						<p>Thành phần và công dụng: - Sữa Chống Nắng Dưỡng Da Anessa
-							Perfect UV SPF50+/PA++++ sữa chống nắng dưỡng da và bảo vệ da tối
-							đa với kết cấu mỏng nhẹ, khô ráo. - Hiệu quả chống trôi trong
-							nước rất cao với công nghệ Aqua Booster EX. - Dưỡng da ẩm mượt,
-							gia tăng độ đàn hồi, chống oxi hoá, và kiểm soát bóng dầu. - Có
-							thể dùng làm lớp lót trang điểm, dễ dàng làm sạch với sữa rửa
-							mặt. - Dùng cho mặt và toàn thân. - Thích hợp sử dụng hàng ngày
-							và các hoạt động ngoài trời. - Công thức được kiểm nghiệm bởi
-							chuyên gia da liễu, an toàn cho sức khỏe người tiêu dùng.</p>
-					</div>
+					<c:forEach items="${product.productDetailDescription }"
+						var="description">
+						<h2 class="titlemotasanpham">${description.tile }</h2>
+						<div style="margin: 1.875rem .9375rem .9375rem;">
+							<p>${description.description }</p>
+						</div>
+					</c:forEach>
 				</section>
 			</div>
 		</div>
@@ -263,666 +398,177 @@
 					<div class="danhgiasanpham">ĐÁNH GIÁ SẢN PHẨM</div>
 				</div>
 				<div class="comment-list">
-					<!-- mỗi 1 div là 1 phần bình luận -->
-					<div class="comment-rating">
-						<a href class="avatar-rating">
-							<div class="avatar-background">
-								<img
-									src="https://down-vn.img.susercontent.com/file/6ae595b087d32e50949dbe904838e9e6_tn"
-									alt class="img-rating">
-							</div>
-						</a>
-						<div class="main-rating" style="flex: 1;">
-							<a href class="name-comment">thienbao0909</a>
-							<div class="5sao">
-								<i class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i>
-							</div>
-							<div class="time-comment">2022-05-01 12:02</div>
-							<div style="margin: 0.5rem 0 0.5rem 0;">Kem chống nắng của
-								anessa thì khỏi chê rồi. Mk mua sales xong lại đc tặng sample
-								nhỏ nhỏ xinh tật sự.</div>
-							<div class="product-rating-img">
-								<div style="display: flex; width: 100%; flex-wrap: wrap;">
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="comment-rating">
-						<a href class="avatar-rating">
-							<div class="avatar-background">
-								<img
-									src="https://down-vn.img.susercontent.com/file/6ae595b087d32e50949dbe904838e9e6_tn"
-									alt class="img-rating">
-							</div>
-						</a>
-						<div class="main-rating" style="flex: 1;">
-							<a href class="name-comment">thienbao0909</a>
-							<div class="5sao">
-								<i class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i>
-							</div>
-							<div class="time-comment">2022-05-01 12:02</div>
-							<div style="margin: 0.5rem 0 0.5rem 0;">Kem chống nắng của
-								anessa thì khỏi chê rồi. Mk mua sales xong lại đc tặng sample
-								nhỏ nhỏ xinh tật sự.</div>
-							<div class="product-rating-img">
-								<div style="display: flex; width: 100%; flex-wrap: wrap;">
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
+					<c:choose>
+						<c:when test="${comment.size()>0 }">
+							<c:forEach items="${comment}" var="comment">
+								<div class="comment-rating">
+									<a href class="avatar-rating">
+										<div class="avatar-background">
+											<c:if test="${comment.user.image!=null }">
+												<img src="../../images/avatar/${comment.user.image }" alt
+													class="img-rating">
+											</c:if>
+										</div>
+									</a>
+									<div class="main-rating" style="flex: 1;">
+										<p class="name-comment">${comment.user.fullname }</p>
+										<div class="5sao">
+											<c:choose>
+												<c:when test="${comment.star <= 0.5}">
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+												</c:when>
+												<c:when test="${comment.star <= 1}">
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+												</c:when>
+												<c:when test="${comment.star <= 2}">
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+												</c:when>
+												<c:when test="${comment.star <= 3}">
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star"></i>
+													<i class="bi bi-star"></i>
+												</c:when>
+												<c:when test="${comment.star <= 4}">
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star"></i>
+												</c:when>
+												<c:otherwise>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+													<i class="bi bi-star-fill mausao"></i>
+												</c:otherwise>
+											</c:choose>
+										</div>
+										<div class="time-comment">${comment.date }</div>
+										<div style="margin: 0.5rem 0 0.5rem 0;">${comment.content }</div>
+										<div class="product-rating-img">
+											<div style="display: flex; width: 100%; flex-wrap: wrap;">
+												<%-- <c:if test="${comment.ImageComment!=null }">
+													<c:forEach items="${comment.ImageComment }" var="imageC">
+														<div class="frames-rating-img">
+															<img class="hinhanhdanhgia"
+																src="../../images/products/${imageC.image }">
+														</div>
+													</c:forEach>
+												</c:if> --%>
+											</div>
+										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="comment-rating">
-						<a href class="avatar-rating">
-							<div class="avatar-background">
-								<img
-									src="https://down-vn.img.susercontent.com/file/6ae595b087d32e50949dbe904838e9e6_tn"
-									alt class="img-rating">
-							</div>
-						</a>
-						<div class="main-rating" style="flex: 1;">
-							<a href class="name-comment">thienbao0909</a>
-							<div class="5sao">
-								<i class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i> <i
-									class="bi bi-star-fill mausao"> </i>
-							</div>
-							<div class="time-comment">2022-05-01 12:02</div>
-							<div style="margin: 0.5rem 0 0.5rem 0;">Kem chống nắng của
-								anessa thì khỏi chê rồi. Mk mua sales xong lại đc tặng sample
-								nhỏ nhỏ xinh tật sự.</div>
-							<div class="product-rating-img">
-								<div style="display: flex; width: 100%; flex-wrap: wrap;">
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-									<div class="frames-rating-img">
-										<img class="hinhanhdanhgia"
-											src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-											alt>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<p class="text-center">Chưa có đánh giá nào</p>
+						</c:otherwise>
+					</c:choose>
+
 				</div>
 			</div>
 		</div>
 
 	</div>
-	<!-- Các sản phẩm khác -->
-	<div>
-		<div class="dinhdangkhungcacspkhac">
-			<div class="khoangcachtitlespkhacvasp">
-				<div class="cacspkhaccuashop">CÁC SẢN PHẨM KHÁC CỦA SHOP</div>
-			</div>
-			<div
-				style="padding-top: 0.3125rem; margin-right: -0.3125rem; margin-left: -0.3125rem;">
-				<div style="height: 100%; overflow: hidden; touch-action: pan-y;">
-					<ul
-						style="width: 100%; transform: translate(0px, 0px); transition: all 500ms ease 0s;">
-						<div id="carouselExampleControls" class="carousel slide"
-							data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="carousel-item active">
-									<li
-										style="padding: 0px; width: 100%; overflow-x: hidden; list-style: none; float: left; touch-action: pan-y; margin: 10px;"
-										class="d-flex flex-row">
-										<!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
+	<div class="section-flashsale listCarousel cardProduct-comment">
+		<c:forEach var="p" items="${productOther}" varStatus="i">
+			<c:if test="${!p.del && i.index<8}">
+				<div class="mb-3">
+					<div class="card h-100 mx-3">
+						<input type="hidden" name="productId" value="${p.productId}">
+						<a href="/products/${p.productId}"><img
+							src="../../images/products/${p.productImage[0].image }"
+							class="card-img-top" alt="${p.productName }"
+							style="height: 318px !important;"></a>
+						<div class="card-body d-flex flex-column">
+							<span class="text-muted">${p.manufacturerProduct.manufacturerName }</span>
+							<a
+								class="card-title fs-6 font-weight-bold text-black text-decoration-none"
+								href="/products/${p.productId }" style="min-height: 48px">${p.productName }</a>
+							<div class="price-product mb-3">
+								<c:set var="foundFlashSale" value="false" />
+								<c:forEach var="f" items="${listPdFlashsale}">
+									<c:choose>
+										<c:when test="${f.product.productId == p.productId}">
+											<span class="text-decoration-line-through"
+												style="text-decoration: line-through;"> <fmt:formatNumber
+													type="number" pattern="###,###,###" value="${p.price}" />
+												đ
+											</span>
+											<span class="text-danger font-weight-bold"> <fmt:formatNumber
+													type="number" pattern="###,###,###"
+													value="${f.discountedPrice}" /> đ
+											</span>
+											<div class="position-absolute" style="top: 0; left: 0">
+												<div>
+													<span class="p-1 bg-danger text-white"> -<fmt:formatNumber
+															type="number" pattern="###,###,###"
+															value="${(p.price - f.discountedPrice)/p.price *100}" />%
+													</span>
+													<c:if test="${p.quantityInStock==0 }">
+														<span class="p-1  bg-dark text-white ms-3">Tạm hết
+															hàng</span>
+													</c:if>
 												</div>
 											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4wcmjjysf5e_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp -->
-									</li>
-								</div>
-								<div class="carousel-item">
-									<li
-										style="padding: 0px; width: 100%; overflow-x: hidden; list-style: none; float: left; touch-action: pan-y; margin: 10px;"
-										class="d-flex flex-row">
-										<!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4n1ort9svda_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4n1ort9svda_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4n1ort9svda_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4n1ort9svda_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4n1ort9svda_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp -->
-									</li>
-								</div>
-								<div class="carousel-item">
-									<li
-										style="padding: 0px; width: 100%; overflow-x: hidden; list-style: none; float: left; touch-action: pan-y; margin: 10px;"
-										class="d-flex flex-row">
-										<!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4z11wg25b1d_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4z11wg25b1d_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4z11wg25b1d_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4z11wg25b1d_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp --> <!-- 1 sp  -->
-										<div class="dinhdangkhung1product">
-											<div class="dinhdangvien1product">
-												<!-- định dạng hình ảnh sản phẩm -->
-												<div style="pointer-events: none;">
-													<div class="kichthuockhung1sp">
-														<img class="vitrihinhanhsp"
-															src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmh4z11wg25b1d_tn"
-															alt width="invalid-value" height="invalid-value">
-													</div>
-												</div>
-												<!-- định dạng nội dung sản phẩm  -->
-												<div class="dinhdangkhungtitlespkhac">
-													<div
-														style="flex: 1 0 auto; display: flex; flex-direction: column;">
-														<div class="phan-title-sanphamkhac">
-															<div class="dinh-dang-title-sanpham">Sữa chống nắng
-																bảo vệ hoàn hảo Anessa Perfect UV Sunscreen Skincare
-																Milk 60ml</div>
-														</div>
-														<div class="phan-gia-sanphamkhac">
-															<div class="khung-gia-sanphamkhac">
-																<span style="color: rgb(238, 77, 45);">₫</span> <span
-																	class="dinh-dang-gia-sanphamkhac">469.000</span>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div> <!-- kết thúc 1 sp -->
-									</li>
-								</div>
+											<c:set var="foundFlashSale" value="true" />
+										</c:when>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${!foundFlashSale}">
+									<span class="text-danger fw-bold"> <fmt:formatNumber
+											type="number" pattern="###,###,###" value="${p.price}" /> đ
+									</span>
+								</c:if>
 							</div>
-							<!-- 2 nút carosel-->
-							<a class="carousel-control-prev" href="#carouselExampleControls"
-								role="button" data-slide="prev"> <span
-								class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-								class="sr-only">Previous</span>
-							</a> <a class="carousel-control-next" href="#carouselExampleControls"
-								role="button" data-slide="next"> <span
-								class="carousel-control-next-icon" aria-hidden="true"></span> <span
-								class="sr-only">Next</span>
-							</a>
+							<div class="siteAction d-flex justify-content-between">
+								<c:choose>
+									<c:when test="${p.quantityInStock==0  }">
+										<button type="button" disabled
+											class="btn-outline-primary p-2  float-xl-start">Thêm
+											vào giỏ</button>
+										<button class="btn-outline-primary  p-2  float-xl-end"
+											role="button" disabled>Mua ngay</button>
+									</c:when>
+									<c:otherwise>
+										<button type="button"
+											class="btn-outline-primary p-2 addToCart"
+											data-product-id="${p.productId}"
+											data-user-id="${userLogin.userId}">Thêm vào giỏ</button>
+										<button class="btn-outline-primary  p-2 btnBuyNow"
+											data-product-id="${p.productId}"
+											data-user-id="${userLogin.userId}">Mua ngay</button>
+									</c:otherwise>
+								</c:choose>
+							</div>
 						</div>
-
-					</ul>
+					</div>
 				</div>
-			</div>
-		</div>
 
+			</c:if>
+		</c:forEach>
 	</div>
 
 	<!-- Start Footer Area -->
 	<jsp:include page="component/_footer.jsp"></jsp:include>
 	<!-- /End Footer Area -->
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
 	<!-- Footer -->
 	<script type="text/javascript"
 		src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -955,10 +601,76 @@
 	<!-- ScrollUp JS -->
 	<script src="../js/scrollup.js"></script>
 	<!-- Onepage Nav JS -->
-	<script src="js/onepage-nav.min.js"></script>
+	<script src="../js/onepage-nav.min.js"></script>
 	<!-- Easing JS -->
 	<script src="../js/easing.js"></script>
 	<!-- Active JS -->
 	<script src="../js/active.js"></script>
+
+	<script src="../js/likeProduct.js"></script>
+
+	<script
+		src="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick.js"/>"></script>
+
+	<script src="../js/cart-script.js"></script>
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function() {
+			let cardTitles = document.querySelectorAll(".card-title");
+			cardTitles.forEach(function(cardTitle) {
+				cardTitle.classList.add("clamp-two-lines");
+			});
+			console.log(1123)
+			let endDay = $('#your-countdown').data('end-day');
+			let countdownElement = $('#your-countdown');
+
+			// Chuyển đổi dữ liệu từ thuộc tính 'data-end-day' thành đối tượng Date
+			let endDate = new Date(endDay);
+			let currentDate = new Date();
+			console.log(endDate)
+			// Kiểm tra nếu ngày hiện tại lớn hơn ngày kết thúc khuyến mãi
+			if (currentDate > endDate) {
+				// Hiển thị dòng text "Khuyến mãi đã kết thúc" thay vì countdown
+				countdownElement.html('Khuyến mãi đã kết thúc');
+			} else {
+				// Thực hiện countdown
+				countdownElement.countdown(endDate, function(event) {
+					$(this).html(
+							event.strftime('%D ngày %H giờ %M phút %S giây'));
+				});
+			}
+		});
+
+		$('.cardProduct-comment').slick({
+
+			dots : true,
+			autoplay : false,
+			infinite : true,
+			slidesToShow : 4,
+			slidesToScroll : 4,
+			adaptiveHeight : true,
+			arrows : true,
+			responsive : [ {
+				breakpoint : 1024,
+				settings : {
+					slidesToShow : 2,
+					slidesToScroll : 2,
+					infinite : true,
+					dots : true
+				}
+			}, {
+				breakpoint : 600,
+				settings : {
+					slidesToShow : 2,
+					slidesToScroll : 2
+				}
+			}, {
+				breakpoint : 480,
+				settings : {
+					slidesToShow : 1,
+					slidesToScroll : 1
+				}
+			} ]
+		});
+	</script>
 </body>
 </html>
