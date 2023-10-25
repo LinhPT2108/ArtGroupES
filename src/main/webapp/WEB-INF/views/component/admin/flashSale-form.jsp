@@ -57,9 +57,9 @@
 						<th>Ngày bắt đầu</th>
 						<th>Ngày kết thúc</th>
 						<th>Trạng thái</th>
+						<th>Số lượng sản phẩm</th>
 						<th></th>
 						<!-- <th>Thông tin</th> -->
-						<th></th>
 					</tr>
 					<c:forEach var="flashSale" items="${flashSales}">
 						<tr>
@@ -72,6 +72,10 @@
 									<c:otherwise>Ngưng hoạt động</c:otherwise>
 								</c:choose>
 							</td> 
+							<td>
+								${flashSale.promotionalDetailsList.size()}
+								<a href="/admin/promotionalDetail/${flashSale.id}">Xem chi tiết</a>
+							</td>
 							<td><a href="/admin/flashSale/edit/${flashSale.id}">Edit</a></td>
 						</tr>
 					</c:forEach>
