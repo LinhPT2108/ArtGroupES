@@ -66,28 +66,28 @@ function checkFileSize(e) {
 
 
 function layDuLieuMoTa() {
-    // Sử dụng jQuery để tìm thẻ có class "motaClass" cuối cùng và lấy giá trị "data-counter-number"
-    var lastMotaClassElement = $('.motaClass').last();
-    var counterNumber = lastMotaClassElement.data('counter-number');
+	// Sử dụng jQuery để tìm thẻ có class "motaClass" cuối cùng và lấy giá trị "data-counter-number"
+	var lastMotaClassElement = $('.motaClass').last();
+	var counterNumber = lastMotaClassElement.data('counter-number');
 
-    const moTaObjects = [];
+	const moTaObjects = [];
 
-    for (let index = 0; index <= counterNumber; index++) {
-        const tieuDe = $(`#tieude${index}`).val() || '';
-        const noiDung = $(`#noidung${index}`).val() || '';
+	for (let index = 0; index <= counterNumber; index++) {
+		const tieuDe = $(`#tieude${index}`).val() || '';
+		const noiDung = $(`#noidung${index}`).val() || '';
 
-        // Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
-        if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
-            const moTa = {
-                tieuDe: tieuDe,
-                description: noiDung
-            };
+		// Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
+		if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
+			const moTa = {
+				tieuDe: tieuDe,
+				description: noiDung
+			};
 
-            moTaObjects.push(moTa);
-        }
-    }
+			moTaObjects.push(moTa);
+		}
+	}
 
-    return moTaObjects;
+	return moTaObjects;
 }
 
 
@@ -169,6 +169,7 @@ $(document).ready(function() {
 					console.log(formData);
 					let timerInterval
 					Swal.fire({
+						icon:'success',
 						title: 'Dữ liệu đang được thêm vào hệ thông!',
 						html: 'sẽ làm mới trang trong <b></b> mili giây.',
 						timer: 1500,
@@ -246,17 +247,32 @@ $(document).ready(function() {
 			data: formData,
 			success: function(data) {
 				if (data == 'success') {
-					Swal
-						.fire({
-							icon: 'success',
-							title: 'Cập  nhật thành công',
-							text: "Sản phẩm đã được thêm vào hệ thống !",
-							showConfirmButton: true,
-							timer: 1500
-						});
-
-					console.log(formData);
-
+					
+					let timerInterval
+					Swal.fire({
+						icon: 'success',
+						title: 'Dữ liệu đang được cập nhật vào hệ thông!',
+						html: 'sẽ làm mới trang trong <b></b> mili giây.',
+						timer: 1500,
+						allowOutsideClick: false,
+						timerProgressBar: true,
+						didOpen: () => {
+							Swal.showLoading()
+							const b = Swal.getHtmlContainer().querySelector('b')
+							timerInterval = setInterval(() => {
+								b.textContent = Swal.getTimerLeft()
+							}, 100)
+						},
+						willClose: () => {
+							clearInterval(timerInterval)
+						}
+					}).then((result) => {
+						/* Read more about handling dismissals below */
+						if (result.dismiss === Swal.DismissReason.timer) {
+							console.log('I was closed by the timer')
+							location.reload();
+						}
+					})
 				} else {
 
 					$("#productNameError").html('');

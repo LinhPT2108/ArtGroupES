@@ -55,9 +55,9 @@
 					<div class="describe row ">
 						<c:choose>
 							<c:when test="${!typeButton }">
-								<div class="col-xs-12 col-md-6 mb-3 ">
+								<div class="description-container col-xs-12 col-md-6 mb-3 ">
 									<div class=" border border-1 p-3 position-relative">
-										<span class="position-absolute z-3 bg-white"
+										<span class="motaClass position-absolute z-3 bg-white" data-counter-number="${i.index+1 }"
 											style="top: -13px">Mô tả 1:</span>
 										<div class="mb-3">
 											<div class="form-floating">
@@ -131,7 +131,7 @@
 					</c:when>
 					<c:otherwise>
 						<form:button class="btn btn-primary" type="submit"
-							id="btnAddProduct">thêm</form:button>
+							id="btnAddProduct">Thêm</form:button>
 					</c:otherwise>
 				</c:choose>
 
@@ -249,8 +249,9 @@
 		return finalString;
 	}
 
+	
 	var randomString = generateRandomString();
-
-	document.getElementById('productId').value == null ? document
+console.log(document.getElementById('productId').value);
+	document.getElementById('productId').value == "" ? document
 			.getElementById('productId').value = randomString : '';
 </script>

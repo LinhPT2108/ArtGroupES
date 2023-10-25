@@ -145,9 +145,10 @@ public class productController {
 
 				detailDescriptionDAO.save(detailDescription);
 			}
-
+			return ResponseEntity.ok("success");
+		}else {
+			return ResponseEntity.ok(errors);
 		}
-		return ResponseEntity.ok("success");
 	}
 
 	@PostMapping("/product/remove/{id}")
