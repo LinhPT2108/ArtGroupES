@@ -111,7 +111,7 @@
 							data-end-day="<c:out value="${flashsale.endDay}" />"> </span>
 
 					</div>
-					<a href="collections/flashsale"
+					<a href="/product/flash-sale"
 						class="view-all-collection ml-auto bg-dark text-white">Xem tất
 						cả</a>
 				</c:if>
@@ -130,7 +130,6 @@
 						<c:forEach var="f" items="${listPdFlashsale}">
 							<c:if test="${f.product.productId == p.productId}">
 								<c:if test="${!p.del}">
-
 									<div class="mb-3 ">
 										<div class="card h-100 mx-3">
 											<input type="hidden" name="productId" value="${p.productId}">

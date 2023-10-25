@@ -2,6 +2,8 @@ package com.art.DAO.Promotion;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.art.Entities.Promotion.PromotionalDetails;
@@ -35,4 +37,5 @@ public interface PromotionalDetailsDAO extends JpaRepository<PromotionalDetails,
 //
 //	// Tìm PromotionalDetails theo ID của FlashSale
 	List<PromotionalDetails> findByFlashSale_Id(int id);
+	Page<PromotionalDetails> findByFlashSale_Id(int id, Pageable pageable);
 }

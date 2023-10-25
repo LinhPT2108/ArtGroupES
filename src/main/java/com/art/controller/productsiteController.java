@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +32,7 @@ import com.art.Entities.Product.Category;
 import com.art.Entities.Product.Manufacturer;
 import com.art.Entities.Product.Product;
 import com.art.Entities.Promotion.FlashSale;
+import com.art.Entities.Promotion.Invoice;
 
 @Controller
 @RequestMapping("/product")
@@ -74,24 +80,30 @@ public class productsiteController {
 
 	@GetMapping("")
 	public String getProduct(Model model, @RequestParam("c") Optional<Integer> category,
-			@RequestParam("b") Optional<Integer> manufacturer) {
+			@RequestParam("b") Optional<Integer> manufacturer, @RequestParam("p") Optional<Integer> p) {
+		model.addAttribute("siteFlashSale", false);
 
 		if (category.isPresent() && manufacturer.isPresent()) {
 			model.addAttribute("catemanu", true);
 			Category category2 = categoryDAO.getById(category.orElse(-1));
 			Manufacturer manufacturer2 = manuDAO.getById(manufacturer.orElse(-1));
-			model.addAttribute("listProduct",
-					pdDAO.findByCategoryProductAndManufacturerProduct(category2, manufacturer2));
+			Pageable pageable = PageRequest.of(p.orElse(0), 20);
+			Page<Product> listProduct = pdDAO.findByCategoryProductAndManufacturerProduct(category2, manufacturer2,
+					pageable);
+
 		} else if (category.isPresent() && manufacturer.isEmpty()) {
 			model.addAttribute("catemanu", true);
-			model.addAttribute("listProduct", pdDAO.findByCategoryProduct(categoryDAO.getById(category.get())));
+			Pageable pageable = PageRequest.of(p.orElse(0), 20);
+			model.addAttribute("listProduct",
+					pdDAO.findByCategoryProduct(categoryDAO.getById(category.get()), pageable));
 		} else {
 			model.addAttribute("catemanu", false);
-			model.addAttribute("listProduct", pdDAO.findAll());
+			Pageable pageable = PageRequest.of(p.orElse(0), 20);
+			model.addAttribute("listProduct", pdDAO.findAll(pageable));
 		}
 
 		model.addAttribute("bestSellers", idDAO.countProductsOrderByCountDesc());
-		
+
 		try {
 			FlashSale endDay = lsDAO.findByIsStatus(false);
 
@@ -117,13 +129,14 @@ public class productsiteController {
 			System.out.println(e);
 			model.addAttribute("checkDayTime", true);
 		}
-		
+
 		return "shop-grid";
 	}
 
 	@GetMapping("/search")
 	public String searchProduct(@RequestParam("categoryId") Optional<Integer> categoryId,
 			@RequestParam(value = "search", required = true) String search, Model model) {
+		model.addAttribute("siteFlashSale", false);
 		if (categoryId.get() == -1) {
 			model.addAttribute("catemanu", false);
 			model.addAttribute("listProduct", pdDAO.searchProductByName(search));
@@ -160,4 +173,37 @@ public class productsiteController {
 		return "search-product";
 	}
 
+	@GetMapping("/flash-sale")
+	public String getFlashSale(Model model, @RequestParam("p") Optional<Integer> p) {
+		model.addAttribute("siteFlashSale", true);
+		model.addAttribute("listProduct", pdDAO.findAll());
+
+		try {
+			FlashSale endDay = lsDAO.findByIsStatus(false);
+
+			model.addAttribute("now", new Date());
+			model.addAttribute("flashsale", lsDAO.findByIsStatus(false));
+			if (endDay != null) {
+				Pageable pageable = PageRequest.of(p.orElse(0), 20);
+				model.addAttribute("listPdFlashsale", pmtDAO.findByFlashSale_Id(endDay.getId(), pageable));
+				Date endDay1 = lsDAO.findByIsStatus(false).getEndDay();
+				System.out.println(endDay1);
+				Date now = new Date();
+				Boolean checkDayTime = endDay1.before(now) || endDay1.equals(now);
+				System.out.println(checkDayTime);
+				if (checkDayTime) {
+					model.addAttribute("checkDayTime", true);
+				} else {
+					model.addAttribute("checkDayTime", false);
+				}
+			} else {
+				model.addAttribute("checkDayTime", true);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			model.addAttribute("checkDayTime", true);
+		}
+		return "shop-grid";
+	}
 }
