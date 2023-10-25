@@ -133,7 +133,7 @@
 									<div class="mb-3 ">
 										<div class="card h-100 mx-3">
 											<input type="hidden" name="productId" value="${p.productId}">
-											<a href="<%-- /products/${p.productId} --%>#"><img
+											<a href="/products/${p.productId}"><img
 												src="images/products/${p.productImage[0].image }"
 												class="card-img-top" alt="${p.productName }"
 												style="height: 280px !important;"></a>
@@ -141,7 +141,7 @@
 												<span class="text-muted">${p.manufacturerProduct.manufacturerName }</span>
 												<a
 													class="card-title fs-6 font-weight-bold text-black text-decoration-none"
-													href="/nguyentcpc04750_ASM/products/${p.productId }"
+													href="/products/${p.productId }"
 													style="min-height: 48px">${p.productName }</a>
 												<div class="price-product mb-3">
 													<c:set var="foundFlashSale" value="false" />

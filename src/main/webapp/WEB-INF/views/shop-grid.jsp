@@ -228,7 +228,7 @@
 											<div class="single-product h-100">
 												<div class="product-img">
 													<a class="product_name"
-														href="<%-- /products/${p.productId} --%>#"> <img
+														href="/products/${p.productId}"> <img
 														class="default-img"
 														src="../images/products/${p.productImage[0].image }"
 														alt="${p.productName }" height="190" width="250"> <img
@@ -297,7 +297,7 @@
 													</div>
 												</div>
 												<div class="product-content">
-													<h3 class="card-title" style="height: 48px">
+													<h3 class="card-title" style="height: 60px">
 														<a href="/products/${p.productId }">${p.productName
 																			}</a>
 													</h3>
@@ -473,7 +473,7 @@
 									<div class="single-product h-100">
 										<div class="product-img">
 											<a class="product_name"
-												href="<%-- /products/${p.productId} --%>#"> <img
+												href="/products/${p.productId}"> <img
 												class="default-img"
 												src="images/products/${p.productImage[0].image }"
 												alt="${p.productName }" height="190" width="250"> <img
@@ -539,7 +539,7 @@
 											</div>
 										</div>
 										<div class="product-content">
-											<h3 class="card-title" style="height: 48px">
+											<h3 class="card-title" style="height: 60px">
 												<a href="/products/${p.productId }">${p.productName
 																	}</a>
 											</h3>
