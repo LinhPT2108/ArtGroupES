@@ -123,7 +123,9 @@
 				<div class="thongtinchitietsanpham d-flex flex-row">
 					<button class="thongtindau d-flex flex-row">
 						<div class="sosao"
-							style="color: #ee4d2d; border-bottom-color: #ee4d2d; margin-right: 5px;">${star}</div>
+							style="color: #ee4d2d; border-bottom-color: #ee4d2d; margin-right: 5px;">
+							<fmt:formatNumber value="${star}" type="number" pattern="#.#" />
+						</div>
 						<div class="5sao">
 							<c:choose>
 								<c:when test="${star <= 0.5}">
@@ -253,26 +255,7 @@
 					</c:if>
 					<div class="thongtingia">
 						<div class="d-flex ">
-							<%-- <div class="giacu">
-								<fmt:setLocale value="vi_VN" />
-								<fmt:formatNumber value="${product.price}" type="currency"
-									currencyCode="VND" maxFractionDigits="0" minFractionDigits="0" />
-							</div>
-							 <div class="d-flex mx-3" style="align-items: center;">
-								<div class="giamoi">
-									<fmt:setLocale value="vi_VN" />
-									<fmt:formatNumber value="${disCountProduct.discountedPrice }"
-										type="currency" currencyCode="VND" maxFractionDigits="0"
-										minFractionDigits="0" />
-								</div>
-								<div class="giamgia">
-									giảm <span style="font-size: 1.5rem;"> <fmt:setLocale
-											value="vi_VN" /> <fmt:formatNumber
-											value="${((product.price-disCountProduct.discountedPrice)/product.price)*100}"
-											maxFractionDigits="0" minFractionDigits="0" />%
-									</span>
-								</div>
-							</div>  --%>
+
 							<c:if test="${!isFlashSale }">
 								<span
 									class="price product-price text-danger display-6 font-weight-bold ml-2"><fmt:formatNumber
@@ -290,8 +273,9 @@
 									<fmt:formatNumber type="number" pattern="###,###,###"
 										value="${product.productPromotionalDetails[0].discountedPrice }" />
 
-									₫ <span class="badge bg-danger text-white rounded display-6 ml-4">giảm <fmt:formatNumber
-											type="number" pattern="###,###"
+									₫ <span
+									class="badge bg-danger text-white rounded display-6 ml-4">giảm
+										<fmt:formatNumber type="number" pattern="###,###"
 											value="${(product.price - product.productPromotionalDetails[0].discountedPrice)/product.price*100}" />
 										%
 								</span>
@@ -351,10 +335,7 @@
 										class="bi-heart text-danger display-5 float-right"></i></a>
 								</c:otherwise>
 							</c:choose>
-							<!-- <a role="button" href=""
-								class="d-flex text-light align-items-center justify-content-center px-4 btn btn-primary bg-success">
-								<i class="bi bi-heart mx-2"></i> Yêu thích
-							</a> -->
+
 						</div>
 					</div>
 				</div>
@@ -462,14 +443,14 @@
 										<div style="margin: 0.5rem 0 0.5rem 0;">${comment.content }</div>
 										<div class="product-rating-img">
 											<div style="display: flex; width: 100%; flex-wrap: wrap;">
-												<%-- <c:if test="${comment.ImageComment!=null }">
-													<c:forEach items="${comment.ImageComment }" var="imageC">
+												<c:if test="${comment.commentImages!=null }">
+													<c:forEach items="${comment.commentImages }" var="imageC">
 														<div class="frames-rating-img">
 															<img class="hinhanhdanhgia"
-																src="../../images/products/${imageC.image }">
+																src="../../images/comments/${imageC.image }">
 														</div>
 													</c:forEach>
-												</c:if> --%>
+												</c:if>
 											</div>
 										</div>
 									</div>
@@ -486,85 +467,98 @@
 		</div>
 
 	</div>
-	<div class="section-flashsale listCarousel cardProduct-comment">
-		<c:forEach var="p" items="${productOther}" varStatus="i">
-			<c:if test="${!p.del && i.index<8}">
-				<div class="mb-3">
-					<div class="card h-100 mx-3">
-						<input type="hidden" name="productId" value="${p.productId}">
-						<a href="/products/${p.productId}"><img
-							src="../../images/products/${p.productImage[0].image }"
-							class="card-img-top" alt="${p.productName }"
-							style="height: 318px !important;"></a>
-						<div class="card-body d-flex flex-column">
-							<span class="text-muted">${p.manufacturerProduct.manufacturerName }</span>
-							<a
-								class="card-title fs-6 font-weight-bold text-black text-decoration-none"
-								href="/products/${p.productId }" style="min-height: 48px">${p.productName }</a>
-							<div class="price-product mb-3">
-								<c:set var="foundFlashSale" value="false" />
-								<c:forEach var="f" items="${listPdFlashsale}">
-									<c:choose>
-										<c:when test="${f.product.productId == p.productId}">
-											<span class="text-decoration-line-through"
-												style="text-decoration: line-through;"> <fmt:formatNumber
+	<section class="small-banner section flash-sale-site mt-3 rounded">
+		<div class="container-fluid">
+			<div
+				class="bg-light section-heading text-center d-flex align-items-center mb-3 p-3">
+				<div class="title-flashsale mr-3 ">
+					<h2 class="hTitle ">
+						Sản phẩm khác
+					</h2>
+				</div>
+			</div>
+			<div class="section-flashsale listCarousel cardProduct-comment">
+				x
+				<c:forEach var="p" items="${productOther}" varStatus="i">
+					<c:if test="${!p.del && i.index<8}">
+						<div class="mb-3">
+							<div class="card h-100 mx-3">
+								<input type="hidden" name="productId" value="${p.productId}">
+								<a href="/products/${p.productId}"><img
+									src="../../images/products/${p.productImage[0].image }"
+									class="card-img-top" alt="${p.productName }"
+									style="height: 280px !important;"></a>
+								<div class="card-body d-flex flex-column">
+									<span class="text-muted">${p.manufacturerProduct.manufacturerName }</span>
+									<a
+										class="card-title fs-6 font-weight-bold text-black text-decoration-none"
+										href="/products/${p.productId }" style="min-height: 48px">${p.productName }</a>
+									<div class="price-product mb-3">
+										<c:set var="foundFlashSale" value="false" />
+										<c:forEach var="f" items="${listPdFlashsale}">
+											<c:choose>
+												<c:when test="${f.product.productId == p.productId}">
+													<span class="text-decoration-line-through"
+														style="text-decoration: line-through;"> <fmt:formatNumber
+															type="number" pattern="###,###,###" value="${p.price}" />
+														đ
+													</span>
+													<span class="text-danger font-weight-bold"> <fmt:formatNumber
+															type="number" pattern="###,###,###"
+															value="${f.discountedPrice}" /> đ
+													</span>
+													<div class="position-absolute" style="top: 0; left: 0">
+														<div>
+															<span class="p-1 bg-danger text-white"> -<fmt:formatNumber
+																	type="number" pattern="###,###,###"
+																	value="${(p.price - f.discountedPrice)/p.price *100}" />%
+															</span>
+															<c:if test="${p.quantityInStock==0 }">
+																<span class="p-1  bg-dark text-white ms-3">Tạm
+																	hết hàng</span>
+															</c:if>
+														</div>
+													</div>
+													<c:set var="foundFlashSale" value="true" />
+												</c:when>
+											</c:choose>
+										</c:forEach>
+										<c:if test="${!foundFlashSale}">
+											<span class="text-danger fw-bold"> <fmt:formatNumber
 													type="number" pattern="###,###,###" value="${p.price}" />
 												đ
 											</span>
-											<span class="text-danger font-weight-bold"> <fmt:formatNumber
-													type="number" pattern="###,###,###"
-													value="${f.discountedPrice}" /> đ
-											</span>
-											<div class="position-absolute" style="top: 0; left: 0">
-												<div>
-													<span class="p-1 bg-danger text-white"> -<fmt:formatNumber
-															type="number" pattern="###,###,###"
-															value="${(p.price - f.discountedPrice)/p.price *100}" />%
-													</span>
-													<c:if test="${p.quantityInStock==0 }">
-														<span class="p-1  bg-dark text-white ms-3">Tạm hết
-															hàng</span>
-													</c:if>
-												</div>
-											</div>
-											<c:set var="foundFlashSale" value="true" />
-										</c:when>
-									</c:choose>
-								</c:forEach>
-								<c:if test="${!foundFlashSale}">
-									<span class="text-danger fw-bold"> <fmt:formatNumber
-											type="number" pattern="###,###,###" value="${p.price}" /> đ
-									</span>
-								</c:if>
-							</div>
-							<div class="siteAction d-flex justify-content-between">
-								<c:choose>
-									<c:when test="${p.quantityInStock==0  }">
-										<button type="button" disabled
-											class="btn-outline-primary p-2  float-xl-start">Thêm
-											vào giỏ</button>
-										<button class="btn-outline-primary  p-2  float-xl-end"
-											role="button" disabled>Mua ngay</button>
-									</c:when>
-									<c:otherwise>
-										<button type="button"
-											class="btn-outline-primary p-2 addToCart"
-											data-product-id="${p.productId}"
-											data-user-id="${userLogin.userId}">Thêm vào giỏ</button>
-										<button class="btn-outline-primary  p-2 btnBuyNow"
-											data-product-id="${p.productId}"
-											data-user-id="${userLogin.userId}">Mua ngay</button>
-									</c:otherwise>
-								</c:choose>
+										</c:if>
+									</div>
+									<div class="siteAction d-flex justify-content-between">
+										<c:choose>
+											<c:when test="${p.quantityInStock==0  }">
+												<button type="button" disabled
+													class="btn-outline-primary p-2  float-xl-start">Thêm
+													vào giỏ</button>
+												<button class="btn-outline-primary  p-2  float-xl-end"
+													role="button" disabled>Mua ngay</button>
+											</c:when>
+											<c:otherwise>
+												<button type="button"
+													class="btn-outline-primary p-2 addToCart"
+													data-product-id="${p.productId}"
+													data-user-id="${userLogin.userId}">Thêm vào giỏ</button>
+												<button class="btn-outline-primary  p-2 btnBuyNow"
+													data-product-id="${p.productId}"
+													data-user-id="${userLogin.userId}">Mua ngay</button>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
 
-			</c:if>
-		</c:forEach>
-	</div>
-
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+	</section>
 	<!-- Start Footer Area -->
 	<jsp:include page="component/_footer.jsp"></jsp:include>
 	<!-- /End Footer Area -->

@@ -137,7 +137,7 @@
 											<a href="<%-- /products/${p.productId} --%>#"><img
 												src="images/products/${p.productImage[0].image }"
 												class="card-img-top" alt="${p.productName }"
-												style="height: 318px !important;"></a>
+												style="height: 280px !important;"></a>
 											<div class="card-body d-flex flex-column">
 												<span class="text-muted">${p.manufacturerProduct.manufacturerName }</span>
 												<a

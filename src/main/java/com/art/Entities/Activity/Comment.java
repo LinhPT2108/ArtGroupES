@@ -66,5 +66,5 @@ public class Comment {
 
 	@OneToMany(mappedBy = "comment", fetch =  FetchType.EAGER)
 	@JsonManagedReference 
-	private List<ImageComment> ImageComment;
+	private List<ImageComment> commentImages;
 }
