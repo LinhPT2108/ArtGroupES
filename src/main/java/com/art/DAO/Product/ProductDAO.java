@@ -4,6 +4,8 @@ import java.util.List;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -32,7 +34,8 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 
 //
 //    // Tìm tất cả Product
-//    List<Product> findAll();
+	Page<Product> findAll(Pageable pageable);
+
 //
 //    // Tìm Product theo tên
 	List<Product> findByProductName(String productName);
@@ -69,9 +72,10 @@ public interface ProductDAO extends JpaRepository<Product, String> {
 //    List<Product> findByUser_UserId(int userId);
 //
 //    // Tìm Product theo ID của Category
-	List<Product> findByCategoryProduct(Category categoryProduct);
+	Page<Product> findByCategoryProduct(Category categoryProduct, Pageable pageable);
 
-	List<Product> findByCategoryProductAndManufacturerProduct(Category category, Manufacturer manufacturer);
+	Page<Product> findByCategoryProductAndManufacturerProduct(Category category, Manufacturer manufacturer,
+			Pageable pageable);
 
 //    // Tìm Product theo ID của Manufacturer
 	List<Product> findByManufacturerProduct(Manufacturer manufacturerProduct);

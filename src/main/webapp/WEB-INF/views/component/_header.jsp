@@ -27,7 +27,7 @@
 							<li><i class="ti-location-pin"></i><a
 								href="https://maps.app.goo.gl/npdKKMSeD48m2dAa8" target="_blank">
 									Địa chỉ</a></li>
-							<li><i class="ti-alarm-clock"></i> <a href="#">Khuyến
+							<li><i class="ti-alarm-clock"></i> <a href="/product/flash-sale">Khuyến
 									mãi</a></li>
 							<c:choose>
 								<c:when test="${userLogin ==null }">
@@ -333,7 +333,7 @@
 										<ul class="nav main-menu menu navbar-nav ">
 											<li class=""><a href="/" class="">TRANG CHỦ</a></li>
 											<li><a href="/product" class="">SẢN PHẨM</a></li>
-											<li><a href="/flash-sale" class="">KHUYẾN MÃI</a></li>
+											<li><a href="/product/flash-sale" class="">KHUYẾN MÃI</a></li>
 											<li><a href="/contact" class="">LIÊN HỆ</a></li>
 										</ul>
 									</div>

@@ -168,13 +168,6 @@
 								phẩm yêu thích
 							</a>
 						</div>
-						<div class="border-0 mb-1">
-							<a
-								class="btn-default border-0 bg-white font-weight-normal stardust-dropdown item-custom p-0"
-								href="/account/viewed-list"> <i class="ti ti-eye mr-2"></i>Sản
-								phẩm đã xem
-							</a>
-						</div>
 					</div>
 
 				</div>
