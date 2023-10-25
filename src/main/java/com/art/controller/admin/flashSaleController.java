@@ -1,10 +1,8 @@
 package com.art.controller.admin;
 
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.art.DAO.Promotion.FlashSaleDAO;
 import com.art.DAO.User.RoleDAO;
+import com.art.DAO.User.UserCustomDAO;
 import com.art.Entities.Promotion.FlashSale;
 import com.art.Entities.User.Role;
 import com.art.Entities.User.UserCustom;
@@ -45,36 +44,36 @@ public class flashSaleController {
 	ParamService paramService;
 	@Autowired
 	SessionService sessionService;
-
 	@GetMapping("/flashSale")
-	public String FlashSale(@ModelAttribute("flashSale") FlashSale flashSale, Model model) {
+	public String FlashSale(@ModelAttribute("flashSale") FlashSale flashSale,Model model) {	
 		model.addAttribute("views", "flashSale-form");
 		model.addAttribute("title", "Quản lí khuyến mãi");
 		model.addAttribute("typeButton", "Thêm");
-		model.addAttribute("updateButton", "Cập nhật");
+		model.addAttribute("updateButton", "Cập nhật"); 
 		model.addAttribute("deleteButton", "Xóa");
 		model.addAttribute("start_dayError", "");
-		List<FlashSale> flashSales = flashSaleDAO.findAll();
-		model.addAttribute("flashSales", flashSales);
+		List<FlashSale> flashSales=flashSaleDAO.findAll();
+		model.addAttribute("flashSales",flashSales);
 		return "admin/index";
 	}
 
 	@PostMapping("/flashSale/create")
-	public String createflashSale(@ModelAttribute("flashSale") FlashSale flashSale, BindingResult bd, Model model) {
+	public String createflashSale(@ModelAttribute("flashSale") FlashSale flashSale, BindingResult bd,Model model) {
 		model.addAttribute("views", "flashSale-form");
 		model.addAttribute("title", "Quản lí khuyến mãi");
 		model.addAttribute("typeButton", "Thêm");
-		model.addAttribute("updateButton", "Cập nhật");
+		model.addAttribute("updateButton", "Cập nhật"); 
 		model.addAttribute("deleteButton", "Xóa");
-		List<FlashSale> flashSales = flashSaleDAO.findAll();
-		model.addAttribute("flashSales", flashSales);
+		List<FlashSale> flashSales=flashSaleDAO.findAll();
+		model.addAttribute("flashSales",flashSales);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		String startDayStr = paramService.getString("startDay", "");
+		String startDayStr = paramService.getString("startDay","");
 		System.out.println(startDayStr);
-		String endDayStr = paramService.getString("endDay", "");
+		String endDayStr = paramService.getString("endDay","");
 		System.out.println(endDayStr);
-		boolean check = false;
-		if (startDayStr == null || startDayStr.trim().isEmpty() || endDayStr == null || endDayStr.trim().isEmpty()) {
+		boolean check=false;
+		if (startDayStr == null || startDayStr.trim().isEmpty() || endDayStr == null
+				|| endDayStr.trim().isEmpty()) {
 			if (startDayStr.isEmpty() || startDayStr.trim().isEmpty()) {
 				model.addAttribute("start_dayError", "Vui lòng chọn thời gian bắt đầu");
 			}
@@ -88,93 +87,95 @@ public class flashSaleController {
 				Date currentDateTime = new Date();
 				if (startDateTime.after(endDateTime)) {
 					model.addAttribute("start_dayError", "Ngày bắt đầu phải trước ngày kết thúc");
-					check = true;
+					check=true;
 				}
 
 				if (startDateTime.before(currentDateTime)) {
 					model.addAttribute("start_dayError", "Ngày bắt đầu phải lớn hơn ngày hiện tại");
-					check = true;
+					check=true;
 				}
 
 				if (endDateTime.before(startDateTime)) {
 					model.addAttribute("end_dayError", "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-					check = true;
+					check=true;
 				}
 
 				if (endDateTime.before(currentDateTime)) {
 					model.addAttribute("end_dayError", "Ngày kết thúc phải lớn hơn ngày hiện tại");
-					check = true;
+					check=true;
 				}
-			} catch (DateTimeParseException | ParseException e) {
-				check = true;
+			}catch(DateTimeParseException | ParseException e) {
+				check=true;
 				System.out.println(e);
 				model.addAttribute("start_dayError", "Ngày không hợp lệ");
 				model.addAttribute("end_dayError", "Ngày không hợp lệ");
 			}
-			if (check) {
+			if(check) {
 				return "admin/index";
-			} else {
+			}else {				
 				try {
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
-					List<FlashSale> createFS = flashSaleDAO.findAll();
-					for (FlashSale f : createFS) {
+					List<FlashSale> createFS=flashSaleDAO.findAll();
+					UserCustom userCus=sessionService.get("userLogin");
+					for (FlashSale f: createFS) {
+						if(!f.isStatus()) {
 						f.setStatus(true);
 						flashSaleDAO.save(f);
+						}
 					}
+					flashSale.setUser(userCus);
 					flashSaleDAO.save(flashSale);
 					return "redirect:/admin/flashSale";
-				} catch (Exception e) {
+				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					System.out.println(e);
 				}
-
+				
 			}
-
+			
 		}
-
+		
 		return "admin/index";
 	}
-
 	@RequestMapping("/flashSale/edit/{id}")
-	public String editflashSale(@ModelAttribute("flashSale") FlashSale flashSale, Model model,
-			@PathVariable("id") Integer id) {
+	public String editflashSale(@ModelAttribute("flashSale") FlashSale flashSale,Model model,@PathVariable("id") Integer id) {
 		try {
 			model.addAttribute("views", "flashSale-form");
 			model.addAttribute("title", "Quản lí khuyến mãi");
 			model.addAttribute("typeButton", "Thêm");
-			model.addAttribute("updateButton", "Cập nhật");
+			model.addAttribute("updateButton", "Cập nhật"); 
 			model.addAttribute("deleteButton", "Xóa");
-			List<FlashSale> flashSales = flashSaleDAO.findAll();
-			FlashSale flashsalebyid = flashSaleDAO.findById(id).get();
-			model.addAttribute("flashSale", flashsalebyid);
-			model.addAttribute("flashSales", flashSales);
-
+			List<FlashSale> flashSales=flashSaleDAO.findAll();
+			FlashSale flashsalebyid=flashSaleDAO.findById(id).get();
+			model.addAttribute("flashSale",flashsalebyid);
+			model.addAttribute("flashSales",flashSales);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "admin/index";
 	}
-
 	@RequestMapping("/flashSale/update")
-	public String updateflashSale(@ModelAttribute("flashSale") FlashSale flashSale, BindingResult bd, Model model) {
+	public String updateflashSale(@ModelAttribute("flashSale") FlashSale flashSale,BindingResult bd,Model model) {
 		model.addAttribute("views", "flashSale-form");
 		model.addAttribute("title", "Quản lí khuyến mãi");
 		model.addAttribute("typeButton", "Thêm");
-		model.addAttribute("updateButton", "Cập nhật");
+		model.addAttribute("updateButton", "Cập nhật"); 
 		model.addAttribute("deleteButton", "Xóa");
 //		if(bd.hasErrors()) {
 //			return "admin/index";
 //		}
-		List<FlashSale> flashSales = flashSaleDAO.findAll();
-		model.addAttribute("flashSales", flashSales);
+		List<FlashSale> flashSales=flashSaleDAO.findAll();
+		model.addAttribute("flashSales",flashSales);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		String startDayStr = paramService.getString("startDay", "");
+		String startDayStr = paramService.getString("startDay","");
 		System.out.println(startDayStr);
-		String endDayStr = paramService.getString("endDay", "");
+		String endDayStr = paramService.getString("endDay","");
 		System.out.println(endDayStr);
-		boolean check = false;
-		if (startDayStr == null || startDayStr.trim().isEmpty() || endDayStr == null || endDayStr.trim().isEmpty()) {
+		boolean check=false;
+		if (startDayStr == null || startDayStr.trim().isEmpty() || endDayStr == null
+				|| endDayStr.trim().isEmpty()) {
 			if (startDayStr.isEmpty() || startDayStr.trim().isEmpty()) {
 				model.addAttribute("start_dayError", "Vui lòng chọn thời gian bắt đầu");
 			}
@@ -188,68 +189,71 @@ public class flashSaleController {
 				Date currentDateTime = new Date();
 				if (startDateTime.after(endDateTime)) {
 					model.addAttribute("start_dayError", "Ngày bắt đầu phải trước ngày kết thúc");
-					check = true;
+					check=true;
 				}
 
 				if (startDateTime.before(currentDateTime)) {
 					model.addAttribute("start_dayError", "Ngày bắt đầu phải lớn hơn ngày hiện tại");
-					check = true;
+					check=true;
 				}
 
 				if (endDateTime.before(startDateTime)) {
 					model.addAttribute("end_dayError", "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-					check = true;
+					check=true;
 				}
 
 				if (endDateTime.before(currentDateTime)) {
 					model.addAttribute("end_dayError", "Ngày kết thúc phải lớn hơn ngày hiện tại");
-					check = true;
+					check=true;
 				}
-			} catch (DateTimeParseException | ParseException e) {
-				check = true;
+			}catch(DateTimeParseException | ParseException e) {
+				check=true;
 				System.out.println(e);
 				model.addAttribute("start_dayError", "Ngày không hợp lệ");
 				model.addAttribute("end_dayError", "Ngày không hợp lệ");
 			}
-			if (check) {
+			if(check) {
 				return "admin/index";
-			} else {
+			}else {				
 				try {
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
-					List<FlashSale> createFS = flashSaleDAO.findAll();
-					for (FlashSale f : createFS) {
+					List<FlashSale> createFS=flashSaleDAO.findAll();
+					UserCustom userCus=sessionService.get("userLogin");
+					for (FlashSale f: createFS) {
+						if(!f.isStatus()) {
 						f.setStatus(true);
 						flashSaleDAO.save(f);
+						}
 					}
+					flashSale.setUser(userCus);
 					flashSaleDAO.save(flashSale);
 					return "redirect:/admin/flashSale";
-				} catch (Exception e) {
+				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					System.out.println(e);
 				}
-
+				
 			}
-
+			
 		}
-		return "redirect:/admin/flashSale/edit/" + flashSale.getId();
+		return "redirect:/admin/flashSale/edit/"+flashSale.getId();
 	}
-
 	@RequestMapping("/flashSale/delete/{id}")
-	public String deleteflashSale(@PathVariable("id") Integer id, @ModelAttribute("flashSale") FlashSale flashSale,
-			BindingResult bd, Model model) {
+	public String deleteflashSale(@PathVariable("id") Integer id,@ModelAttribute("flashSale") FlashSale flashSale,BindingResult bd,Model model) {
 		model.addAttribute("views", "flashSale-form");
 		model.addAttribute("title", "Quản lí khuyến mãi");
 		model.addAttribute("typeButton", "Thêm");
-		model.addAttribute("updateButton", "Cập nhật");
+		model.addAttribute("updateButton", "Cập nhật"); 
 		model.addAttribute("deleteButton", "Xóa");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-		String startDayStr = paramService.getString("startDay", "");
+		String startDayStr = paramService.getString("startDay","");
 		System.out.println(startDayStr);
-		String endDayStr = paramService.getString("endDay", "");
+		String endDayStr = paramService.getString("endDay","");
 		System.out.println(endDayStr);
-		boolean check = false;
-		if (startDayStr == null || startDayStr.trim().isEmpty() || endDayStr == null || endDayStr.trim().isEmpty()) {
+		boolean check=false;
+		if (startDayStr == null || startDayStr.trim().isEmpty() || endDayStr == null
+				|| endDayStr.trim().isEmpty()) {
 			if (startDayStr.isEmpty() || startDayStr.trim().isEmpty()) {
 				model.addAttribute("start_dayError", "Vui lòng chọn thời gian bắt đầu");
 			}
@@ -263,49 +267,49 @@ public class flashSaleController {
 				Date currentDateTime = new Date();
 				if (startDateTime.after(endDateTime)) {
 					model.addAttribute("start_dayError", "Ngày bắt đầu phải trước ngày kết thúc");
-					check = true;
+					check=true;
 				}
 
 				if (startDateTime.before(currentDateTime)) {
 					model.addAttribute("start_dayError", "Ngày bắt đầu phải lớn hơn ngày hiện tại");
-					check = true;
+					check=true;
 				}
 
 				if (endDateTime.before(startDateTime)) {
 					model.addAttribute("end_dayError", "Ngày kết thúc phải lớn hơn ngày bắt đầu");
-					check = true;
+					check=true;
 				}
 
 				if (endDateTime.before(currentDateTime)) {
 					model.addAttribute("end_dayError", "Ngày kết thúc phải lớn hơn ngày hiện tại");
-					check = true;
+					check=true;
 				}
-			} catch (DateTimeParseException | ParseException e) {
-				check = true;
+			}catch(DateTimeParseException | ParseException e) {
+				check=true;
 				System.out.println(e);
 				model.addAttribute("start_dayError", "Ngày không hợp lệ");
 				model.addAttribute("end_dayError", "Ngày không hợp lệ");
 			}
-			if (check) {
+			if(check) {
 				return "admin/index";
-			} else {
+			}else {				
 				try {
+					UserCustom userCus=sessionService.get("userLogin");
 					flashSale.setStartDay(dateFormat.parse(startDayStr));
 					flashSale.setEndDay(dateFormat.parse(endDayStr));
+					flashSale.setUser(userCus);
 					flashSale.setStatus(true);
-					UserCustom custom = sessionService.get("userLogin");
-					flashSale.setUser(custom);
 					flashSaleDAO.save(flashSale);
 					return "redirect:/admin/flashSale";
-				} catch (Exception e) {
+				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					System.out.println(e);
 				}
-
+				
 			}
-
+			
 		}
-
+		
 //		flashSaleDAO.deleteById(id);
 		return "redirect:/admin/flashSale";
 	}

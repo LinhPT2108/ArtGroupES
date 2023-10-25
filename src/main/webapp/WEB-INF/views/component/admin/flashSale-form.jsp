@@ -28,8 +28,8 @@
 					</div>
 					<div class="col-12 mb-3">
 						<form:label path="status" cssClass="form-label">Thông tin:</form:label>
-						<form:radiobutton path="status" value="false" label="Đang hoạt động"/>
-						<form:radiobutton path="status" value="true" label="Ngưng hoạt động"/>
+						<form:radiobutton path="status" value="false" label="Đang hoạt động" style="margin-left:10px"/>
+						<form:radiobutton path="status" value="true" label="Ngưng hoạt động" style="margin-left:10px"/>
 						<form:errors path="status" cssClass="text-danger"></form:errors>
 					</div> 
 				</div>
