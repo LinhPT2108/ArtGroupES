@@ -265,7 +265,7 @@
 											</div>
 										</div>
 										<div class="product-content">
-											<h3 class="card-title" style="height: 48px">
+											<h3 class="card-title" style="height: 60px">
 												<a href="/products/${p.productId }">${p.productName }</a>
 											</h3>
 											<div class="product-price3">

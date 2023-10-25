@@ -126,7 +126,7 @@
 
 									<c:forEach var="cart" items="${carts}">
 										<tr id="${cart.cartId }">
-											<td class="image" data-title="Ảnh"><img
+											<td class="image" data-title="Ảnh" width="150px"><img
 												src="images/products/${cart.product.productImage[0].image }"
 												alt="${cart.product.productName}"></td>
 											<td class="product-des" data-title="Sản phẩm" width="400px">
@@ -138,7 +138,7 @@
 													Loại: ${cart.product.categoryProduct.categoryName }</p>
 											</td>
 											<c:set var="priceAndQty" value="0"></c:set>
-											<td class="price" data-title="Giá" width="140px"><c:choose>
+											<td class="price" data-title="Giá" width="160px"><c:choose>
 													<c:when test="${isFlashSale}">
 														<c:choose>
 															<c:when

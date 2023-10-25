@@ -186,17 +186,14 @@
 															<button type="button" disabled
 																class="btn-outline-primary p-2  float-xl-start">Thêm
 																vào giỏ</button>
-															<button class="btn-outline-primary  p-2  float-xl-end"
-																role="button" disabled>Mua ngay</button>
+															
 														</c:when>
 														<c:otherwise>
 															<button type="button"
 																class="btn-outline-primary p-2 addToCart"
 																data-product-id="${p.productId}"
 																data-user-id="${userLogin.userId}">Thêm vào giỏ</button>
-															<button class="btn-outline-primary  p-2 btnBuyNow"
-																data-product-id="${p.productId}"
-																data-user-id="${userLogin.userId}">Mua ngay</button>
+															
 														</c:otherwise>
 													</c:choose>
 												</div>

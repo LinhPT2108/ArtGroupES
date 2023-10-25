@@ -30,6 +30,7 @@ $(document).ready(function() {
 			var filterValue = parseInt($(this).val());
 			priceFilters.push(function() {
 				var productPrice = parseFloat($(this).find(".product-price").text().replace("đ", "").replace(/\,/g, ""));
+				console.log(productPrice)
 				if (productPrice <= filterValue) {
 					return productPrice <= filterValue;
 				}

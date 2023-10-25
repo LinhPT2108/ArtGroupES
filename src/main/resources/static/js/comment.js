@@ -119,13 +119,13 @@ $(document).ready(function() {
 						$('.status-ratting').text("");
 					}
 					let listImages = [];
-					data.ImageComment.forEach(function(item, index) {
+					data.commentImages.forEach(function(item, index) {
 						listImages.push(item);
 					});
 
 					var imageList = $("#listImg"); // Chọn phần tử danh sách hình ảnh
 					imageList.html('');
-					let imageArray = data.ImageComment;
+					let imageArray = data.commentImages;
 					if (imageArray.length > 0) {
 						imageList.html('');
 

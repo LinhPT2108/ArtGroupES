@@ -197,9 +197,19 @@
 						<!-- Button Widget -->
 						<div class="single-widget get-button">
 							<div class="content">
-								<div class="button">
-									<a href="/checkout" class="btn" id="postCheckout">ĐẶT HÀNG</a>
-								</div>
+								<c:choose>
+									<c:when test="${listAddress.size()!=0}">
+										<div class="button">
+											<a href="/checkout" class="btn" id="postCheckout">ĐẶT
+												HÀNG</a>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div>
+											Vui lòng thêm địa chỉ mới
+										</div>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
 						<!--/ End Button Widget -->

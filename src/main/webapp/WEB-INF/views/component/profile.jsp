@@ -17,10 +17,12 @@
 						<form:label path="userId" cssClass="col-sm-3 col-form-label">Mã
 							người dùng:</form:label>
 						<div class="col-sm-9">
-							<form:input type="text" cssClass="form-control border-0 bg-white"
+						<span class="form-control border-0 pl-0"> ${userLogin.userId } </span> <small
+								id="emailError" class="text-danger"></small>
+							<%-- <form:input type="text" cssClass="form-control border-0 bg-white"
 								path="userId" placeholder="tên đăng nhập"
 								value="${userLogin.userId }" readonly="readonly" />
-							<small id="userIdError" class="text-danger"></small>
+							<small id="userIdError" class="text-danger"></small> --%>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -35,9 +37,8 @@
 					<div class="form-group row">
 						<form:label path="email" cssClass="col-sm-3 col-form-label">Email:</form:label>
 						<div class="col-sm-9">
-							<form:input type="email" cssClass="form-control" path="email"
-								placeholder="Email" value="${userLogin.email }" />
-							<small id="emailError" class="text-danger"></small>
+							<span class="form-control border-0 pl-0"> ${userLogin.email } </span> <small
+								id="emailError" class="text-danger"></small>
 						</div>
 					</div>
 					<!-- <div class="form-group row">
@@ -136,7 +137,7 @@
 												title : 'Oops...',
 												text : 'Dung lượng file tối đa 1 MB và có định dạng: .JPEG, .PNG!',
 											});
-									fileInput.value=null;
+									fileInput.value = null;
 								}
 							}
 						});
@@ -189,11 +190,9 @@
 						});
 						copyBackgroundImageToImg();
 						$("#fullnameError").html("");
-						$("#emailError").html("");
 						console.log(data);
 					} else {
 						$("#fullnameError").html(data.fullname);
-						$("#emailError").html(data.email);
 						Swal.fire({
 							icon : 'error',
 							title : 'Cập nhật thất bại',

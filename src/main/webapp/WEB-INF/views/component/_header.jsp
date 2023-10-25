@@ -166,7 +166,7 @@
 											</div>
 											<ul class="shopping-list" id="listProductCart">
 												<c:choose>
-													<c:when test="${sizeInCart==0 }">
+													<c:when test="${carts.size()==0 }">
 														<div
 															class="nothing d-flex flex-column align-items-center justify-content-center">
 															<i class="bi bi-cart-x display-1"></i> <span>Chưa
@@ -232,7 +232,7 @@
 												</c:choose>
 											</ul>
 											<div class="bottom cartBottom">
-												<c:if test="${sizeInCart>0 }">
+												<c:if test="${carts.size()>0 }">
 													<div class=" bottomCart">
 														<div class="total">
 															<span>Tổng tiền</span> <span class="total-amount">

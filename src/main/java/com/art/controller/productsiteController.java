@@ -90,12 +90,13 @@ public class productsiteController {
 			Pageable pageable = PageRequest.of(p.orElse(0), 20);
 			Page<Product> listProduct = pdDAO.findByCategoryProductAndManufacturerProduct(category2, manufacturer2,
 					pageable);
-
+			model.addAttribute("listProduct", listProduct);
 		} else if (category.isPresent() && manufacturer.isEmpty()) {
 			model.addAttribute("catemanu", true);
 			Pageable pageable = PageRequest.of(p.orElse(0), 20);
 			model.addAttribute("listProduct",
 					pdDAO.findByCategoryProduct(categoryDAO.getById(category.get()), pageable));
+			
 		} else {
 			model.addAttribute("catemanu", false);
 			Pageable pageable = PageRequest.of(p.orElse(0), 20);

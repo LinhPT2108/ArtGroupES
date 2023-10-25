@@ -11,7 +11,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Title Tag  -->
-<title>Eshop - eCommerce HTML5 Template.</title>
+<title>Eshop - Giới thiệu</title>
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="images/favicon.png">
 <!-- Web Font -->
@@ -73,77 +73,61 @@
 
 	<!--/ End Header -->
 
-	<!-- Breadcrumbs -->
-	<div class="breadcrumbs">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="bread-inner">
-						<ul class="bread-list">
-							<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="blog-single.html">About us</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Breadcrumbs -->
 
 	<!-- Start Contact -->
 	<section id="contact-us" class="contact-us section">
-			<div class="container">
-				<div class="contact-head">
-					<div class="row">
-						<div class="col-lg-12 col-12">
-							<div class="form-main">
-								<div class="title">
+		<div class="container">
+			<div class="contact-head">
+				<div class="row">
+					<div class="col-lg-12 col-12">
+						<div class="form-main">
+							<div class="title">
 
-									<h3>About us page</h3>
-								</div>
-								<form class="form" method="post" action="mail/mail.php">
-									<div class="row">
-										<div class="col-lg-6 col-12">
-											<div class="form-group">
-												<img src="../../images/about/nha.jpg" alt=" ">
-												<p>Eshop is a leading brand specializing in providing high-quality home
-													appliances on the current market. Our products are known for their
-													advanced technology, diverse designsec, and the ability to meet the
-													needs of most users. The prices of our products are always
-													competitive, offering the best value for money.</p>
-											</div>
-										</div>
-										<div class="col-lg-6 col-12">
-											<div class="form-group">
-												<img src="../../images/about/dienmay_4.jpg" alt=" ">
-												<p>The goods are extremely diverse, ranging from large categories
-													such as TVs, Refrigerators, Washing Machines, Air Conditioners,
-													to household appliances such as Electric Rice Cookers, Gas Stoves,
-													Induction Cookers, and also business in items such as Phones,
-													Tablets,
-													Laptops, Accessories,..</p>
-											</div>
-										</div>
-										<div class="col-lg-12 col-12">
-											<div class="form-group">
-												<img src="../../images/about/camket.jpg" alt=" ">
-												<p>Eshop is committed to delivering high-quality products with
-													the most advanced technology, aiming to optimize performance
-													and save costs. Our products are manufactured with a focus on
-													innovation and research, in order to meet the increasingly high
-													demands of customers in modern life</p>
-											</div>
-										</div>
-										<img src="../../images/about/thuonghieu.png" alt=" ">
-									</div>
-								</form>
+								<h3>About us page</h3>
 							</div>
+							<form class="form" method="post" action="mail/mail.php">
+								<div class="row">
+									<div class="col-lg-6 col-12">
+										<div class="form-group">
+											<img src="../../images/about/nha.jpg" alt=" ">
+											<p>ArtGroupES shop là thương hiệu hàng đầu chuyên cung cấp đồ gia
+												dụng chất lượng cao thiết bị trên thị trường hiện nay. Sản
+												phẩm của chúng tôi được biết đến với công nghệ tiên tiến,
+												thiết kế đa dạng và khả năng đáp ứng nhu cầu của hầu hết
+												người dùng. Giá các sản phẩm của chúng tôi luôn cạnh tranh,
+												mang lại giá trị tốt nhất cho đồng tiền.</p>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12">
+										<div class="form-group">
+											<img src="../../images/about/oto.png" alt=" ">
+											<p>Hàng hóa vô cùng đa dạng, từ lớn các loại như TV, Tủ
+												lạnh, Máy giặt, Điều hòa Điều hòa, đến các thiết bị gia dụng
+												như Cơm Điện Bếp nấu ăn, Bếp gas, Bếp điện từ và kinh doanh
+												các mặt hàng Các mặt hàng như Điện thoại, Máy tính bảng,
+												Laptop, Phụ kiện,...</p>
+										</div>
+									</div>
+									<div class="col-lg-12 col-12">
+										<div class="form-group">
+											<img src="../../images/about/camket.jpg" alt=" ">
+											<p>ArtGroupES cam kết cung cấp sản phẩm chất lượng cao với
+												công nghệ tiên tiến nhất, nhằm tối ưu hóa hiệu quả và tiết
+												kiệm chi phí. Sản phẩm của chúng tôi được sản xuất với sự
+												tập trung vào đổi mới và nghiên cứu, để đáp ứng nhu cầu ngày
+												càng cao của khách hàng trong cuộc sống hiện đại</p>
+										</div>
+									</div>
+									<img src="../../images/about/thuonghieu.png" alt=" ">
+								</div>
+							</form>
 						</div>
-
 					</div>
+
 				</div>
 			</div>
-		</section>
+		</div>
+	</section>
 	<!-- End Shop Newsletter -->
 
 	<!-- Start Footer Area -->

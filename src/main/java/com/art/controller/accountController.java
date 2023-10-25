@@ -121,7 +121,6 @@ public class accountController {
 					System.out.println("đăng nhập thành công");
 					for (Cart c : cartDAO.findByUser(user)) {
 						System.out.println(c.getProduct().getProductId());
-
 					}
 					sessionService.set("sizeInCart", cartDAO.findByUser(user).size());
 					sessionService.setCart(cartDAO.findByUser(user));
@@ -258,9 +257,6 @@ public class accountController {
 	public ResponseEntity<?> postProfile(@Valid @ModelAttribute("us") UserCustom us, BindingResult rs, Model model,
 			@RequestParam("avatar") MultipartFile avatar) {
 		String fullname = paramService.getString("fullname", "");
-		String email = paramService.getString("email", "");
-		String userId = paramService.getString("userId", "");
-		System.out.println(userId + " - " + fullname.isBlank() + " - " + email);
 		Map<String, String> errors = new HashMap<>();
 
 		if (fullname.isBlank()) {
@@ -268,27 +264,15 @@ public class accountController {
 		} else if (containsSpecialCharacters(fullname) || containsNumber(fullname)) {
 			errors.put("fullname", "Họ tên không được chứa số và kí tự đặt biệt");
 		}
-		if (email.isBlank()) {
-			errors.put("email", "Vui lòng nhập email");
-		} else if (!isValidEmail(email)) {
-			errors.put("email", "Email không hợp lệ");
-		} else if (!usDAO.findByEmail(email).isEmpty()) {
-			List<UserCustom> userCustom2 = usDAO.findByEmail(email);
-			for (UserCustom u : userCustom2) {
-				if (!u.getUserId().equals(userId)) {
-					errors.put("email", "Email đã tồn tại");
-				}
-			}
-		}
 		if (!errors.isEmpty()) {
 			return ResponseEntity.ok(errors);
 		} else {
-			UserCustom currentUser = usDAO.getById(userId);
+			UserCustom currentUser = sessionService.get("userLogin");
 			if (!avatar.isEmpty()) {
 				currentUser.setImage(paramService.save(avatar, "/images/avatar").getName());
 			}
 			currentUser.setFullname(fullname);
-			currentUser.setEmail(email);
+			currentUser.setEmail(currentUser.getEmail());
 			usDAO.save(currentUser);
 			sessionService.set("userLogin", currentUser);
 		}
@@ -417,12 +401,11 @@ public class accountController {
 		System.out.println(currentPassword + " - " + confirmPassword);
 		UserCustom currentUser = sessionService.get("userLogin");
 
-		if (!currentPassword.equals(currentUser.getPassword())) {
+		if (!PasswordEncryption.toSHA1(currentPassword).equals(currentUser.getPassword())) {
 			return ResponseEntity.ok("404");
 		} else {
 			currentUser.setPassword(PasswordEncryption.toSHA1(confirmPassword));
 			usDAO.save(currentUser);
-
 		}
 		return ResponseEntity.ok("success");
 	}

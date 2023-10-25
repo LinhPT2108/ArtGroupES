@@ -6,6 +6,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>Trang chủ</title>
@@ -48,19 +49,23 @@
 
 <link rel="stylesheet" href="../css/index.css">
 <script
-	src="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.js"/>"></script>
+	src="<c:url value=" /webjars/sweetalert2/11.7.12/dist/sweetalert2.min.js" />"></script>
 <link rel="stylesheet"
-	href="<c:url value="/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.css"/>">
+	href="<c:url value="
+						/webjars/sweetalert2/11.7.12/dist/sweetalert2.min.css" />">
 <link rel="stylesheet" href="../../css/custom-nav.css">
 
 <link rel="stylesheet"
-	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick.css"/>">
+	href="<c:url value=" /webjars/slick-carousel/1.8.1/slick/slick.css" />">
 <link rel="stylesheet"
-	href="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick-theme.css"/>">
+	href="<c:url value=" /webjars/slick-carousel/1.8.1/slick/slick-theme.css" />
+					">
 
 <link rel="stylesheet"
-	href="<c:url value="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">
+	href="<c:url value="
+						/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css" />">
 </head>
+
 <body class="js">
 
 	<!-- Preloader -->
@@ -94,7 +99,9 @@
 							<span
 								class="lof-clock-detail bg-warning text-dark rounded-3 p-2 fw-bold"
 								id="your-countdown"
-								data-end-day="<c:out value="${flashsale.endDay}" />"> </span>
+								data-end-day="<c:out value="
+												${flashsale.endDay}" />">
+							</span>
 
 						</div>
 					</c:if>
@@ -133,7 +140,8 @@
 													class="form-check-input filter-checkbox brand-checkbox"
 													type="checkbox" value="${mn.manufacturerName }"
 													id="${mn.manufacturerName }"> <label
-													class="form-check-label" for="${mn.manufacturerName }">${mn.manufacturerName}</label></li>
+													class="form-check-label" for="${mn.manufacturerName }">${mn.manufacturerName}</label>
+												</li>
 											</c:if>
 										</c:forEach>
 									</ul>
@@ -153,7 +161,8 @@
 													class="form-check-input filter-checkbox category-checkbox"
 													type="checkbox" value="${ca.categoryName }"
 													id="${ca.categoryName }"> <label
-													class="form-check-label" for="${ca.categoryName}">${ca.categoryName }</label></li>
+													class="form-check-label" for="${ca.categoryName}">${ca.categoryName
+																		}</label></li>
 
 											</c:if>
 										</c:forEach>
@@ -168,7 +177,7 @@
 									type="button" id="dropdownMenuButton2" data-toggle="dropdown"
 									aria-expanded="false">Lọc giá</button>
 								<ul class="dropdown-menu px-4"
-									aria-labelledby="dropdownMenuButton2" style="min-width: 180px">
+									aria-labelledby="dropdownMenuButton2" style="min-width: 200px">
 									<li class=""><input
 										class="form-check-input filter-checkbox price-checkbox"
 										type="checkbox" value="5000000" id="checkbox1"> <label
@@ -206,7 +215,7 @@
 				</div>
 			</div>
 
-			<div class="section-flashsale cardProduct-flashsale container mb-5">
+			<div class="content-listProduct container mb-5">
 				<div class="row">
 					<c:if test="${!checkDayTime}">
 						<c:forEach var="p" items="${listProduct}" varStatus="i">
@@ -234,7 +243,8 @@
 																	<div>
 																		<span class="out-of-stock">Giảm <fmt:formatNumber
 																				type="number" pattern="###,###,###"
-																				value="${(p.price - f.discountedPrice)/p.price *100}" />%
+																				value="${(p.price - f.discountedPrice)/p.price *100}" />
+																			%
 																		</span>
 																	</div>
 
@@ -253,10 +263,12 @@
 																title="Quick View" href="#" class="quickViews"
 																data-product-id="${p.productId}"><i class=" ti-eye"></i><span>Xem
 																	nhanh</span></a>
-															<c:set var="checkLike" value="false"></c:set>
+															<c:set var="checkLike" value="false">
+															</c:set>
 															<c:forEach items="${likeList }" var="l" varStatus="i">
 																<c:if test="${l.product.productId == p.productId }">
-																	<c:set var="checkLike" value="true"></c:set>
+																	<c:set var="checkLike" value="true">
+																	</c:set>
 																</c:if>
 															</c:forEach>
 															<c:choose>
@@ -286,7 +298,8 @@
 												</div>
 												<div class="product-content">
 													<h3 class="card-title" style="height: 48px">
-														<a href="/products/${p.productId }">${p.productName }</a>
+														<a href="/products/${p.productId }">${p.productName
+																			}</a>
 													</h3>
 													<div class="product-price3">
 														<c:if test="${!foundFlashSale}">
@@ -327,18 +340,21 @@
 								class="page-link" href="?p=${listPdFlashsale.number-1}"
 								tabindex="-1"><i class="ti ti-arrow-left"></i></a></li>
 							<li class="page-item active"><a class="page-link"
-								href="?p=${listPdFlashsale.number }">${listPdFlashsale.number+1}</a></li>
+								href="?p=${listPdFlashsale.number }">${listPdFlashsale.number+1}</a>
+							</li>
 
 							<li
-								class="page-item ${listPdFlashsale.number+1==listPdFlashsale.totalPages?'disabled':'' }"><a
-								class="page-link " href="?p=${listPdFlashsale.number+1 }"><i
-									class="ti ti-arrow-right"></i></a></li>
+								class="page-item ${listPdFlashsale.number+1==listPdFlashsale.totalPages?'disabled':'' }">
+								<a class="page-link " href="?p=${listPdFlashsale.number+1 }"><i
+									class="ti ti-arrow-right"></i></a>
+							</li>
 							<li class="ml-3 choose-page"><select
 								name="selectedPage mb-0" id="selectedPage">
 									<option value="">--Chọn trang--</option>
 									<c:forEach begin="1" end="${listPdFlashsale.totalPages }"
 										varStatus="i" var="page">
-										<option value="${i.index}" class="option-page">${i.index}</option>
+										<option value="${i.index}" class="option-page">${i.index}
+										</option>
 									</c:forEach>
 							</select></li>
 						</ul>
@@ -373,7 +389,8 @@
 														class="form-check-input filter-checkbox brand-checkbox"
 														type="checkbox" value="${mn.manufacturerName }"
 														id="${mn.manufacturerName }"> <label
-														class="form-check-label" for="${mn.manufacturerName }">${mn.manufacturerName}</label></li>
+														class="form-check-label" for="${mn.manufacturerName }">${mn.manufacturerName}</label>
+													</li>
 												</c:if>
 											</c:forEach>
 										</ul>
@@ -393,7 +410,8 @@
 														class="form-check-input filter-checkbox category-checkbox"
 														type="checkbox" value="${ca.categoryName }"
 														id="${ca.categoryName }"> <label
-														class="form-check-label" for="${ca.categoryName}">${ca.categoryName }</label></li>
+														class="form-check-label" for="${ca.categoryName}">${ca.categoryName
+																			}</label></li>
 
 												</c:if>
 											</c:forEach>
@@ -408,7 +426,7 @@
 										type="button" id="dropdownMenuButton2" data-toggle="dropdown"
 										aria-expanded="false">Lọc giá</button>
 									<ul class="dropdown-menu px-4"
-										aria-labelledby="dropdownMenuButton2" style="min-width: 180px">
+										aria-labelledby="dropdownMenuButton2" style="min-width: 200px">
 										<li class=""><input
 											class="form-check-input filter-checkbox price-checkbox"
 											type="checkbox" value="5000000" id="checkbox1"> <label
@@ -470,7 +488,8 @@
 															<div>
 																<span class="out-of-stock">Giảm <fmt:formatNumber
 																		type="number" pattern="###,###,###"
-																		value="${(p.price - f.discountedPrice)/p.price *100}" />%
+																		value="${(p.price - f.discountedPrice)/p.price *100}" />
+																	%
 																</span>
 															</div>
 
@@ -521,7 +540,8 @@
 										</div>
 										<div class="product-content">
 											<h3 class="card-title" style="height: 48px">
-												<a href="/products/${p.productId }">${p.productName }</a>
+												<a href="/products/${p.productId }">${p.productName
+																	}</a>
 											</h3>
 											<div class="product-price3">
 												<c:if test="${!foundFlashSale}">
@@ -561,15 +581,17 @@
 									href="?p=${listProduct.number }">${listProduct.number+1}</a></li>
 
 								<li
-									class="page-item ${listProduct.number+1==listProduct.totalPages?'disabled':'' }"><a
-									class="page-link " href="?p=${listProduct.number+1 }"><i
-										class="ti ti-arrow-right"></i></a></li>
+									class="page-item ${listProduct.number+1==listProduct.totalPages?'disabled':'' }">
+									<a class="page-link " href="?p=${listProduct.number+1 }"><i
+										class="ti ti-arrow-right"></i></a>
+								</li>
 								<li class="ml-3 choose-page"><select
 									name="selectedPage mb-0" id="selectedPage">
 										<option value="">--Chọn trang--</option>
 										<c:forEach begin="1" end="${listProduct.totalPages }"
 											varStatus="i" var="page">
-											<option value="${i.index}" class="option-page">${i.index}</option>
+											<option value="${i.index}" class="option-page">${i.index}
+											</option>
 										</c:forEach>
 								</select></li>
 							</ul>
@@ -721,7 +743,7 @@
 	<script src="../js/active.js"></script>
 	<script src="../js/jquery.countdown.js"></script>
 	<script
-		src="<c:url value="/webjars/slick-carousel/1.8.1/slick/slick.js"/>"></script>
+		src="<c:url value=" /webjars/slick-carousel/1.8.1/slick/slick.js" />"></script>
 	<script src="../js/choose-product.js"></script>
 	<script src="../js/isotope.pkgd.js"></script>
 	<script src="../js/cart-script.js"></script>
@@ -763,4 +785,5 @@
 		});
 	</script>
 </body>
+
 </html>
