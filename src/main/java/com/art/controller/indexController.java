@@ -95,4 +95,9 @@ public class indexController {
 			return ResponseEntity.ok("fail");
 		}
 	}
+	
+	@GetMapping("/about-us")
+	public String getAbout() {
+		return "introduce";
+	}
 }

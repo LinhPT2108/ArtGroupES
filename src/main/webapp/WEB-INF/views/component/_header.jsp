@@ -335,6 +335,7 @@
 											<li><a href="/product" class="">SẢN PHẨM</a></li>
 											<li><a href="/product/flash-sale" class="">KHUYẾN MÃI</a></li>
 											<li><a href="/contact" class="">LIÊN HỆ</a></li>
+											<li><a href="/about-us" class="">GIỚI THIỆU</a></li>
 										</ul>
 									</div>
 								</div>

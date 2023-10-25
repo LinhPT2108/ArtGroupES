@@ -337,7 +337,7 @@
 																				</div>
 																			</div>
 																		</div>
-																		<div class="product-content text-truncate">
+																		<div class="product-content">
 																			<h3 class="card-title" style="height: 60px">
 																				<a href="/products/${p.productId }">${p.productName }</a>
 																			</h3>
