@@ -266,7 +266,7 @@
 																<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 																	<div class="single-product h-100">
 																		<div class="product-img">
-																			<a href="<%-- /products/${p.productId} --%>#"> <img
+																			<a href="/products/${p.productId}"> <img
 																				class="default-img"
 																				src="images/products/${p.productImage[0].image }"
 																				alt="${p.productName }" height="190" width="250">
@@ -338,7 +338,7 @@
 																				</div>
 																			</div>
 																		</div>
-																		<div class="product-content">
+																		<div class="product-content text-truncate">
 																			<h3 class="card-title" style="height: 60px">
 																				<a href="/products/${p.productId }">${p.productName }</a>
 																			</h3>
