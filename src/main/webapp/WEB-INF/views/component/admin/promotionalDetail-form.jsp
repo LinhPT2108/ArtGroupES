@@ -12,12 +12,12 @@
 			<div class="col-xs-12 col-md-7">
 				<div class="row">
 					<div class="col-12 mb-3">
-						 <input type="hidden"
-							name="idflashSale" id="idflashSale" value="${idflashSale}"
-							cssClass="form-control"></input>
+						<input type="hidden" name="idflashSale" id="idflashSale"
+							value="${idflashSale}" cssClass="form-control"></input>
 					</div>
 					<div class="col-12 mb-3">
-						<form:input type="hidden" path="id" id="id" cssClass="form-control"></form:input>
+						<form:input type="hidden" path="id" id="id"
+							cssClass="form-control"></form:input>
 					</div>
 					<div class="col-12 mb-3">
 						<label>Sản phẩm:</label> <br>
@@ -39,52 +39,53 @@
 						class="btn btn-warning">${updateButton}</button>
 					<button class="btn btn-danger"
 						formaction="/admin/promotionalDetail/${idflashSale}/delete/${promotionalDetail.id}">${deleteButton}</button>
-					<a href="/admin/promotionalDetail/${idflashSale}" class="btn btn-primary">Reset</a>
+					<a href="/admin/promotionalDetail/${idflashSale}"
+						class="btn btn-primary">Reset</a>
 				</div>
 			</div>
 		</div>
 	</form:form>
 	<hr>
 	<br>
-	<div class="row">
-		<div class="col-xs-12 col-md-12">
-			<div class="row">
-				<table border="1" style="width: 100%">
+	<div class="table-responsive">
+		<table id="statisticalTable" class="table table-hover" style="vertical-align:middle;">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Tên sản phẩm</th>
+					<th>SL tồn kho</th>
+					<th>Giá gốc</th>
+					<th>Giá khuyến mãi</th>
+					<th>Trạng thái</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="promotionalDetail" items="${promotionalDetails}">
 					<tr>
-						<th>Id</th>
-						<th>Tên sản phẩm</th>
-						<th>SL tồn kho</th>
-						<th>Giá gốc</th>
-						<th>Giá khuyến mãi</th>
-						<th>Trạng thái</th>
-						<th></th>
-					</tr>
-					<c:forEach var="promotionalDetail" items="${promotionalDetails}">
-						<tr>
-							<td>${promotionalDetail.id}</td>
-							<td>${promotionalDetail.product.productName}</td>
-							<td>${promotionalDetail.product.quantityInStock}</td>
+						<td>${promotionalDetail.id}</td>
+						<td>${promotionalDetail.product.productName}</td>
+						<td>${promotionalDetail.product.quantityInStock}</td>
 
-							<td><fmt:setLocale value="vi_VN" /> <fmt:formatNumber
-									value="${promotionalDetail.product.price}" type="currency"
-									currencyCode="VND" maxFractionDigits="0" minFractionDigits="0" />
-							</td>
-							<td><fmt:setLocale value="vi_VN" /> <fmt:formatNumber
-									value="${promotionalDetail.discountedPrice}" type="currency"
-									currencyCode="VND" maxFractionDigits="0" minFractionDigits="0" />
-							</td>
-							<td><c:choose>
-									<c:when test="${promotionalDetail.status == false}">Đang hoạt động</c:when>
-									<c:otherwise>Ngưng hoạt động</c:otherwise>
-								</c:choose></td>
-							<td><a class="btn btn-warning"
-								href="/admin/promotionalDetail/${idflashSale}/edit/${promotionalDetail.id}">Chỉnh
-									sửa</a></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
-		</div>
+						<td><fmt:setLocale value="vi_VN" /> <fmt:formatNumber
+								value="${promotionalDetail.product.price}" type="currency"
+								currencyCode="VND" maxFractionDigits="0" minFractionDigits="0" />
+						</td>
+						<td><fmt:setLocale value="vi_VN" /> <fmt:formatNumber
+								value="${promotionalDetail.discountedPrice}" type="currency"
+								currencyCode="VND" maxFractionDigits="0" minFractionDigits="0" />
+						</td>
+						<td><c:choose>
+								<c:when test="${promotionalDetail.status == false}">Đang hoạt động</c:when>
+								<c:otherwise>Ngưng hoạt động</c:otherwise>
+							</c:choose></td>
+						<td><a class="btn btn-warning"
+							href="/admin/promotionalDetail/${idflashSale}/edit/${promotionalDetail.id}">Chỉnh
+								sửa</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
 	</div>
 </div>
 
