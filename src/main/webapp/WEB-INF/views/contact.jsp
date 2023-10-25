@@ -73,59 +73,12 @@
 
 	<!--/ End Header -->
 	<!-- Start Contact -->
-	<section id="contact-us" class="contact-us section">
+	<section id="contact-us" class="contact-us section pb-5">
 		<div class="container">
 			<div class="contact-head">
 				<div class="row">
-					<div class="col-lg-8 col-12">
-						<div class="form-main">
-							<div class="title">
-								<h2 class="text-primary">Thông tin liên hệ</h2>
-								<h4>Điền thông tin</h4>
-							</div>
-							<form class="form" method="post" action="mail/mail.php">
-								<div class="row">
-									<div class="col-lg-6 col-12">
-										<div class="form-group">
-											<label>Họ và tên<span>*</span></label> <input name="name"
-												type="text" placeholder="">
-										</div>
-									</div>
-									<div class="col-lg-6 col-12">
-										<div class="form-group">
-											<label>Tiêu đề<span>*</span></label> <input name="subject"
-												type="text" placeholder="">
-										</div>
-									</div>
-									<div class="col-lg-6 col-12">
-										<div class="form-group">
-											<label>Email<span>*</span></label> <input name="email"
-												type="email" placeholder="">
-										</div>
-									</div>
-									<div class="col-lg-6 col-12">
-										<div class="form-group">
-											<label>Số điện thoại<span>*</span></label> <input
-												name="company_name" type="text" placeholder="">
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-group message">
-											<label>Nội dung<span>*</span></label>
-											<textarea name="message" placeholder=""></textarea>
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-group button">
-											<button type="submit" class="btn ">Gửi</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="col-lg-4 col-12">
-						<div class="single-head">
+					<div class=" col-12">
+						<div class="single-head d-flex justify-content-between">
 							<div class="single-info">
 								<i class="fa fa-phone"></i>
 								<h4 class="title">Gọi ngay cho chúng tôi:</h4>
@@ -158,7 +111,7 @@
 	<!--/ End Contact -->
 
 	<!-- Map Section -->
-	<div class="map-section">
+	<div class="map-section mb-5">
 		<div class="container">
 			<iframe
 				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8128.681313566823!2d105.76670264796438!3d9.986688345048032!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31a08906415c355f%3A0x416815a99ebd841e!2zVHLGsOG7nW5nIENhbyDEkeG6s25nIEZQVCBQb2x5dGVjaG5pYw!5e0!3m2!1svi!2s!4v1695988326214!5m2!1svi!2s"
@@ -168,33 +121,7 @@
 	</div>
 	<!--/ End Map Section -->
 
-	<!-- Start Shop Newsletter  -->
-	<section class="shop-newsletter section">
-		<div class="container">
-			<div class="inner-top">
-				<div class="row">
-					<div class="col-lg-8 offset-lg-2 col-12">
-						<!-- Start Newsletter Inner -->
-						<div class="inner">
-							<h4>Newsletter</h4>
-							<p>
-								Subscribe to our newsletter and get <span>10%</span> off your
-								first purchase
-							</p>
-							<form action="mail/mail.php" method="get" target="_blank"
-								class="newsletter-inner">
-								<input name="EMAIL" placeholder="Your email address" required=""
-									type="email">
-								<button class="btn">Subscribe</button>
-							</form>
-						</div>
-						<!-- End Newsletter Inner -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Newsletter -->
+
 
 	<!-- Start Footer Area -->
 	<jsp:include page="component/_footer.jsp"></jsp:include>

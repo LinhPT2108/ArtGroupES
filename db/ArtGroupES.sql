@@ -1056,43 +1056,43 @@ INSERT INTO dbo.invoice
         )
 VALUES  ( 18000000 , -- total_amount - float
           '2023-09-01' , -- invoice_date - datetime2(6)
-          N'' , -- note - nvarchar(255)
+          N'ĐC: số 123 đường số 4,Xã Thới Hưng, Huyện Cờ Đỏ, Thành Phố Cần Thơ' , -- note - nvarchar(255)
           'linhptpc04737',  -- user_id - varchar(255)
 		  3
         ),
 		( 17980000 , -- total_amount - float
           '2023-10-01' , -- invoice_date - datetime2(6)
-          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          N'ĐC: số 123 đường số 4,Xã Thới Hưng, Huyện Cờ Đỏ, Thành Phố Cần Thơ' , -- note - nvarchar(255)
           'linhptpc04737',  -- user_id - varchar(255)
 		  3
         ),
 		( 44650000 , -- total_amount - float
           '2023-10-05' , -- invoice_date - datetime2(6)
-          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          N'ĐC: số 123 đường số 4,Xã Thới Hưng, Huyện Cờ Đỏ, Thành Phố Cần Thơ' , -- note - nvarchar(255)
           'linhptpc04737',  -- user_id - varchar(255)
 		  3
         ),
 		( 144950000 , -- total_amount - float
           '2023-10-10' , -- invoice_date - datetime2(6)
-          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          N'ĐC: số 123 đường số 4,Xã Thới Hưng, Huyện Cờ Đỏ, Thành Phố Cần Thơ' , -- note - nvarchar(255)
           'linhptpc04737',  -- user_id - varchar(255)
 		  3
         ),
 		( 374800000 , -- total_amount - float
           '2023-10-15' , -- invoice_date - datetime2(6)
-          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          N'ĐC: số 123 đường số 4,Xã Thới Hưng, Huyện Cờ Đỏ, Thành Phố Cần Thơ' , -- note - nvarchar(255)
           'linhptpc04737',  -- user_id - varchar(255)
 		  3
         ),
 		( 11090000 , -- total_amount - float
           '2023-10-16' , -- invoice_date - datetime2(6)
-          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          N'ĐC: số 123 đường số 4,Xã Thới Hưng, Huyện Cờ Đỏ, Thành Phố Cần Thơ' , -- note - nvarchar(255)
           'linhptpc04737',  -- user_id - varchar(255)
 		  2
         ),
 		( 10590000 , -- total_amount - float
           '2023-10-16' , -- invoice_date - datetime2(6)
-          N'Gọi trước khi giao hàng' , -- note - nvarchar(255)
+          N'ĐC: số 123 đường số 4,Xã Thới Hưng, Huyện Cờ Đỏ, Thành Phố Cần Thơ' , -- note - nvarchar(255)
           'linhptpc04737',  -- user_id - varchar(255)
 		  1
         );
