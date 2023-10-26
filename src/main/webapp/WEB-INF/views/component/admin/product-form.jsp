@@ -55,10 +55,10 @@
 					<div class="describe row ">
 						<c:choose>
 							<c:when test="${!typeButton }">
-								<div class="col-xs-12 col-md-6 mb-3 ">
+								<div class="col-xs-12 col-md-6 mb-3 description-container">
 									<div class=" border border-1 p-3 position-relative">
-										<span class="position-absolute z-3 bg-white"
-											style="top: -13px">Mô tả 1:</span>
+										<span class="position-absolute z-3 bg-white motaClass"
+											style="top: -13px" data-counter-number="${i.index+1 }">Mô tả 1:</span>
 										<div class="mb-3">
 											<div class="form-floating">
 												<input type="text" class="form-control" id="tieude1"
@@ -250,7 +250,6 @@
 	}
 
 	var randomString = generateRandomString();
-
-	document.getElementById('productId').value == null ? document
-			.getElementById('productId').value = randomString : '';
+	console.log(document.getElementById('productId').value=="")
+	document.getElementById('productId').value == "" ? document.getElementById('productId').value = randomString : "";
 </script>

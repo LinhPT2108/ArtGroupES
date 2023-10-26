@@ -27,8 +27,8 @@
 							<li><i class="ti-location-pin"></i><a
 								href="https://maps.app.goo.gl/npdKKMSeD48m2dAa8" target="_blank">
 									Địa chỉ</a></li>
-							<li><i class="ti-alarm-clock"></i> <a href="/product/flash-sale">Khuyến
-									mãi</a></li>
+							<li><i class="ti-alarm-clock"></i> <a
+								href="/product/flash-sale">Khuyến mãi</a></li>
 							<c:choose>
 								<c:when test="${userLogin ==null }">
 									<li><i class="ti-power-off"></i><a href="/account/login">
@@ -70,8 +70,8 @@
 						<!-- Search Form -->
 						<div class="search-top">
 							<form class="search-form" method="get" action="/product/search">
-							<input type="hidden" name="categoryId" value="-1">
-								<input type="text" placeholder="Nhập tên sản phẩm..." name="search">
+								<input type="hidden" name="categoryId" value="-1"> <input
+									type="text" placeholder="Nhập tên sản phẩm..." name="search">
 								<button type="submit">
 									<i class="ti-search"></i>
 								</button>
@@ -87,15 +87,16 @@
 					<div class="search-bar-top">
 						<div class="search-bar">
 							<form method="get" action="/product/search" id="categoryIdSort">
-								<select name="categoryId" style="width:160px;" >
+								<select name="categoryId" style="width: 160px;">
 									<option selected="selected" value="-1">Danh mục</option>
 									<c:forEach items="${listCategories }" var="c">
 										<c:if test="${c.del }">
 											<option value="${c.categoryId }">${c.categoryName }</option>
 										</c:if>
 									</c:forEach>
-								</select> <input name="search" placeholder="Nhập tên sản phẩm cần tìm....."
-									type="search" autocomplete="off">
+								</select> <input name="search"
+									placeholder="Nhập tên sản phẩm cần tìm....." type="search"
+									autocomplete="off">
 								<button class="btnn">
 									<i class="ti-search"></i>
 								</button>
@@ -175,58 +176,61 @@
 													</c:when>
 													<c:otherwise>
 														<c:forEach var="cart" items="${carts}">
-															<li>
-																<div class="mb-2 productInCart" id="${cart.cartId}">
-																	<a class="cart-img"
-																		href="/products/${cart.product.productId }"><img
-																		src="../../images/products/${cart.product.productImage[0].image }"
-																		alt="${cart.product.productImage[0].image }"></a>
-																	<h4>
-																		<a href="#">${cart.product.productName}</a>
-																	</h4>
-																	<p class="quantity">
-																		Số lượng: <span class="qtyInStock">${cart.quantity}
-																		</span> <span class="amount d-flex flex-column"> <c:choose>
-																				<c:when test="${isFlashSale}">
-																					<c:choose>
-																						<c:when
-																							test="${cart.product.productPromotionalDetails[0] != null}">
-																							<del>
-																								<span
-																									class="text-muted text-decoration-line-through me-2"><fmt:formatNumber
+															<c:if test="${!cart.product.del }">
+																<li>
+																	<div class="mb-2 productInCart" id="${cart.cartId}">
+																		<a class="cart-img"
+																			href="/products/${cart.product.productId }"><img
+																			src="../../images/products/${cart.product.productImage[0].image }"
+																			alt="${cart.product.productImage[0].image }"></a>
+																		<h4>
+																			<a href="#">${cart.product.productName}</a>
+																		</h4>
+																		<p class="quantity">
+																			Số lượng: <span class="qtyInStock">${cart.quantity}
+																			</span> <span class="amount d-flex flex-column"> <c:choose>
+																					<c:when test="${isFlashSale}">
+																						<c:choose>
+																							<c:when
+																								test="${cart.product.productPromotionalDetails[0] != null}">
+																								<del>
+																									<span
+																										class="text-muted text-decoration-line-through me-2"><fmt:formatNumber
+																											type="number" pattern="###,###,###"
+																											value="${cart.product.price}" /> ₫</span>
+																								</del>
+																								<span class="fw-bold float-end text-danger">
+																									<fmt:formatNumber type="number"
+																										pattern="###,###,###"
+																										value="${cart.product.productPromotionalDetails[0].discountedPrice}" />
+																									₫
+																								</span>
+																							</c:when>
+																							<c:otherwise>
+																								<span class="fw-bold float-end text-danger"><fmt:formatNumber
 																										type="number" pattern="###,###,###"
 																										value="${cart.product.price}" /> ₫</span>
-																							</del>
-																							<span class="fw-bold float-end text-danger">
-																								<fmt:formatNumber type="number"
-																									pattern="###,###,###"
-																									value="${cart.product.productPromotionalDetails[0].discountedPrice}" />
-																								₫
-																							</span>
-																						</c:when>
-																						<c:otherwise>
-																							<span class="fw-bold float-end text-danger"><fmt:formatNumber
-																									type="number" pattern="###,###,###"
-																									value="${cart.product.price}" /> ₫</span>
-																						</c:otherwise>
-																					</c:choose>
-																				</c:when>
-																				<c:otherwise>
-																					<span class="fw-bold float-end text-danger"><fmt:formatNumber
-																							type="number" pattern="###,###,###"
-																							value="${cart.product.price}" /> ₫</span>
-																				</c:otherwise>
-																			</c:choose>
-																		</span>
-																		<button onclick="removeCartItem(${cart.cartId}, this)"
-																			class="remove remove-product-cart"
-																			title="Xóa khỏi giỏ hàng">
-																			<i class="fa fa-remove"></i>
-																		</button>
-																	</p>
+																							</c:otherwise>
+																						</c:choose>
+																					</c:when>
+																					<c:otherwise>
+																						<span class="fw-bold float-end text-danger"><fmt:formatNumber
+																								type="number" pattern="###,###,###"
+																								value="${cart.product.price}" /> ₫</span>
+																					</c:otherwise>
+																				</c:choose>
+																			</span>
+																			<button
+																				onclick="removeCartItem(${cart.cartId}, this)"
+																				class="remove remove-product-cart"
+																				title="Xóa khỏi giỏ hàng">
+																				<i class="fa fa-remove"></i>
+																			</button>
+																		</p>
 
-																</div>
-															</li>
+																	</div>
+																</li>
+															</c:if>
 														</c:forEach>
 													</c:otherwise>
 												</c:choose>
@@ -333,7 +337,8 @@
 										<ul class="nav main-menu menu navbar-nav ">
 											<li class=""><a href="/" class="">TRANG CHỦ</a></li>
 											<li><a href="/product" class="">SẢN PHẨM</a></li>
-											<li><a href="/product/flash-sale" class="">KHUYẾN MÃI</a></li>
+											<li><a href="/product/flash-sale" class="">KHUYẾN
+													MÃI</a></li>
 											<li><a href="/contact" class="">LIÊN HỆ</a></li>
 											<li><a href="/about-us" class="">GIỚI THIỆU</a></li>
 										</ul>

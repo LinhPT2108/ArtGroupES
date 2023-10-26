@@ -1,6 +1,5 @@
 package com.art.service;
 
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -74,9 +73,9 @@ public class SessionService {
 		Double totalPrice = totalPriceCartByUserId(get("userLogin"));
 		session.setAttribute("totalPriceInCart", totalPrice);
 	}
-	
+
 	public double totalPriceCartByUserId(UserCustom userId) {
-		
+
 		FlashSale isFlashSale = fsDAO.findByIsStatus(false);
 
 		List<Cart> cartList = cartDAO.findByUser(userId);
@@ -87,29 +86,33 @@ public class SessionService {
 
 			for (Cart cart : cartList) {
 				Boolean isSale = false;
-				for (PromotionalDetails p : pmt) {
-					if (cart.getProduct().getProductId() == p.getProduct().getProductId()) {
-						isSale = true;
+				if (!cart.getProduct().isDel()) {
+					for (PromotionalDetails p : pmt) {
+						if (cart.getProduct().getProductId() == p.getProduct().getProductId()) {
+							isSale = true;
+						}
 					}
-				}
-				if (isSale) {
-					totalPrice += cart.getProduct().getProductPromotionalDetails().get(0).getDiscountedPrice()
-							* cart.getQuantity();
-				} else { 
-					BigDecimal bigDecimalValue = new BigDecimal(String.valueOf(cart.getProduct().getPrice())); 
-					int intValue = cart.getQuantity(); 
+					if (isSale) {
+						totalPrice += cart.getProduct().getProductPromotionalDetails().get(0).getDiscountedPrice()
+								* cart.getQuantity();
+					} else {
+						BigDecimal bigDecimalValue = new BigDecimal(String.valueOf(cart.getProduct().getPrice()));
+						int intValue = cart.getQuantity();
 
-					BigDecimal result = bigDecimalValue.multiply(new BigDecimal(intValue));
-					totalPrice += Double.parseDouble(String.valueOf(result));
+						BigDecimal result = bigDecimalValue.multiply(new BigDecimal(intValue));
+						totalPrice += Double.parseDouble(String.valueOf(result));
+					}
 				}
 			}
 		} else {
 			for (Cart cart : cartList) {
-				BigDecimal bigDecimalValue = new BigDecimal(String.valueOf(cart.getProduct().getPrice())); 
-				int intValue = cart.getQuantity(); 
+				if (!cart.getProduct().isDel()) {
+					BigDecimal bigDecimalValue = new BigDecimal(String.valueOf(cart.getProduct().getPrice()));
+					int intValue = cart.getQuantity();
 
-				BigDecimal result = bigDecimalValue.multiply(new BigDecimal(intValue));
-				totalPrice += Double.parseDouble(String.valueOf(result));
+					BigDecimal result = bigDecimalValue.multiply(new BigDecimal(intValue));
+					totalPrice += Double.parseDouble(String.valueOf(result));
+				}
 			}
 		}
 		return totalPrice;
