@@ -92,7 +92,7 @@ public class productController {
 	@PostMapping("/product")
 	public ResponseEntity<?> createProduct(@Valid @ModelAttribute("pd") Product product, BindingResult result,
 			@RequestParam("listImage") MultipartFile[] listImage, @RequestParam("descriptions") String descriptions) {
-		System.out.println(product.getProductId());
+
 		Map<String, String> errors = new HashMap<>();
 		System.out.println(descriptions);
 		if (descriptions.length() == 32 || descriptions.length() == 2) {
@@ -103,11 +103,9 @@ public class productController {
 			if (!image.isEmpty()) {
 				System.out.println(image.getOriginalFilename());
 			} else {
-				System.out.println("Khong co hinh");
 				errors.put("image", "Vui lòng chọn ít nhất 1 ảnh");
 			}
 		}
-
 		if (result.hasErrors()) {
 			// Trả lỗi về Json
 			for (FieldError error : result.getFieldErrors()) {
@@ -118,7 +116,6 @@ public class productController {
 
 		if (errors.isEmpty()) {
 			try {
-				product.setProductId(product.getProductId());
 				product.setUser(sessionService.get("userLogin"));
 				pdDAO.save(product);
 			} catch (Exception e) {
@@ -149,7 +146,7 @@ public class productController {
 				detailDescriptionDAO.save(detailDescription);
 			}
 			return ResponseEntity.ok("success");
-		} else {
+		}else {
 			return ResponseEntity.ok(errors);
 		}
 	}

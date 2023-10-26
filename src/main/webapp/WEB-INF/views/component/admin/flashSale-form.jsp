@@ -3,7 +3,6 @@
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
 <div class="site-product">
 	<form:form cssClass="row g-3 needs-validation"
 		action="/admin/flashSale" modelAttribute="flashSale" method="POST"
@@ -52,37 +51,40 @@
 	</form:form>
 	<hr>
 	<br>
-</div>
-<div class="table-responsive">
-	<table id="statisticalTable" class="table table-hover">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Ngày bắt đầu</th>
-				<th>Ngày kết thúc</th>
-				<th>Trạng thái</th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="flashSale" items="${flashSales}">
+	<div class="table-responsive">
+		<table id="statisticalTable" class="table table-hover">
+			<thead>
 				<tr>
-					<td>${flashSale.id}</td>
-
-					<td><fmt:formatDate value="${flashSale.startDay}"
-							pattern="HH:mm dd/MM/yyyy" /></td>
-
-					<td><fmt:formatDate value="${flashSale.endDay}"
-							pattern="HH:mm dd/MM/yyyy" /></td>
-
-					<td><c:choose>
-							<c:when test="${flashSale.status == false}">Đang hoạt động</c:when>
-							<c:otherwise>Ngưng hoạt động</c:otherwise>
-						</c:choose></td>
-
-					<td><a href="/admin/flashSale/edit/${flashSale.id}">Edit</a></td>
+					<th>Id</th>
+					<th>Ngày bắt đầu</th>
+					<th>Ngày kết thúc</th>
+					<th>Trạng thái</th>
+					<th>Số lượng sản phẩm</th>
+					<th></th>
+					<!-- <th>Thông tin</th> -->
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<c:forEach var="flashSale" items="${flashSales}">
+					<tr>
+						<td>${flashSale.id}</td>
+						<td><fmt:formatDate value="${flashSale.startDay}"
+								pattern="HH:mm dd/MM/yyyy" /></td>
+						<td><fmt:formatDate value="${flashSale.endDay}"
+								pattern="HH:mm dd/MM/yyyy" /></td>
+						<td><c:choose>
+								<c:when test="${flashSale.status == false}">Đang hoạt động</c:when>
+								<c:otherwise>Ngưng hoạt động</c:otherwise>
+							</c:choose></td>
+						<td>${flashSale.promotionalDetailsList.size()}<a
+							href="/admin/promotionalDetail/${flashSale.id}">   Xem chi tiết</a>
+						</td>
+						<td><a href="/admin/flashSale/edit/${flashSale.id}">Edit</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
 </div>
+

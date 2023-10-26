@@ -66,30 +66,28 @@ function checkFileSize(e) {
 
 
 function layDuLieuMoTa() {
-    // Sử dụng jQuery để tìm thẻ có class "motaClass" cuối cùng và lấy giá trị "data-counter-number"
-    var lastMotaClassElement = $('.motaClass').last();
-    var counterNumber = lastMotaClassElement.data('counter-number');
+	// Sử dụng jQuery để tìm thẻ có class "motaClass" cuối cùng và lấy giá trị "data-counter-number"
+	var lastMotaClassElement = $('.motaClass').last();
+	var counterNumber = lastMotaClassElement.data('counter-number');
 
-    const moTaObjects = [];
+	const moTaObjects = [];
 
-    for (let index = 0; index <= counterNumber; index++) {
-		console.log(index)
-        const tieuDe = $(`#tieude${index}`).val() || '';
-        const noiDung = $(`#noidung${index}`).val() || '';
-		console.log(tieuDe)
-		console.log(noiDung)
-        // Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
-        if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
-            const moTa = {
-                tieuDe: tieuDe,
-                description: noiDung
-            };
+	for (let index = 0; index <= counterNumber; index++) {
+		const tieuDe = $(`#tieude${index}`).val() || '';
+		const noiDung = $(`#noidung${index}`).val() || '';
 
-            moTaObjects.push(moTa);
-        }
-    }
+		// Kiểm tra nếu cả hai ô đều trống thì không thêm vào moTaObjects
+		if (tieuDe.trim() !== "" || noiDung.trim() !== "") {
+			const moTa = {
+				tieuDe: tieuDe,
+				description: noiDung
+			};
 
-    return moTaObjects;
+			moTaObjects.push(moTa);
+		}
+	}
+
+	return moTaObjects;
 }
 
 
@@ -142,7 +140,6 @@ $(document).ready(function() {
 		var formData = new FormData(this);
 
 		var descriptions = layDuLieuMoTa();
-		console.log(descriptions)
 		formData.append("descriptions", JSON.stringify(descriptions));
 
 		console.log(formData);
@@ -160,18 +157,19 @@ $(document).ready(function() {
 			data: formData,
 			success: function(data) {
 				if (data == 'success') {
-					Swal
+					/*Swal
 						.fire({
 							icon: 'success',
 							title: 'Thêm thành công',
 							text: "Sản phẩm đã được thêm vào hệ thống !",
 							showConfirmButton: true,
 							timer: 1500
-						});
+						});*/
 
 					console.log(formData);
-					/*let timerInterval
+					let timerInterval
 					Swal.fire({
+						icon:'success',
 						title: 'Dữ liệu đang được thêm vào hệ thông!',
 						html: 'sẽ làm mới trang trong <b></b> mili giây.',
 						timer: 1500,
@@ -188,12 +186,12 @@ $(document).ready(function() {
 							clearInterval(timerInterval)
 						}
 					}).then((result) => {
-						 Read more about handling dismissals below 
+						/* Read more about handling dismissals below */
 						if (result.dismiss === Swal.DismissReason.timer) {
 							console.log('I was closed by the timer')
 							location.reload();
 						}
-					})*/
+					})
 				} else {
 
 					$("#productNameError").html('');
@@ -249,17 +247,32 @@ $(document).ready(function() {
 			data: formData,
 			success: function(data) {
 				if (data == 'success') {
-					Swal
-						.fire({
-							icon: 'success',
-							title: 'Cập  nhật thành công',
-							text: "Sản phẩm đã được thêm vào hệ thống !",
-							showConfirmButton: true,
-							timer: 1500
-						});
-
-					console.log(formData);
-
+					
+					let timerInterval
+					Swal.fire({
+						icon: 'success',
+						title: 'Dữ liệu đang được cập nhật vào hệ thông!',
+						html: 'sẽ làm mới trang trong <b></b> mili giây.',
+						timer: 1500,
+						allowOutsideClick: false,
+						timerProgressBar: true,
+						didOpen: () => {
+							Swal.showLoading()
+							const b = Swal.getHtmlContainer().querySelector('b')
+							timerInterval = setInterval(() => {
+								b.textContent = Swal.getTimerLeft()
+							}, 100)
+						},
+						willClose: () => {
+							clearInterval(timerInterval)
+						}
+					}).then((result) => {
+						/* Read more about handling dismissals below */
+						if (result.dismiss === Swal.DismissReason.timer) {
+							console.log('I was closed by the timer')
+							location.reload();
+						}
+					})
 				} else {
 
 					$("#productNameError").html('');
